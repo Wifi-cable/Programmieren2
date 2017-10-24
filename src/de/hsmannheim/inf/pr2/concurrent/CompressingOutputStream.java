@@ -11,4 +11,7 @@ public class CompressingOutputStream extends FileOutputStream {
 		// TODO Auto-generated constructor stub
 	}
 	// aufgabe 1.2 
+	/*diese klasse soll die "Laufängen-Komprimierung" realisieren, (so etwas wie einen zip file bauen)
+	 * -sie erbt schon von fileoutputstream, wie im übungsblatt beschrieben. 
+	 * */
 }
