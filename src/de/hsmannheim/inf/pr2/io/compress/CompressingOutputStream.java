@@ -1,13 +1,9 @@
 package de.hsmannheim.inf.pr2.io.compress;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
+import java.io.FileNotFoundException;
 import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 public class CompressingOutputStream extends FilterOutputStream {
@@ -19,15 +15,15 @@ public class CompressingOutputStream extends FilterOutputStream {
 	}
 	// aufgabe 1.2 
 	/*diese klasse soll die "Laufängen-Komprimierung" realisieren, (so etwas wie einen zip file bauen)
-	 * -sie erbt schon von fileoutputstream, wie im übungsblatt beschrieben. 
+	 * -sie erbt schon von filtereoutputstream, wie im übungsblatt beschrieben. 
 	 * 
 	 * -sie benutzt zwei arrays. eins liest sie nur, das andere füllt sie mit kompremierten zahlen.*/
 	
 	// felder,  daten
-	File inputFile;
+	
 	private byte[] rawData;
 	private byte[] zipData;
-	int fileLengh;
+	//int fileLengh;
 	int rawIdx;//index des uncompremierten arrays
 	byte value;
 	
@@ -36,37 +32,119 @@ public class CompressingOutputStream extends FilterOutputStream {
 			input=rawData;
 		
 	}
-	
+/* kompremiert den inhalt eines arrays  und macht einen stream daraus der in eine datei geschriebn werden kann*/	
 
 	
-	public void compressArray(){
+	public void compressStream()throws IOException{
+		int len=rawData.length;
 		byte repeat;
-		byte next;
-		int zipIdx=0;
+		//byte next;
+		//int zipIdx=0;
 		rawIdx=0; 
 		value=rawData[rawIdx];
-		while(rawIdx<fileLengh){
-			repeat=1;
-			next=1;
+		while(rawIdx<len){
+			repeat=0;
+			//next=1;
 			if(rawData[rawIdx]==-1){		// sonderfall nächstes byte ist ein -1
-				if(zipIdx>=zipData.length-1){
-					resizeArray(rawData);
-				}
-				zipData[zipIdx]=-1;
-				zipData[zipIdx+1]=-1;
-				zipIdx+=2;
+				out.write(-1);
+				out.write(-1);
+				//zipData[zipIdx]=-1;
+				//zipData[zipIdx+1]=-1;
+				//zipIdx+=2;
+				rawIdx++;
 			}
-			else{				// nächstes byte ist keine -1
-				while(((rawIdx+next)<fileLengh)&& (value==rawData[next])){//wieviele wiederholungen der zahl gibts ?
+			else{	// nächstes byte ist keine -1 wiederholt es sich?
+				while(((rawIdx+repeat)<len)&& (value==rawData[rawIdx+repeat])){//wieviele wiederholungen der zahl gibts ?
 					repeat++;	
 				}
-				// wiederholt es sich?
-				
+				if(repeat==0){	// keine wiederholung
+					out.write(value);
+				}
+				else if(repeat>126){	// wiederholt so oft das es einen byte overflow gibt
+					out.write(-1);
+					out.write(value);
+					out.write(126);
+					out.write(-1);
+					out.write(value);
+					out.write(repeat-126);
+				}
+				else{	// ist keine -1 wiederholt sich wehniger als 126 mal
+					out.write(-1);
+					out.write(value);
+					out.write(repeat);
+				}
+				rawIdx= rawIdx+repeat;
 			}
 			
 		}
-		
 	}
+	 void compressToArray()throws IOException{
+		 int len= rawData.length;
+		 int idx=0;
+		 int i=0;
+		 int next;
+		 byte val;
+		 zipData=new byte[len];
+		 while (i<len){
+			 next=0;
+			 val=rawData[i];
+			 if(idx>=zipData.length){// falls das array zu klein wird, mach es grösser
+				 resizeArray(zipData);
+			 }
+			 else{		
+				if(val==-1){		// sonderfall -1	
+					zipData[idx]= (-1);
+					idx++;
+					zipData[idx]=(-1);
+					idx++;
+					i++;
+				}
+				else{
+					while(((i+next)<len)&&(val==rawData[next])){	//wiederholt sich der wert?
+					next++;	
+					}
+					if(next==0){
+						zipData[idx]=rawData[i]; 
+						idx++;
+						i++;
+				}
+					
+					else if (next>126){	
+						if(zipData.length<(idx+6)){		//falls das array zu klein wird, mach es grösser
+							resizeArray(zipData);
+						}
+						zipData[idx]= (-1);
+						idx++;
+						zipData[idx]=rawData[i];
+						idx++;
+						zipData[idx]=126;
+						idx++;
+						zipData[idx]=(-1);
+						idx++;
+						zipData[idx]=rawData[i];
+						idx++;
+						zipData[idx]= ((byte)(next-126));
+						idx++;
+						i= i+next;
+					}
+					else{
+						if(zipData.length<(idx+3)){		//falls das array zu klein wird, mach es grösser
+							resizeArray(zipData);
+						}
+						zipData[idx]= (-1);
+						idx++;
+						zipData[idx]=rawData[i];
+						idx++;
+						zipData[idx]=(byte)next;
+						idx++;
+						i= i+next;
+					}
+					
+				}
+			 }
+		 }
+	 }
+	
 	/*hilfsmethode das array mit den kompremierten zahlen zu voll ist wird ein doppelt so grosses gebaut.
 	 * der inhalt des alten arrays wird ins neue kopiert.
 	 * die neue refernz wird auf die variable des alten arrays gesetzt- (aliasierung) */
@@ -85,30 +163,5 @@ public class CompressingOutputStream extends FilterOutputStream {
 	public byte[] getZipData(){
 		return zipData;
 	}
-	//nimmt einen file und packt ihn in ein byte array eventuell sinvoller in aufgabe 1.3 zu packen
-//	protected byte[]fileToArray(File inFile){
-//		//int len= (int) inFile.length();
-//		int len=10, idx=0;
-//		byte[] arrayFromFile=new byte[len];
-//		try{
-//			InputStream in = new BufferedInputStream(new FileInputStream(inFile));
-//			int counter=  in.read(arrayFromFile);
-//			while(counter>0){
-//				if(idx<len){
-//				byte b= (byte)counter;
-//				arrayFromFile[idx]=b;
-//				idx++;
-//				}
-//				else{// geht net mit globalen arrays ohen parameter, oder? 
-//					resizeArray(arrayFromFile);
-//				}
-//				in.close();
-//			}
-//			
-//		}
-//		catch(IOException ioex){}
-//		
-//		return arrayFromFile;
-//	}
-
+	
 }
