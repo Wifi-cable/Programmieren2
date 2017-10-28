@@ -98,7 +98,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 			
 				if(val==-1){		// sonderfall -1	
 					if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
-						resizeArray(zipData);
+						zipData=resizeArray(zipData);
 					}
 					zipData[idx]= (-1);
 					idx++;
@@ -121,7 +121,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 					
 					else if (counter>126){	// gäbe es einen byte overflow? 
 						if(zipData.length<(idx+7)){		//falls das array zu klein wird, mach es grösser
-							resizeArray(zipData);
+							zipData=resizeArray(zipData);
 						}
 						zipData[idx]= (-1);
 						idx++;
@@ -139,7 +139,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 					}
 					else{	//standartfall
 						if(zipData.length<(idx+4)){		//falls das array zu klein wird, mach es grösser
-							resizeArray(zipData);
+							zipData=resizeArray(zipData);
 						}
 						zipData[idx]= (-1);
 						idx++;
@@ -154,7 +154,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 		 }
 		 //wenn das unkompremierte array abgearbeitet ist wird noch -125 -125 rein geschrieben als marker
 			if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
-				resizeArray(zipData);	
+				zipData=resizeArray(zipData);	
 			 }
 			zipData[idx]= (-125);
 			idx++;
@@ -164,7 +164,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 	/*hilfsmethode das array mit den kompremierten zahlen zu voll ist wird ein doppelt so grosses gebaut.
 	 * der inhalt des alten arrays wird ins neue kopiert.
 	 * die neue refernz wird auf die variable des alten arrays gesetzt- (aliasierung) */
-	public void resizeArray(byte[]small){
+	public byte []resizeArray(byte[]small){
 		
 		int old=small.length;
 		int bigger=(old*2);
@@ -172,8 +172,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 		for(int i=0;i<old; i++){
 			temp[i]=small[i];
 			}
-		small= temp;
-		temp=null; // referenz löschen	
+		return temp;
 	}
 	// einfacher getter für die ein array mit kompremierten daten
 	public byte[] getZipData(){
