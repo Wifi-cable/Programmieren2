@@ -1,7 +1,9 @@
 package de.hsmannheim.inf.pr2.io.compress;
 
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,8 +31,8 @@ public class CompressingOutputStream extends FilterOutputStream {
 	
 	public CompressingOutputStream( byte [] input,FilterOutputStream out) throws IOException{
 			super(out);
-			input=rawData;
-		
+			//input=rawData;
+			rawData=input;
 	}
 /* kompremiert den inhalt eines arrays  und macht einen stream daraus der in eine datei geschriebn werden kann*/	
 
@@ -78,39 +80,47 @@ public class CompressingOutputStream extends FilterOutputStream {
 			
 		}
 	}
+/* nimmt ein byte array des objectes( zipData)  und füllt es mit kompremierten bytes. es vergrössert das array dynamisch 
+ * schreibt als marker -125 -125 wenn die orginal daten zu ende sind.
+ *  */	
 	 void compressToArray()throws IOException{
 		 int len= rawData.length;
 		 int idx=0;
 		 int i=0;
 		 int next;
 		 byte val;
+		 int counter;
 		 zipData=new byte[len];
 		 while (i<len){
-			 next=0;
+			 counter=0;
+			 next=1;
 			 val=rawData[i];
-			 if(idx>=zipData.length){// falls das array zu klein wird, mach es grösser
-				 resizeArray(zipData);
-			 }
-			 else{		
+			
 				if(val==-1){		// sonderfall -1	
+					if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
+						resizeArray(zipData);
+					}
 					zipData[idx]= (-1);
 					idx++;
 					zipData[idx]=(-1);
 					idx++;
 					i++;
 				}
-				else{
-					while(((i+next)<len)&&(val==rawData[next])){	//wiederholt sich der wert?
-					next++;	
+				else{		//wert nicht -1
+					next=counter+i;
+					while(((i+counter)<len)&&(val==rawData[next])){	//wiederholt sich der wert?
+					
+					counter++;
+					next=counter+i;
 					}
-					if(next==0){
+					if(counter==0){
 						zipData[idx]=rawData[i]; 
 						idx++;
 						i++;
-				}
+					}
 					
-					else if (next>126){	
-						if(zipData.length<(idx+6)){		//falls das array zu klein wird, mach es grösser
+					else if (counter>126){	// gäbe es einen byte overflow? 
+						if(zipData.length<(idx+7)){		//falls das array zu klein wird, mach es grösser
 							resizeArray(zipData);
 						}
 						zipData[idx]= (-1);
@@ -123,26 +133,32 @@ public class CompressingOutputStream extends FilterOutputStream {
 						idx++;
 						zipData[idx]=rawData[i];
 						idx++;
-						zipData[idx]= ((byte)(next-126));
+						zipData[idx]= ((byte)(counter-126));
 						idx++;
-						i= i+next;
+						i= i+counter;
 					}
-					else{
-						if(zipData.length<(idx+3)){		//falls das array zu klein wird, mach es grösser
+					else{	//standartfall
+						if(zipData.length<(idx+4)){		//falls das array zu klein wird, mach es grösser
 							resizeArray(zipData);
 						}
 						zipData[idx]= (-1);
 						idx++;
-						zipData[idx]=rawData[i];
+						zipData[idx]=rawData[i];	//error here
 						idx++;
-						zipData[idx]=(byte)next;
+						zipData[idx]=(byte)counter;
 						idx++;
-						i= i+next;
+						i= i+counter;
 					}
 					
 				}
-			 }
 		 }
+		 //wenn das unkompremierte array abgearbeitet ist wird noch -125 -125 rein geschrieben als marker
+			if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
+				resizeArray(zipData);	
+			 }
+			zipData[idx]= (-125);
+			idx++;
+			zipData[idx]= (-125);
 	 }
 	
 	/*hilfsmethode das array mit den kompremierten zahlen zu voll ist wird ein doppelt so grosses gebaut.
@@ -151,7 +167,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 	public void resizeArray(byte[]small){
 		
 		int old=small.length;
-		int bigger=old*2;
+		int bigger=(old*2);
 		byte []temp=new byte[bigger];
 		for(int i=0;i<old; i++){
 			temp[i]=small[i];
@@ -162,6 +178,22 @@ public class CompressingOutputStream extends FilterOutputStream {
 	// einfacher getter für die ein array mit kompremierten daten
 	public byte[] getZipData(){
 		return zipData;
+	}
+	public static void main(String[] args)throws IOException{
+		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,5,5,5,5,5};
+	
+		OutputStream out=new FileOutputStream("example");
+		CompressingOutputStream outPut;
+		byte []result;
+		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
+		outPut.compressToArray();
+		result= outPut.getZipData();
+		for(int i=0; i<result.length; i++ ){
+			System.out.print(" "+ result[i]+" ");
+		}
+		
+		outPut.close();
+		out.close();
 	}
 	
 }
