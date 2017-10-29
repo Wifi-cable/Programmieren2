@@ -93,10 +93,10 @@ public class CompressingOutputStream extends FilterOutputStream {
 		 zipData=new byte[len];
 		 while (i<len){
 			 counter=0;
-			 next=1;
+			 next=i+1;
 			 val=rawData[i];
 			
-				if(val==-1){		// sonderfall -1	
+				if(val==(-1)){		// sonderfall -1	
 					if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
 						zipData=resizeArray(zipData);
 					}
@@ -107,19 +107,32 @@ public class CompressingOutputStream extends FilterOutputStream {
 					i++;
 				}
 				else{		//wert nicht -1
-					next=counter+i;
-					while(((i+counter)<len)&&(val==rawData[next])){	//wiederholt sich der wert?
+					//next=counter+i;	// 0+0 ist sinnloos
+					//while(((i+next)<len)&&(val==rawData[i+next])){ falsche zahlen
+//					while(((i+counter)<(len-1))&&(val==rawData[next])){ //Ignoriert den letzten
+//						System.out.println("@"+ (i+counter) +" / "+ len +" Val="+ val +" vs. rawData["+ next +"]="+ rawData[next] + " for "+ counter +" times.");
+//						counter++;
+//						next=counter+i;
+//					}
 					
-					counter++;
-					next=counter+i;
+					while(((i+counter)<(len-0))&&(val==rawData[next])){ //Ignoriert den letzten
+						System.out.println("@"+ (i+counter) +" / "+ len +" Val="+ val +" vs. rawData["+ next +"]="+ rawData[next] + " for "+ counter +" times.");
+						counter++;
+						next=counter+i;
 					}
+					
+
+					
 					if(counter==0){
 						zipData[idx]=rawData[i]; 
+						System.out.println("@"+ i +" -> "+ rawData[i]);
 						idx++;
 						i++;
 					}
 					
-					else if (counter>126){	// gäbe es einen byte overflow? 
+					else if (counter>126){	// gäbe es einen byte overflow?
+						System.out.println("@"+ i +" counter overflow ("+ counter +")! write 126 + "+ (counter-126));
+
 						if(zipData.length<(idx+7)){		//falls das array zu klein wird, mach es grösser
 							zipData=resizeArray(zipData);
 						}
@@ -141,6 +154,8 @@ public class CompressingOutputStream extends FilterOutputStream {
 						if(zipData.length<(idx+4)){		//falls das array zu klein wird, mach es grösser
 							zipData=resizeArray(zipData);
 						}
+						System.out.println("@"+ i +" => "+ rawData[i] +" for "+ counter +" times.");
+
 						zipData[idx]= (-1);
 						idx++;
 						zipData[idx]=rawData[i];	//error here
@@ -179,7 +194,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 		return zipData;
 	}
 	public static void main(String[] args)throws IOException{
-		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,5,5,5,5,5};
+		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
 	
 		OutputStream out=new FileOutputStream("example");
 		CompressingOutputStream outPut;

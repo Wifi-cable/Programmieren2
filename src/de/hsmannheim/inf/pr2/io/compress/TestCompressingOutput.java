@@ -10,10 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestCompressingOutput {
-	byte []tester1={1,2,4,-1,6,-1,-1,3};
+	byte []tester1={-1,-1};
 	byte []tester2= new byte[200];	//immer die selbe zahl
 	byte []tester3=new byte [50];	// random zahlen
 	byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,5,5,5,5,5};
+	byte[]tester5= new byte[10];
 	CompressingOutputStream outPut;
 	//File ex= new File("example");
 	OutputStream out;
@@ -25,6 +26,9 @@ public class TestCompressingOutput {
 		}
 		for (int i=0; i<50;i++){
 			tester3[i]= (byte)((Math.random()*11)-2); // zahlen zwischen -2 und 9 
+		}
+		for (int i=0; i<tester5.length; i++){
+			tester5[i]=(byte)i;
 		}
 		try{ // try catch weil outputstreams einem dauernt um die ohren fliegen. 
 			 outPut= new CompressingOutputStream(tester1, new FilterOutputStream( out));
@@ -38,14 +42,36 @@ public class TestCompressingOutput {
 		
 	}
 
-	//@Test	// geht er mit 126 gleichen zahlen richtig um?
+	@Test	// geht er mit 126 gleichen zahlen richtig um?
 	public void byteoverflow() throws IOException{
+		byte []result;
+		CompressingOutputStream outPut2= new CompressingOutputStream(tester2, new FilterOutputStream( out));
+		outPut2.compressToArray();
+		result= outPut2.getZipData();
+		assertEquals(-1,result[0]);
+		assertEquals(42,result[1]);
+		assertEquals(126,result[2]);
+		assertEquals(-1,result[3]);
+		assertEquals(42,result[4]);
+		assertEquals(74,result[5]);
+		assertEquals(-125,result[6]);
+		assertEquals(-125,result[7]);
 		
-		//assertEquals();
+	
+		
 	}
 	
-	//@Test // funst das mit den minus einsen?
-	public void negativeOne(){
+	@Test // funst das mit den minus einsen?
+	public void negativeOne()throws IOException{
+		byte []result;
+		CompressingOutputStream outPut2= new CompressingOutputStream(tester1, new FilterOutputStream( out));
+		outPut2.compressToArray();
+		result= outPut2.getZipData();
+		assertEquals(-1,result[0]);
+		assertEquals(-1,result[1]);
+		assertEquals(-1,result[2]);
+		assertEquals(-1,result[3]);
+	
 		
 	}
 	@Test // tested wiederholungen
@@ -63,6 +89,21 @@ public class TestCompressingOutput {
 		assertEquals(-1, result[6]);
 		assertEquals(5, result[7]);
 		assertEquals(10, result[8]);
+	}
+	@Test // tested wiederholungen
+	public void noRepet()throws IOException{
+		byte []result;
+		outPut= new CompressingOutputStream(tester5, new FilterOutputStream( out));
+		outPut.compressToArray();
+		result= outPut.getZipData();
+		int i;
+		for (i=0; i<result.length; i++){
+			System.out.println(i);
+			assertEquals(i,result[i]);
+			
+		}
+		assertEquals(-125,result[i+1]);
+		assertEquals(-125,result[i+2]);
 	}
 
 
