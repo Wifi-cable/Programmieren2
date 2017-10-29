@@ -101,16 +101,12 @@ public class TestCompressingOutput {
 		result= outPut.getZipData();
 		int i;
 		for (i=0; i<tester5.length; i++){
-			System.out.println(i);
 			assertEquals(i,result[i]);
 			
 		}
-		System.out.println(result[i]);
-		System.out.println("arrayLänge: "+ result.length);
 		assertEquals(-125,result[i]);
-		System.out.println(result[i]);
 		assertEquals(-125,result[i+1]);
-		System.out.println(result[i+1]);
+	
 	}
 
 
