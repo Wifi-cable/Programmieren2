@@ -54,6 +54,7 @@ public class TestCompressingOutput {
 		assertEquals(-1,result[3]);
 		assertEquals(42,result[4]);
 		assertEquals(74,result[5]);
+		System.out.println("sechste stelle ist "+result[6]);
 		assertEquals(-125,result[6]);
 		assertEquals(-125,result[7]);
 		
@@ -71,6 +72,8 @@ public class TestCompressingOutput {
 		assertEquals(-1,result[1]);
 		assertEquals(-1,result[2]);
 		assertEquals(-1,result[3]);
+		assertEquals(-125,result[4]);
+		assertEquals(-125,result[5]);
 	
 		
 	}
@@ -97,13 +100,17 @@ public class TestCompressingOutput {
 		outPut.compressToArray();
 		result= outPut.getZipData();
 		int i;
-		for (i=0; i<result.length; i++){
+		for (i=0; i<tester5.length; i++){
 			System.out.println(i);
 			assertEquals(i,result[i]);
 			
 		}
+		System.out.println(result[i]);
+		System.out.println("arrayLänge: "+ result.length);
+		assertEquals(-125,result[i]);
+		System.out.println(result[i]);
 		assertEquals(-125,result[i+1]);
-		assertEquals(-125,result[i+2]);
+		System.out.println(result[i+1]);
 	}
 
 

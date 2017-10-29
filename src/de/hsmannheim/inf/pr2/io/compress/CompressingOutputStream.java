@@ -83,7 +83,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 /* nimmt ein byte array des objectes( zipData)  und füllt es mit kompremierten bytes. es vergrössert das array dynamisch 
  * schreibt als marker -125 -125 wenn die orginal daten zu ende sind.
  *  */	
-	 void compressToArray()throws IOException{
+	 void compressToArrayOld()throws IOException{
 		 int len= rawData.length;
 		 int idx=0;
 		 int i=0;
@@ -95,7 +95,20 @@ public class CompressingOutputStream extends FilterOutputStream {
 			 counter=0;
 			 next=i+1;
 			 val=rawData[i];
-			
+			 	
+			 if(i== (len-1)){
+				 //wenn das unkompremierte array abgearbeitet ist wird noch -125 -125 rein geschrieben als marker
+					if(zipData.length<(idx+3)){		//falls das array zu klein wird, mach es grösser
+						zipData=resizeArray(zipData);	
+					 }
+					zipData[idx]=rawData[len-1];
+					idx++;
+					zipData[idx]= (-125);
+					idx++;
+					zipData[idx]= (-125);
+				 
+			 }
+			 
 				if(val==(-1)){		// sonderfall -1	
 					if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
 						zipData=resizeArray(zipData);
@@ -115,7 +128,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 //						next=counter+i;
 //					}
 					
-					while(((i+counter)<(len-0))&&(val==rawData[next])){ //Ignoriert den letzten
+					while((next<len)&&(val==rawData[next])){ //Ignoriert den letzten
 						System.out.println("@"+ (i+counter) +" / "+ len +" Val="+ val +" vs. rawData["+ next +"]="+ rawData[next] + " for "+ counter +" times.");
 						counter++;
 						next=counter+i;
@@ -151,7 +164,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 						i= i+counter;
 					}
 					else{	//standartfall
-						if(zipData.length<(idx+4)){		//falls das array zu klein wird, mach es grösser
+						if(zipData.length<(idx+4)){		
 							zipData=resizeArray(zipData);
 						}
 						System.out.println("@"+ i +" => "+ rawData[i] +" for "+ counter +" times.");
@@ -167,13 +180,13 @@ public class CompressingOutputStream extends FilterOutputStream {
 					
 				}
 		 }
-		 //wenn das unkompremierte array abgearbeitet ist wird noch -125 -125 rein geschrieben als marker
-			if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
-				zipData=resizeArray(zipData);	
-			 }
-			zipData[idx]= (-125);
-			idx++;
-			zipData[idx]= (-125);
+//		 //wenn das unkompremierte array abgearbeitet ist wird noch -125 -125 rein geschrieben als marker
+//			if(zipData.length<(idx+2)){		//falls das array zu klein wird, mach es grösser
+//				zipData=resizeArray(zipData);	
+//			 }
+//			zipData[idx]= (-125);
+//			idx++;
+//			zipData[idx]= (-125);
 	 }
 	
 	/*hilfsmethode das array mit den kompremierten zahlen zu voll ist wird ein doppelt so grosses gebaut.
@@ -209,5 +222,133 @@ public class CompressingOutputStream extends FilterOutputStream {
 		outPut.close();
 		out.close();
 	}
-	
+	 void compressToArray()throws IOException{
+			// String output = "OUT=";
+			int count=1;
+			int index=1;
+			int pos=0;
+			byte searchFor = rawData[0];
+		
+			zipData=new byte[rawData.length];
+			while (index < rawData.length){
+				if (searchFor == (-1)){		// -1 Sonderbehandlung!
+					if(zipData.length<(pos+2)){		
+						zipData=resizeArray(zipData);	
+					}
+					zipData[pos]=(-1);
+					pos++;
+					zipData[pos]=(-1);
+					pos++;
+					searchFor = rawData[index];
+				}
+				else{	// check for compression
+					if (searchFor == rawData[index]){// same!
+						count++;
+						//System.out.println("at "+ index +" Found same "+ searchFor +" for "+ count +" times.");
+					}
+					else{	// Not the same!!!
+						if (count>1){	// can be compressed
+							// Handle count > 126 because more than one overflow is possible
+							while (count >= 126){
+								//zipData = zipData + "-1 "+ searchFor +" "+ 126 +" ";
+								if(zipData.length<(pos+3)){		
+									zipData=resizeArray(zipData);	
+								}
+								zipData[pos]=(-1);
+								pos++;
+								zipData[pos]=searchFor;
+								pos++;
+								zipData[pos]=126;
+								pos++;
+								//System.out.println("at "+ index +" output "+ searchFor +" for "+ 126 +" times (overflow).");
+								count = count - 126;
+							}
+							// Output rest (< 126), if has repetions are not accounted for
+							if (count >0){
+								//zipData = zipData + "-1 "+ searchFor +" "+ count +" ";
+								if(zipData.length<(pos+3)){		
+									zipData=resizeArray(zipData);	
+								}
+								zipData[pos]=(-1);
+								pos++;
+								zipData[pos]=searchFor;
+								pos++;
+								zipData[pos]=(byte)count;
+								pos++;
+								//System.out.println("at "+ index +" output "+ searchFor +" for "+ count +" times.");
+							}
+						}
+						else{	// uncompressed!
+							if(zipData.length<(pos+1)){		
+								zipData=resizeArray(zipData);	
+							}
+							//zipData = zipData + searchFor +" ";
+							zipData[pos]=searchFor;
+							pos++;
+							//System.out.println("at "+ index +" output "+ searchFor +" (uncompressed).");
+						}// What ever happend, get a new number form input
+						searchFor = rawData[index];// AND reset count!
+						count = 1;
+					}
+				}// Try next....
+				index++;
+			}	//end of while loop.
+			// At the end, maybe we have no output yet, so do it now!
+			if (count>1){// is compressed!
+				// Handle count > 126
+				while (count >= 126){
+					if(zipData.length<(pos+3)){		
+						zipData=resizeArray(zipData);	
+					}
+					//zipData = zipData + "-1 "+ searchFor +" "+ 126 +" ";
+					zipData[pos]=-1;
+					pos++;
+					zipData[pos]=searchFor;
+					pos++;
+					zipData[pos]=126;
+					pos++;
+					//System.out.println("at "+ index +" output "+ searchFor +" for "+ 126 +" times (overflow) (last).");
+					count = count - 126;
+				}// Output rest (< 126), if has some
+				if (count >0){
+					//zipData = zipData + "-1 "+ searchFor +" "+ count +" ";
+					if(zipData.length<(pos+3)){		
+						zipData=resizeArray(zipData);	
+					}
+					zipData[pos]=(-1);
+					pos++;
+					zipData[pos]=searchFor;
+					pos++;
+					zipData[pos]=(byte)count;
+					pos++;
+					//System.out.println("at "+ index +" output "+ searchFor +" for "+ count +" times (last).");
+				}
+			}
+			else{// can not be compressed
+				if(zipData.length<(pos+3)){		
+					zipData=resizeArray(zipData);
+				}
+				//zipData = zipData + searchFor +" ";
+				if(searchFor==-1){
+					zipData[pos]=(-1);
+					pos++;
+					zipData[pos]=(-1);
+					pos++;
+				}
+				else{
+				zipData[pos]=searchFor;
+				pos++;
+				//System.out.println("at "+ index +" output "+ searchFor +" (last uncompressed).");
+				}
+			}
+			if(zipData.length<(pos+1)){		
+				zipData=resizeArray(zipData);	
+			}
+			zipData[pos]=-125;
+			pos++;
+			zipData[pos]=-125;
+		
+			//System.out.println("[done.]");
+			//System.out.println(zipData);
+		}
 }
