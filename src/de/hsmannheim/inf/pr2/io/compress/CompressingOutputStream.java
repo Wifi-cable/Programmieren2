@@ -196,7 +196,23 @@ public class CompressingOutputStream extends FilterOutputStream {
 			 out.write(zipData[i]);
 		 }	 
 	 }
-	 protected void readFromFile(){}
+	 protected byte[] readFromFile()throws IOException{
+
+			    InputStream fis = new FileInputStream("/tmp/test.txt");
+			    File in=new File("/tmp/test.txt");
+			    int len= (int)in.length();
+			    byte[] daten = new byte[len];
+			    
+			    int bytesRead =fis.read(daten);
+
+			    while ((bytesRead) > -1) {
+			     bytesRead =fis.read(daten);
+			    		
+			    }
+			    fis.close();
+			    return daten;
+			  
+	 }
 	 
 	 //builds a file full of random numbers just specifiy the name and how many numbers you want-
 	 protected File writeRandomFile(String filename, int amount)throws IOException{
