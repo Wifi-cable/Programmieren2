@@ -1,9 +1,15 @@
 package de.hsmannheim.inf.pr2.concurrent;
 
 public class BaustellenSimulation {
-
+	int len;
+	public BaustellenSimulation(int len){
+		this.len=len;
+	}
+	//braucht ein strassen object. warscheinlich mit ampel objecten und auto objecten
+	
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 
 	}
 	/*In einer Klasse BaustellenSimulation , die auch die main ()-Methode enthält, werden
@@ -21,4 +27,13 @@ public class BaustellenSimulation {
    ist dann beendet, wenn alle Fahrzeuge am Ende der Straÿe angekommen sind. Rechnen
    Sie bei den Fahrzeugen die Geschwindigkeiten von km/h einfach eins-zu-eins in km/sec
  um, damit die Simulation hinreichend schnell abläuft.*/
+	
+	static int gibOrdinal( String ampelnummer ){	// hilfsmehtode ist die ampel rot oder grün?
+	  try {
+	    return Richtung.valueOf( ampelnummer ).ordinal();
+	  }
+	  catch ( IllegalArgumentException e ) {
+	    return -1;
+	  }
+	}
 }

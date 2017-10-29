@@ -1,7 +1,33 @@
 package de.hsmannheim.inf.pr2.concurrent;
 
 class Strasse implements Runnable {
-
+	int laenge;
+	// sollte diese felder besser in die strasse?
+	char[][]strassenSimulation=new char[3][laenge];// simuliert die strasse
+	int[] ampelposition={10,30,60,70};	// beispielhalfte ampel positionen:
+	Richtung[]ampelStand={Richtung.NACHRECHTS,Richtung.NACHRECHTS, Richtung.NACHLINKS,Richtung.NACHLINKS,Richtung.NACHLINKS};	// professors beispiel
+	
+/*füllt das strassenarray mit ampeln und mittel line*/	
+	private void strasseBauen(){
+		int j=0;
+		for(int i=0; i<laenge; i++){
+			if(i==ampelposition[j]){
+				if(ampelStand[j]==Richtung.valueOf("NACHRECHTS")){
+					strassenSimulation [1][i]='>';
+				}
+				else{
+					strassenSimulation [1][i]='<';
+				}
+				j++;
+			}
+			else{	
+			strassenSimulation[1][i]='.';
+			}
+		}
+	}
+	
+	
+	
 	public void run() {
 		// TODO Auto-generated method stub
 

@@ -1,6 +1,10 @@
 package de.hsmannheim.inf.pr2.concurrent;
 
 public class Auto implements Runnable {
+	int position, geschwindikeit;
+	char name;
+	Richtung oneof;//ennum rechts oder links
+	
 
 	public void run() {
 		// TODO Auto-generated method stub

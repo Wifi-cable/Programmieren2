@@ -1,6 +1,8 @@
 package de.hsmannheim.inf.pr2.concurrent;
 
 public class Ampel implements Runnable {
+	long umschaltzeit;
+	Richtung RechtsOLinks;	// ist grün für die autos die nach rechts wollen oder für die autos die nach links wollen?
 
 	public void run() {
 		// TODO Auto-generated method stub
