@@ -2,10 +2,12 @@ package de.hsmannheim.inf.pr2.io.compress;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 public class CompressingOutputStream extends FilterOutputStream {
@@ -26,9 +28,11 @@ public class CompressingOutputStream extends FilterOutputStream {
 	//int fileLengh;
 	int rawIdx;//index des uncompremierten arrays
 	byte value;
-	
+	FilterOutputStream out;
+	InputStream in=new FileInputStream("quelle");
 	public CompressingOutputStream( byte [] input,FilterOutputStream out) throws IOException{
 			super(out);
+			this.out=out;
 			//input=rawData;
 			rawData=input;
 	}	
@@ -181,4 +185,36 @@ public class CompressingOutputStream extends FilterOutputStream {
 //		outPut.close();
 //		out.close();
 //	}
+	 
+	 // builds a file from the zipData array. please specify the filename
+	 protected void writeToFile(String fileName) throws IOException{
+		 File zip = new File("/"+fileName) ;
+			boolean hasFile = zip.createNewFile();
+			String absolut= zip.getAbsolutePath();
+			OutputStream oput= new FileOutputStream(absolut);
+		 for(int i=0; i<zipData.length; i++){
+			 out.write(zipData[i]);
+		 }	 
+	 }
+	 protected void readFromFile(){}
+	 
+	 //builds a file full of random numbers just specifiy the name and how many numbers you want-
+	 protected File writeRandomFile(String filename, int amount)throws IOException{
+		 File random = new File("/random") ;
+		boolean hasFile = random.createNewFile();
+		String absolut= random.getAbsolutePath();
+		OutputStream oput= new FileOutputStream(absolut);
+		if(hasFile){
+		 for (int i=0;i<amount;i++){
+			 int tmp= (int)(Math.random()*20)-5;
+			 byte b= (byte)tmp;
+			 oput.write(b);
+			
+		 }
+		 oput.flush();
+		 oput.close();
+		}
+		
+		 return random;
+	 }
 }
