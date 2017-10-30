@@ -171,40 +171,37 @@ public class CompressingOutputStream extends FilterOutputStream {
 			pos++;
 			zipData[pos]=-125;
 		}
-		public static void main(String[] args)throws IOException{
-		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
-	
-		OutputStream out=new FileOutputStream("example");
-		CompressingOutputStream outPut;
-		byte []result;
-		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
-		CompressingOutputStream output2=new CompressingOutputStream(new FileOutputStream("random"));
-		File sampleFile= output2.writeRandomFile("newFile", 50);		//newFile ich weiss nicht wo mein betriebssystem dn hin packt
-		byte[]test=output2.readFromFile(sampleFile);		//baut aus einem file ein byte array
-		for (int i =0; i<test.length; i++){
-			System.out.print(test[i]+", ");
-		}
-		/* build a random number file	ok;
-		 * put the numbers in an array	ok;
-		 * get the array printed		ok:
-		 * convert the array			ok
-		 * write it to another file		not yet
-		 * */
-		output2.setRawData(test);
-		output2.compressToArray();
-		byte[]test2=output2.getZipData();
-		System.out.println("");
-		System.out.println("das kompremierte array");
-		for (int i =0; i<test2.length; i++){
-			System.out.print(test2[i]+", ");
-		}
-		output2.flush();
-		output2.close();
-		outPut.close();
-		out.close();
-	}
+//		public static void main(String[] args)throws IOException{
+//		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
+//	
+//		OutputStream out=new FileOutputStream("example");
+//		CompressingOutputStream outPut;
+//		byte []result;
+//		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
+//		CompressingOutputStream output2=new CompressingOutputStream(new FileOutputStream("random"));
+//		String rand= "samplefile";
+//		RandomFiller raFill = new RandomFiller(rand);
+//		File rand1=raFill.writeRandomFile(50);
+//		byte[]test=output2.readFromFile(rand1);		//baut aus einem file ein byte array
+//		for (int i =0; i<test.length; i++){
+//			System.out.print(test[i]+", ");
+//		}
+//	
+//		output2.setRawData(test);
+//		output2.compressToArray();
+//		byte[]test2=output2.getZipData();
+//		System.out.println("");
+//		System.out.println("das kompremierte array");
+//		for (int i =0; i<test2.length; i++){
+//			System.out.print(test2[i]+", ");
+//		}
+//		output2.flush();
+//		output2.close();
+//		outPut.close();
+//		out.close();
+//	}
 	 
-	 // builds a file from the zipData array. please specify the filename
+	 //schreibt das "zipData" also das kompremierte array eines compressingoutputstream objectes in eine datei
 	 protected void writeToFile(String fileName) throws IOException{
 		 File zip = new File("/"+fileName) ;
 			boolean hasFile = zip.createNewFile();
@@ -214,6 +211,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 			 out.write(zipData[i]);
 		 }	 
 	 }
+	 /* baut aus einem file ein byte array. */
 	 protected byte[] readFromFile(File inFile)throws IOException{
 
 			    InputStream fis = new FileInputStream(inFile);
@@ -232,26 +230,5 @@ public class CompressingOutputStream extends FilterOutputStream {
 			  
 	 }
 	 
-	 //builds a file full of random numbers just specifiy the name and how many numbers you want-
-	 protected File writeRandomFile(String filename, int amount)throws IOException{
-		 File random = new File("random") ;
-		 String absolut= random.getAbsolutePath();
-		 System.out.println("der file ist bei "+absolut);
-		 byte []writeout=new byte[amount];
-		boolean hasFile = random.createNewFile();
-		if(hasFile){
-		
-		OutputStream oput= new FileOutputStream(absolut, false);
-		 for (int i=0;i<amount;i++){
-			 int tmp= (int)(Math.random()*10)-2;
-			 writeout[i]=(byte)tmp;
-		 }
-		
-		 out.write(writeout);
-		 oput.flush();
-		 oput.close();
-		}
-		
-		 return random;
-	 }
+
 }
