@@ -29,7 +29,7 @@ public class CompressingOutputStream extends FilterOutputStream {
 	int rawIdx;//index des uncompremierten arrays
 	byte value;
 	FilterOutputStream out;
-	InputStream in=new FileInputStream("quelle");
+	InputStream in=new FileInputStream("example");
 	public CompressingOutputStream( byte [] input,FilterOutputStream out) throws IOException{
 			super(out);
 			this.out=out;
@@ -55,7 +55,9 @@ public class CompressingOutputStream extends FilterOutputStream {
 	public byte[] getZipData(){
 		return zipData;
 	}
-
+	public void setRawData(byte []array){
+			rawData=array;
+	}
 	 void compressToArray()throws IOException{
 			int count=1;
 			int index=1;
@@ -169,22 +171,38 @@ public class CompressingOutputStream extends FilterOutputStream {
 			pos++;
 			zipData[pos]=-125;
 		}
-//		public static void main(String[] args)throws IOException{
-//		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
-//	
-//		OutputStream out=new FileOutputStream("example");
-//		CompressingOutputStream outPut;
-//		byte []result;
-//		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
-//		outPut.compressToArray();
-//		result= outPut.getZipData();
-//		for(int i=0; i<result.length; i++ ){
-//			System.out.print(" "+ result[i]+" ");
-//		}
-//		
-//		outPut.close();
-//		out.close();
-//	}
+		public static void main(String[] args)throws IOException{
+		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
+	
+		OutputStream out=new FileOutputStream("example");
+		CompressingOutputStream outPut;
+		byte []result;
+		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
+		CompressingOutputStream output2=new CompressingOutputStream(new FileOutputStream("random"));
+		File sampleFile= output2.writeRandomFile("newFile", 50);		//newFile ich weiss nicht wo mein betriebssystem dn hin packt
+		byte[]test=output2.readFromFile(sampleFile);		//baut aus einem file ein byte array
+		for (int i =0; i<test.length; i++){
+			System.out.print(test[i]+", ");
+		}
+		/* build a random number file	ok;
+		 * put the numbers in an array	ok;
+		 * get the array printed		ok:
+		 * convert the array			ok
+		 * write it to another file		not yet
+		 * */
+		output2.setRawData(test);
+		output2.compressToArray();
+		byte[]test2=output2.getZipData();
+		System.out.println("");
+		System.out.println("das kompremierte array");
+		for (int i =0; i<test2.length; i++){
+			System.out.print(test2[i]+", ");
+		}
+		output2.flush();
+		output2.close();
+		outPut.close();
+		out.close();
+	}
 	 
 	 // builds a file from the zipData array. please specify the filename
 	 protected void writeToFile(String fileName) throws IOException{
@@ -196,11 +214,11 @@ public class CompressingOutputStream extends FilterOutputStream {
 			 out.write(zipData[i]);
 		 }	 
 	 }
-	 protected byte[] readFromFile()throws IOException{
+	 protected byte[] readFromFile(File inFile)throws IOException{
 
-			    InputStream fis = new FileInputStream("/tmp/test.txt");
-			    File in=new File("/tmp/test.txt");
-			    int len= (int)in.length();
+			    InputStream fis = new FileInputStream(inFile);
+			   
+			    int len= (int)inFile.length();
 			    byte[] daten = new byte[len];
 			    
 			    int bytesRead =fis.read(daten);
@@ -216,17 +234,20 @@ public class CompressingOutputStream extends FilterOutputStream {
 	 
 	 //builds a file full of random numbers just specifiy the name and how many numbers you want-
 	 protected File writeRandomFile(String filename, int amount)throws IOException{
-		 File random = new File("/random") ;
+		 File random = new File("random") ;
+		 String absolut= random.getAbsolutePath();
+		 System.out.println("der file ist bei "+absolut);
+		 byte []writeout=new byte[amount];
 		boolean hasFile = random.createNewFile();
-		String absolut= random.getAbsolutePath();
-		OutputStream oput= new FileOutputStream(absolut);
 		if(hasFile){
+		
+		OutputStream oput= new FileOutputStream(absolut, false);
 		 for (int i=0;i<amount;i++){
-			 int tmp= (int)(Math.random()*20)-5;
-			 byte b= (byte)tmp;
-			 oput.write(b);
-			
+			 int tmp= (int)(Math.random()*10)-2;
+			 writeout[i]=(byte)tmp;
 		 }
+		
+		 out.write(writeout);
 		 oput.flush();
 		 oput.close();
 		}
