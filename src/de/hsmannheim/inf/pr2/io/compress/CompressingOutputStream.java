@@ -16,11 +16,6 @@ public class CompressingOutputStream extends FilterOutputStream {
 		super(out);//braucht einen file als parameter. 	
 	}
 	// aufgabe 1.2 
-	/*diese klasse soll die "Laufängen-Komprimierung" realisieren, (so etwas wie einen zip file bauen)
-	 * -sie erbt schon von filtereoutputstream, wie im übungsblatt beschrieben. 
-	 * 
-	 * -sie benutzt zwei arrays. eins liest sie nur, das andere füllt sie mit kompremierten zahlen.*/
-	
 	// felder,  daten
 	
 	private byte[] rawData;
@@ -40,7 +35,6 @@ public class CompressingOutputStream extends FilterOutputStream {
 /* nimmt ein byte array des objectes( zipData)  und füllt es mit kompremierten bytes. es vergrössert das array dynamisch 
  * schreibt als marker -125 -125 wenn die orginal daten zu ende sind.
  *  */	
-
 	public byte []resizeArray(byte[]small){
 		
 		int old=small.length;
@@ -171,35 +165,36 @@ public class CompressingOutputStream extends FilterOutputStream {
 			pos++;
 			zipData[pos]=-125;
 		}
-//		public static void main(String[] args)throws IOException{
-//		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
-//	
-//		OutputStream out=new FileOutputStream("example");
-//		CompressingOutputStream outPut;
-//		byte []result;
-//		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
-//		CompressingOutputStream output2=new CompressingOutputStream(new FileOutputStream("random"));
-//		String rand= "samplefile";
-//		RandomFiller raFill = new RandomFiller(rand);
-//		File rand1=raFill.writeRandomFile(50);
-//		byte[]test=output2.readFromFile(rand1);		//baut aus einem file ein byte array
-//		for (int i =0; i<test.length; i++){
-//			System.out.print(test[i]+", ");
-//		}
-//	
-//		output2.setRawData(test);
-//		output2.compressToArray();
-//		byte[]test2=output2.getZipData();
-//		System.out.println("");
-//		System.out.println("das kompremierte array");
-//		for (int i =0; i<test2.length; i++){
-//			System.out.print(test2[i]+", ");
-//		}
-//		output2.flush();
-//		output2.close();
-//		outPut.close();
-//		out.close();
-//	}
+		public static void main(String[] args)throws IOException{
+		byte[]tester4= {2,2,2,2,3,3,5,5,5,5,5,4,5,5,5,5,5,42};
+	
+		OutputStream out=new FileOutputStream("example");
+		CompressingOutputStream outPut;
+		byte []result;
+		outPut= new CompressingOutputStream(tester4, new FilterOutputStream( out));
+		CompressingOutputStream output2=new CompressingOutputStream(new FileOutputStream("random"));
+		String rand= "samplefile";
+		RandomFiller raFill = new RandomFiller(rand);
+		File rand1=raFill.writeRandomFile(50);
+		byte[]test=output2.readFromFile(rand1);		//baut aus einem file ein byte array
+		for (int i =0; i<test.length; i++){
+			System.out.print(test[i]+", ");
+		}
+	
+		output2.setRawData(test);
+		output2.compressToArray();
+		byte[]test2=output2.getZipData();
+		System.out.println("");
+		System.out.println("das kompremierte array");
+		for (int i =0; i<test2.length; i++){
+			System.out.print(test2[i]+", ");
+		}
+		output2.flush();
+		output2.close();
+		outPut.close();
+		out.close();
+		raFill.close();
+	}
 	 
 	 //schreibt das "zipData" also das kompremierte array eines compressingoutputstream objectes in eine datei
 	 protected void writeToFile(String fileName) throws IOException{
@@ -223,12 +218,10 @@ public class CompressingOutputStream extends FilterOutputStream {
 
 			    while ((bytesRead) > -1) {
 			     bytesRead =fis.read(daten);
-			    		
+			    	
+			     
 			    }
 			    fis.close();
 			    return daten;
-			  
 	 }
-	 
-
 }
