@@ -11,17 +11,19 @@ public class DecompressingInputStream extends InputStream {
 	/*aufgabe 1.3 
 	 * diese Klasse soll eine Dekomprimierung der Daten durchf�hren,
 	 * die vorher mit einem CompressingOutputStream komprimiert wurden*/
+	public DecompressingInputStream(byte [] b) {
+		oldData = b;		
+	}
 	
 	private byte [] oldData;
 	private byte [] newData;
+	//newData=new byte [oldData.length];
 	int index;
 	private int x = 0;
 	private int pos = 0;
 	private int zaehler = 1;
 
-	public DecompressingInputStream(byte [] b) {
-		oldData = b;		
-	}
+
 
 	@Override
 	public int read() throws IOException {
@@ -32,8 +34,10 @@ public class DecompressingInputStream extends InputStream {
 
 		//ArrayIndexOutOfBoundsException wird geworfen, Fehler derzeitig noch nicht gefunden, Z�hler z�hlt �ber die 7 hoch
 		index = 0;
+		newData=new byte [oldData.length];
 				
-		while (index < oldData.length-1){
+		//hile (index < oldData.length-1){
+		while (!(oldData[pos]==(-125)&&oldData[zaehler]==(-125))){
 			//Betrachtet dem Fall -1 -1
 			if((oldData[pos] == -1) && (oldData[zaehler] == -1)){
 				
@@ -65,7 +69,7 @@ public class DecompressingInputStream extends InputStream {
 				index++;
 			}
 			//Betrachtet einzelne Bytes die hintereinander laufen
-			else if (oldData[pos] != -1 && oldData[zaehler] != -1) {
+			else if ((oldData[pos] != -1 && oldData[zaehler] != -1)) {
 				
 				decompressing(oldData[pos]);
 				decompressing(oldData[zaehler]);
@@ -74,16 +78,14 @@ public class DecompressingInputStream extends InputStream {
 				zaehler += 2;
 				index += 2;
 			}
-
-
-			
+						
 		}
 		
 		return 0;
 	}
 	
 	// Soll aus -1 3 2  / 3 3 machen, indem er die Schleife durchl�uft und immer wieder decompressing aufruft mit der Zahl
-	public void berechneAnzahl(int zahl, int menge) {
+	public void berechneAnzahl(byte zahl, byte menge) {
 
 		for(int i = 0; i < menge; i++) {
 			decompressing(zahl);
@@ -91,16 +93,29 @@ public class DecompressingInputStream extends InputStream {
 		
 	}
 	// Nimmt die Zahl und speichert sie in ein neues Array ab
-	public void decompressing(int stelle) {
+	public void decompressing(byte stelle) {
 		
-		newData = new byte[50];
-		int wert = stelle;
 
-		if (x < newData.length) {
-			newData[x] = (byte) wert;
-			System.out.print(newData[x] + " ");
-			x++;
+
+		if (x >= newData.length-1) {
+			newData=machGroesser(newData);
 		}
+		newData[x] = stelle;
+		System.out.print(newData[x] + " ");
+		x++;
+	}
+	
+	public byte [] machGroesser(byte [] klein) {
+		int alt = klein.length;
+		int neu = (alt*2);
+		byte temp [] = new byte [neu];
+		
+		for (int i = 0; i < alt; i++) {
+			temp[i] = klein[i];
+		}
+		
+		return temp;
+				    
 	}
 	
 	
@@ -113,9 +128,11 @@ public class DecompressingInputStream extends InputStream {
 		//Sonderfall noch nicht gel�st, die 3 wird nicht �bernommen
 		//byte test [] = {-1, 2, 4, 3};
 		//byte test [] = {-1, 9, 15, -1, -1};
-		byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, 8};
+		byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
+		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3};
 		
 		DecompressingInputStream in = new DecompressingInputStream(test);
+		
 		
 		in.read();
 		
