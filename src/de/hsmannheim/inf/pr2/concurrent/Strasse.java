@@ -7,7 +7,11 @@ class Strasse implements Runnable {
 	int[] ampelposition={10,30,60,70};	// beispielhalfte ampel positionen:
 	Richtung[]ampelStand={Richtung.NACHRECHTS,Richtung.NACHRECHTS, Richtung.NACHLINKS,Richtung.NACHLINKS,Richtung.NACHLINKS};	// professors beispiel
 	
-/*füllt das strassenarray mit ampeln und mittel line*/	
+/*füllt das strassenarray mit ampeln und mittel line
+ *________
+ *----->---		hat erstmal noch keine autos. 
+ *_________
+ * */	
 	private void strasseBauen(){
 		int j=0;
 		for(int i=0; i<laenge; i++){
