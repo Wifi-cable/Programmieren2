@@ -5,15 +5,15 @@ import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
-/*Ein ArrayIndexOutOfBoundException wird geworfen, liegt am Zähler, da dieser über die Länge des Arrays hinauszählt.
- *Folgender Fall, weiß ich nicht wie ich diesen betrachten soll, wie z.B. am Ende des Arrays die letzte Zahl, sollte diese
+/*Ein ArrayIndexOutOfBoundException wird geworfen, liegt am Zï¿½hler, da dieser ï¿½ber die Lï¿½nge des Arrays hinauszï¿½hlt.
+ *Folgender Fall, weiï¿½ ich nicht wie ich diesen betrachten soll, wie z.B. am Ende des Arrays die letzte Zahl, sollte diese
  *eine einzelne Zahl sein. 
- *Der Anzahl Zähler in der Methode read gibt nicht für alle Kombinationen eines Arrays die richtige Ausgabe, hier fehlt
- *noch ein einheitliches Hochzählen, was für alle Kombinationen gilt. */
+ *Der Anzahl Zï¿½hler in der Methode read gibt nicht fï¿½r alle Kombinationen eines Arrays die richtige Ausgabe, hier fehlt
+ *noch ein einheitliches Hochzï¿½hlen, was fï¿½r alle Kombinationen gilt. */
 
 public class DecompressingInputStream extends InputStream {
 	/*aufgabe 1.3 
-	 * diese Klasse soll eine Dekomprimierung der Daten durchführen,
+	 * diese Klasse soll eine Dekomprimierung der Daten durchfï¿½hren,
 	 * die vorher mit einem CompressingOutputStream komprimiert wurden*/
 	
 	private byte [] oldData;
@@ -29,23 +29,23 @@ public class DecompressingInputStream extends InputStream {
 	@Override
 	public int read() throws IOException {
 		// implementierung der abstrakten methoder der oberklasse. 
-		//ArrayIndexOutOfBoundsException wird geworfen, Fehler derzeitig noch nicht gefunden, Zähler zählt über die 7 hoch
+		//ArrayIndexOutOfBoundsException wird geworfen, Fehler derzeitig noch nicht gefunden, Zï¿½hler zï¿½hlt ï¿½ber die 7 hoch
 		int pos = 0;
-		int zähler = 1;
+		int zaeler= 1;
 		int anzahl = 0;
 		index = 0;
 				
 		while (index < oldData.length) {
 			//Betrachtet dem Fall -1 -1
-			if(oldData[pos] == -1 && oldData[zähler] == -1){
+			if((oldData[pos] == -1) && (oldData[zaeler] == -1)){
 				
 				decompressing(oldData[pos]);
-				zähler += 2;
+				zaeler+= 2;
 				pos += 2;
 				anzahl++;
 				index += 2;
-				// Zählt die Anzahl zur richtigen Stelle hoch
-				if (oldData[pos] == -1 && oldData[zähler] != -1) {
+				// Zï¿½hlt die Anzahl zur richtigen Stelle hoch
+				if (oldData[pos] == -1 && oldData[zaeler] != -1) {
 					//anzahl += 3;
 					index += 3;
 				
@@ -53,42 +53,42 @@ public class DecompressingInputStream extends InputStream {
 				
 			}
 			//Betrachtet die -1 5 8 z.B.
-			else if (oldData[pos] == -1 && oldData[zähler] != -1) {
-				decompressing(oldData[zähler]);
+			else if ((oldData[pos] == -1) && (oldData[zaeler] != -1)) {
+				decompressing(oldData[zaeler]);
 				anzahl += 2;
-				berechneAnzahl(oldData[zähler], oldData[anzahl]);
-				zähler += 3;
+				berechneAnzahl(oldData[zaeler], oldData[anzahl]);
+				zaeler+= 3;
 				pos += 3;
 				//anzahl += 2;
 				index += 2;
 				
 			}
 			// Betrachtet einzelne Bytes
-			else if (oldData[pos] != -1 && oldData[zähler] == -1) {
+			else if (oldData[pos] != -1 && oldData[zaeler] == -1) {
 				decompressing(oldData[pos]);
 				pos++;
-				zähler++;
+				zaeler++;
 				anzahl += 3;
 				index++;
 			}
 			//Betrachtet einzelne Bytes die hintereinander laufen
-			else if (oldData[pos] != -1 && oldData[zähler] != -1) {
+			else if (oldData[pos] != -1 && oldData[zaeler] != -1) {
 				decompressing(oldData[pos]);
-				decompressing(oldData[zähler]);
+				decompressing(oldData[zaeler]);
 				pos += 2;
-				zähler += 2;
+				zaeler += 2;
 				anzahl++;
 				index += 2;
 			}
 
-			//zähler -= 1;
+			//zï¿½hler -= 1;
 			
 		}
 		
 		return 0;
 	}
 	
-	// Soll aus -1 3 2 3 3 machen, indem er die Schleife dürchläuft und immer wieder decompressing aufruft mit der Zahl
+	// Soll aus -1 3 2 3 3 machen, indem er die Schleife dï¿½rchlï¿½uft und immer wieder decompressing aufruft mit der Zahl
 	public void berechneAnzahl(int zahl, int menge) {
 		
 		for(int i = 0; i < menge - 1; i++) {
