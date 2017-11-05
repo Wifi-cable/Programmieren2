@@ -1,43 +1,65 @@
 package de.hsmannheim.inf.pr2.concurrent;
 
-class Strasse implements Runnable {
+class Strasse  {
 	int laenge;
-	// sollte diese felder besser in die strasse?
-	char[][]strassenSimulation=new char[3][laenge];// simuliert die strasse
-	int[] ampelposition={10,30,60,70};	// beispielhalfte ampel positionen:
-	Richtung[]ampelStand={Richtung.NACHRECHTS,Richtung.NACHRECHTS, Richtung.NACHLINKS,Richtung.NACHLINKS,Richtung.NACHLINKS};	// professors beispiel
+	private boolean[]rechteFahrBahn=new boolean[laenge];
+	private boolean[]linkeFahrBahn=new boolean[laenge];
+	private Richtung[]ampeln= new Richtung[laenge];
 	
-/*füllt das strassenarray mit ampeln und mittel line
- *________
- *----->---		hat erstmal noch keine autos. 
- *_________
- * */	
-	private void strasseBauen(){
-		int j=0;
-		for(int i=0; i<laenge; i++){
-			if(i==ampelposition[j]){
-				if(ampelStand[j]==Richtung.valueOf("NACHRECHTS")){
-					strassenSimulation [1][i]='>';
-				}
-				else{
-					strassenSimulation [1][i]='<';
-				}
-				j++;
-			}
-			else{	
-			strassenSimulation[1][i]='.';
-			}
+	
+	public Strasse(int laenge){		//constructor  
+		this.laenge=laenge;
+		for(int i=0; i<laenge; i++){	//setzt alles in ampeln[] auf gruen, oder du kannst fahren
+			ampeln[i]=null;
+		}
+		for(int i=0; i<laenge; i++){	//freihe farht 
+			rechteFahrBahn[i]=false;	//steht hier schon ein auto? false 
+		}
+		for(int i=0; i<laenge; i++){	
+			linkeFahrBahn[i]=false;	
 		}
 	}
-	
-	
-	
-	public void run() {
-		// TODO Auto-generated method stub
-
+	// setter  für eins der fahrban arrays, belegt eine array stelle (mit einem auto) 
+	void SetPark(int p, boolean[]fahrbahn){
+		fahrbahn[p]=false;	// ist da noch frei? false!
+	}
+	// setter für farbahn array, gibt eine stelle wieder frei.
+	void drive(int p, boolean []fahrbahn){
+		fahrbahn[p]=true;
 	}
 	
-	/*Schreiben Sie eine Klasse Strasse , die eine Straÿe symbolisiert. Die Straÿe hat eine
+	boolean istGruen(int ampelPos){
+		boolean gruen=false;
+	//	if(ampeln[ampelPos]){
+			gruen = true;
+		//}
+		return gruen;
+	}
+	//setter für die ampeln
+	void ampelUmschalten(Ampel i){}	// nicht sicher ob das boolean sein soll... ennums und so
+	
+
+	private void strasseBauen(){
+//		int j=0;
+//		for(int i=0; i<laenge; i++){
+//			if(i==ampelposition[j]){
+//				if(ampelStand[j]==Richtung.valueOf("NACHRECHTS")){
+//					strassenSimulation [1][i]='>';
+//				}
+//				
+//				else if(ampelStand[j]==Richtung.valueOf("NACHLINKS")){}
+//				else{
+//					strassenSimulation [1][i]='>';
+//				}
+//				j++;
+//			}
+//			else{	
+//			strassenSim{}ulation[1][i]='.';
+//			}
+//		}
+	}
+	
+	/*Schreiben Sie eine Klasse Strasse , die eine Strase symbolisiert. Die Straÿse hat eine
 	parametrierbare, aber danach für die Laufzeit der Simulation feste Länge (gemessen
 	in Kilometern). Auf der Straÿe können beliebig viele Fahrzeuge fahren. Normalerwei-
 	se hat die Straÿe zwei Fahrspuren (eine pro Richtung), sodass die Fahrzeuge in beide

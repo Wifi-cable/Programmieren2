@@ -15,5 +15,7 @@ zeigt auf der einen Seite Rot und auf der anderen Grün an. Ampeln können an be
 bigen Stellen auf der Straÿe positioniert werden und haben als wichtigste Eigenschaft
 die Zeit in Sekunden, nach der die Ampel die Anzeige wechselt, d. h. die Fahrzeuge aus
 der anderen Richtung fahren lässt.*/
+	
+	
 
 }
