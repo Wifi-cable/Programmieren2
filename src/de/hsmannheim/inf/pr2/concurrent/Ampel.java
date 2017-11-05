@@ -2,12 +2,44 @@ package de.hsmannheim.inf.pr2.concurrent;
 
 public class Ampel implements Runnable {
 	long umschaltzeit;
-	Richtung RechtsOLinks;	// ist grün für die autos die nach rechts wollen oder für die autos die nach links wollen?
+	private Richtung RechtsOLinks;	// ist grün für die autos die nach rechts wollen oder für die autos die nach links wollen?
+	// ist es der ampel wichtig wo sie steht?
+	int standort;
+	Ampel(long umschaltzeit, Richtung RechtsLinks) throws SimulationsException{	//constructor
+		if((RechtsLinks==Richtung.NACHLINKS)||(RechtsLinks==Richtung.NACHRECHTS)){
+			
+			this. umschaltzeit=umschaltzeit;
+			this.RechtsOLinks=RechtsLinks;
+		}
+		else{
+			throw new SimulationsException();
+		}
 
-	public void run() {
-		// TODO Auto-generated method stub
-		// das was paralell läuft, oder laufen kann kommt da rein.
+	}
+	
 
+	public void run() {	//schaltet um
+		try{
+		Thread.sleep(umschaltzeit);
+		if( this.RechtsOLinks==Richtung.NACHRECHTS){
+			RechtsOLinks=Richtung.NACHLINKS;
+		}
+		else{
+			RechtsOLinks=Richtung.NACHRECHTS;
+		}
+		
+		
+		}
+		catch(Exception e){
+			System.out.println("Tote Threads kann man nicht schlafen legen.");
+			e.getMessage();
+		}
+		
+
+	}
+	
+	Richtung getRichtung(){
+		return RechtsOLinks;
 	}
 	/*Schreiben Sie eine Klasse Ampel , die eine Ampel an einer Engstellen repräsentiert. Eine
 Ampel lässt immer nur Autos in die eine oder andere Richtung durchfahren, d. h. sie

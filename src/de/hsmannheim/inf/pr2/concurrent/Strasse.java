@@ -4,7 +4,7 @@ class Strasse  {
 	int laenge;
 	private boolean[]rechteFahrBahn=new boolean[laenge];
 	private boolean[]linkeFahrBahn=new boolean[laenge];
-	private Richtung[]ampeln= new Richtung[laenge];
+	private Ampel[]ampeln= new Ampel[laenge];
 	
 	
 	public Strasse(int laenge){		//constructor  
@@ -20,45 +20,49 @@ class Strasse  {
 		}
 	}
 	// setter  für eins der fahrban arrays, belegt eine array stelle (mit einem auto) 
-	void SetPark(int p, boolean[]fahrbahn){
-		fahrbahn[p]=false;	// ist da noch frei? false!
+	void besetzen(int p, boolean[]fahrbahn){
+		fahrbahn[p]=true;	// ist da noch frei? false!
 	}
 	// setter für farbahn array, gibt eine stelle wieder frei.
-	void drive(int p, boolean []fahrbahn){
-		fahrbahn[p]=true;
+	void freiMachen(int p, boolean []fahrbahn){
+		fahrbahn[p]=false;
 	}
 	
-	boolean istGruen(int ampelPos){
+	/*@pram  aktuelle position des autos.  
+	 * @return  ist die nächste ampel fuer das auto grün*/
+	boolean istGruen(int autoPos, Richtung fahrbahn){
 		boolean gruen=false;
-	//	if(ampeln[ampelPos]){
+		Richtung ampelStellung;	
+		Ampel naechsteAmpel=ampeln[autoPos];
+		while((naechsteAmpel==null)&& !((autoPos<1)||(autoPos>ampeln.length-1))){
+			if(fahrbahn==Richtung.NACHRECHTS){
+				autoPos++;
+			}
+			else{
+				autoPos--;
+			}
+			naechsteAmpel=ampeln[autoPos];
+		}
+		ampelStellung= naechsteAmpel.getRichtung();
+		
+		if(ampelStellung==fahrbahn){
 			gruen = true;
-		//}
+		}// else waere false aber das ist der default wert
 		return gruen;
 	}
-	//setter für die ampeln
-	void ampelUmschalten(Ampel i){}	// nicht sicher ob das boolean sein soll... ennums und so
 	
-
-	private void strasseBauen(){
-//		int j=0;
-//		for(int i=0; i<laenge; i++){
-//			if(i==ampelposition[j]){
-//				if(ampelStand[j]==Richtung.valueOf("NACHRECHTS")){
-//					strassenSimulation [1][i]='>';
-//				}
-//				
-//				else if(ampelStand[j]==Richtung.valueOf("NACHLINKS")){}
-//				else{
-//					strassenSimulation [1][i]='>';
-//				}
-//				j++;
-//			}
-//			else{	
-//			strassenSim{}ulation[1][i]='.';
-//			}
-//		}
+	void setupAmpel(int ort, long intervall, Richtung rOl )throws SimulationsException{// stellt eine neue ampel auf
+		if(!((ort<0)||(ort>ampeln.length))){
+			if(ampeln[ort]==null){
+				ampeln[ort]=new Ampel(intervall,rOl );
+				}
+			}
+		else{
+			throw new SimulationsException();
+		}
+		
 	}
-	
+
 	/*Schreiben Sie eine Klasse Strasse , die eine Strase symbolisiert. Die Straÿse hat eine
 	parametrierbare, aber danach für die Laufzeit der Simulation feste Länge (gemessen
 	in Kilometern). Auf der Straÿe können beliebig viele Fahrzeuge fahren. Normalerwei-
