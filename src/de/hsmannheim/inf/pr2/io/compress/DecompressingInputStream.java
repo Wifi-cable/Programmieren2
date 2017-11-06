@@ -36,7 +36,7 @@ public class DecompressingInputStream extends InputStream {
 		index = 0;
 		newData=new byte [oldData.length];
 				
-		//hile (index < oldData.length-1){
+		//while (index < oldData.length-1){
 		while (!(oldData[pos]==(-125)&&oldData[zaehler]==(-125))){
 			//Betrachtet dem Fall -1 -1
 			if((oldData[pos] == -1) && (oldData[zaehler] == -1)){
@@ -44,7 +44,8 @@ public class DecompressingInputStream extends InputStream {
 				decompressing(oldData[pos]);
 				zaehler+= 2;
 				pos += 2;
-				index += 2;
+				
+				//index += 2;
 			}
 
 	//Betrachtet z.B -1 5 8
@@ -54,7 +55,8 @@ public class DecompressingInputStream extends InputStream {
 
 				zaehler += 3;
 				pos += 3;
-				index += 3;
+				
+				//index += 3;
 				
 			}
 			// Betrachtet einzelne Bytes
@@ -66,17 +68,30 @@ public class DecompressingInputStream extends InputStream {
 				pos++;
 				zaehler++;
 
-				index++;
+				//index++;
 			}
-			//Betrachtet einzelne Bytes die hintereinander laufen
+			//Betrachtet einzelne Bytes die hintereinander laufen und sollte ein einzelnes Byte am Ende stehen
 			else if ((oldData[pos] != -1 && oldData[zaehler] != -1)) {
+				if (oldData[zaehler] == -125) {
+					decompressing(oldData[pos]);
+					pos++;
+					zaehler++;
+					
+					//index++;
+				}
 				
-				decompressing(oldData[pos]);
-				decompressing(oldData[zaehler]);
-				
-				pos += 2;
-				zaehler += 2;
-				index += 2;
+				else {
+					
+					decompressing(oldData[pos]);
+					decompressing(oldData[zaehler]);
+					
+					pos += 2;
+					zaehler += 2;
+					
+					//index += 2;
+					
+				}
+
 			}
 						
 		}
@@ -121,15 +136,15 @@ public class DecompressingInputStream extends InputStream {
 	
 	public static void main(String [] args) throws IOException {
 		
-		//byte test [] = {3, 5, 3, -1, -1, 8, -1, 2, 8};
-		//byte test [] = {-1, 5, 10, -1, -1, -1, -1, 3, 5};
-		//byte test [] = {-1, 3, 4};
-		//byte test [] = {-1, -1, -1, 4, 7};
-		//Sonderfall noch nicht gel�st, die 3 wird nicht �bernommen
-		//byte test [] = {-1, 2, 4, 3};
-		//byte test [] = {-1, 9, 15, -1, -1};
-		byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
-		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3};
+		//byte test [] = {3, 5, 3, -1, -1, 8, -1, 2, 8, -125, -125};
+		//byte test [] = {-1, 5, 10, -1, -1, -1, -1, 3, 5, -125, -125};
+		//byte test [] = {-1, 3, 4, -125, -125};
+		//byte test [] = {-1, -1, -1, 4, 7, -125, -125};
+		//byte test [] = {-1, 2, 4, 3, -125, -125};
+		//byte test [] = {-1, 9, 15, -1, -1, -125, -125};
+		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
+		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
+		byte test [] = {1, 2, 3, 4};
 		
 		DecompressingInputStream in = new DecompressingInputStream(test);
 		
