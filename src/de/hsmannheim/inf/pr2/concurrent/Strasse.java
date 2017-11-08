@@ -4,13 +4,13 @@ class Strasse  {
 	int laenge;
 	private boolean[]rechteFahrBahn=new boolean[laenge];
 	private boolean[]linkeFahrBahn=new boolean[laenge];
-	private Ampel[]ampeln= new Ampel[laenge];
+	private Ampel[]mittelstreifen= new Ampel[laenge];
 	
 	
 	public Strasse(int laenge){		//constructor  
 		this.laenge=laenge;
 		for(int i=0; i<laenge; i++){	//setzt alles in ampeln[] auf gruen, oder du kannst fahren
-			ampeln[i]=null;
+			mittelstreifen[i]=null;
 		}
 		for(int i=0; i<laenge; i++){	//freihe farht 
 			rechteFahrBahn[i]=false;	//steht hier schon ein auto? false 
@@ -24,7 +24,7 @@ class Strasse  {
 		fahrbahn[p]=true;	// ist da noch frei? false!
 	}
 	// setter für farbahn array, gibt eine stelle wieder frei.
-	void freiMachen(int p, boolean []fahrbahn){
+	void freiGeben(int p, boolean []fahrbahn){
 		fahrbahn[p]=false;
 	}
 	
@@ -33,15 +33,15 @@ class Strasse  {
 	boolean istGruen(int autoPos, Richtung fahrbahn){
 		boolean gruen=false;
 		Richtung ampelStellung;	
-		Ampel naechsteAmpel=ampeln[autoPos];
-		while((naechsteAmpel==null)&& !((autoPos<1)||(autoPos>ampeln.length-1))){
+		Ampel naechsteAmpel=mittelstreifen[autoPos];
+		while((naechsteAmpel==null)&& !((autoPos<1)||(autoPos>mittelstreifen.length-1))){
 			if(fahrbahn==Richtung.NACHRECHTS){
 				autoPos++;
 			}
 			else{
 				autoPos--;
 			}
-			naechsteAmpel=ampeln[autoPos];
+			naechsteAmpel=mittelstreifen[autoPos];
 		}
 		ampelStellung= naechsteAmpel.getRichtung();
 		
@@ -52,9 +52,9 @@ class Strasse  {
 	}
 	
 	void setupAmpel(int ort, long intervall, Richtung rOl )throws SimulationsException{// stellt eine neue ampel auf
-		if(!((ort<0)||(ort>ampeln.length))){
-			if(ampeln[ort]==null){
-				ampeln[ort]=new Ampel(intervall,rOl );
+		if(!((ort<0)||(ort>mittelstreifen.length))){
+			if(mittelstreifen[ort]==null){
+				mittelstreifen[ort]=new Ampel(intervall,rOl );
 				}
 			}
 		else{

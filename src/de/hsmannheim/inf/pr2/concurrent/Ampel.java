@@ -38,7 +38,7 @@ public class Ampel implements Runnable {
 
 	}
 	
-	Richtung getRichtung(){
+	 public Richtung getRichtung(){
 		return RechtsOLinks;
 	}
 	/*Schreiben Sie eine Klasse Ampel , die eine Ampel an einer Engstellen repräsentiert. Eine
