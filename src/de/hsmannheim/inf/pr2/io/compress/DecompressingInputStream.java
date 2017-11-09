@@ -2,8 +2,6 @@ package de.hsmannheim.inf.pr2.io.compress;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
 
 
 
@@ -11,17 +9,21 @@ public class DecompressingInputStream extends InputStream {
 	/*aufgabe 1.3 
 	 * diese Klasse soll eine Dekomprimierung der Daten durchf�hren,
 	 * die vorher mit einem CompressingOutputStream komprimiert wurden*/
-	public DecompressingInputStream(byte [] b) {
-		oldData = b;		
-	}
 	
 	private byte [] oldData;
 	private byte [] newData;
-	//newData=new byte [oldData.length];
-	int index;
 	private int x = 0;
 	private int pos = 0;
 	private int zaehler = 1;
+	
+
+	public DecompressingInputStream(byte [] b) {
+		oldData = b;
+	}
+	
+	public byte [] getData() {
+		return newData;
+	}
 
 
 
@@ -29,14 +31,8 @@ public class DecompressingInputStream extends InputStream {
 	public int read() throws IOException {
 		// implementierung der abstrakten methoder der oberklasse. 
 
-		//ArrayIndexOutOfBoundsException wird geworfen, Fehler derzeitig noch nicht gefunden, Z�hler z�hlt �ber die 7 hoch
-
-
-		//ArrayIndexOutOfBoundsException wird geworfen, Fehler derzeitig noch nicht gefunden, Z�hler z�hlt �ber die 7 hoch
-		index = 0;
 		newData=new byte [oldData.length];
 				
-		//while (index < oldData.length-1){
 		while (!(oldData[pos]==(-125)&&oldData[zaehler]==(-125))){
 			//Betrachtet dem Fall -1 -1
 			if((oldData[pos] == -1) && (oldData[zaehler] == -1)){
@@ -44,23 +40,19 @@ public class DecompressingInputStream extends InputStream {
 				decompressing(oldData[pos]);
 				zaehler+= 2;
 				pos += 2;
-				
-				//index += 2;
+			
 			}
 
-	//Betrachtet z.B -1 5 8
+			//Betrachtet z.B -1 5 8
 			else if (oldData[pos] == -1 && oldData[zaehler] != -1) {
 
 				berechneAnzahl(oldData[zaehler], oldData[pos+2]);
 
 				zaehler += 3;
 				pos += 3;
-				
-				//index += 3;
-				
+												
 			}
 			// Betrachtet einzelne Bytes
-
 			else if (oldData[pos] != -1 && oldData[zaehler] == -1) {
 				
 				decompressing(oldData[pos]);
@@ -68,7 +60,6 @@ public class DecompressingInputStream extends InputStream {
 				pos++;
 				zaehler++;
 
-				//index++;
 			}
 			//Betrachtet einzelne Bytes die hintereinander laufen und sollte ein einzelnes Byte am Ende stehen
 			else if ((oldData[pos] != -1 && oldData[zaehler] != -1)) {
@@ -77,7 +68,6 @@ public class DecompressingInputStream extends InputStream {
 					pos++;
 					zaehler++;
 					
-					//index++;
 				}
 				
 				else {
@@ -87,8 +77,6 @@ public class DecompressingInputStream extends InputStream {
 					
 					pos += 2;
 					zaehler += 2;
-					
-					//index += 2;
 					
 				}
 
@@ -143,8 +131,8 @@ public class DecompressingInputStream extends InputStream {
 		//byte test [] = {-1, 2, 4, 3, -125, -125};
 		//byte test [] = {-1, 9, 15, -1, -1, -125, -125};
 		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
-		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
-		byte test [] = {1, 1, 1, 1, -125, -125};
+		byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
+		//byte test [] = {1, 1, 1, 1, -125, -125};
 		
 		
 		DecompressingInputStream in = new DecompressingInputStream(test);
