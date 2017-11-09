@@ -144,7 +144,8 @@ public class DecompressingInputStream extends InputStream {
 		//byte test [] = {-1, 9, 15, -1, -1, -125, -125};
 		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
 		//byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
-		byte test [] = {1, 2, 3, 4};
+		byte test [] = {1, 1, 1, 1, -125, -125};
+		
 		
 		DecompressingInputStream in = new DecompressingInputStream(test);
 		
