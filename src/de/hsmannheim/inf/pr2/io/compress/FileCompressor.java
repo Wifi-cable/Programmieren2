@@ -1,6 +1,7 @@
 package de.hsmannheim.inf.pr2.io.compress;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class FileCompressor extends CompressingOutputStream{
 
@@ -9,10 +10,12 @@ public class FileCompressor extends CompressingOutputStream{
     }
 
     public static void main(String[] args) throws IOException {
-
+        Scanner sc = new Scanner(System.in);
         try {
-            String quelle = "C:\\Users\\alena\\Google Drive\\IB3\\PR2\\Code\\Programmieren2\\src\\de\\hsmannheim\\inf\\pr2\\io\\compress\\test.txt";
-            String ziel = "C:\\Users\\alena\\Google Drive\\IB3\\PR2\\Code\\Programmieren2\\src\\de\\hsmannheim\\inf\\pr2\\io\\compress\\write.txt";
+            System.out.println("Wo soll die byts gelesen werden? ");
+            String quelle = sc.nextLine();
+            System.out.println("Wo soll die komprimierten geschriebnen werden? ");
+            String ziel = sc.nextLine();
 
             fileCompress(quelle,ziel);
 
@@ -29,8 +32,10 @@ public class FileCompressor extends CompressingOutputStream{
                     text += args[i];
                 }
                 byte[] alternativArray = text.getBytes();
-                String freadCommends = "C:\\Users\\alena\\Google Drive\\IB3\\PR2\\Code\\Programmieren2\\src\\de\\hsmannheim\\inf\\pr2\\io\\compress\\readData.txt";
-                String fwriteCommends = "C:\\Users\\alena\\Google Drive\\IB3\\PR2\\Code\\Programmieren2\\src\\de\\hsmannheim\\inf\\pr2\\io\\compress\\writeData.txt";
+                System.out.println("Wo sollen die eingegebenen Byts reingeschrieben werden? ");
+                String freadCommends = sc.nextLine();
+                System.out.println("Wo soll die komprimierten geschriebnen werden? ");
+                String fwriteCommends = sc.nextLine();
                 File fread = new File(freadCommends);
                 File fwrite = new File((fwriteCommends));
                 //Da er keine Files gab werden neue erstellt
