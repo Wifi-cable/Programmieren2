@@ -20,6 +20,14 @@ class Strasse  {
 			untereFahrBahn[i]=false;	
 		}
 	}
+	public boolean []getFahrbahnArray(Richtung rl){
+		if(rl.ordinal()==0){
+			return untereFahrBahn;
+		}
+		else {
+			return obereFahrBahn;
+		}
+	}
 	// setter  für eins der fahrban arrays, belegt eine array stelle (mit einem auto) 
 	void besetzen(int p, boolean[]fahrbahn){
 		fahrbahn[p]=true;	// ist da noch frei? false!
