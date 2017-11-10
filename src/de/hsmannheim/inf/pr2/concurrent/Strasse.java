@@ -40,12 +40,14 @@ class Strasse  {
 	 public char[][] getAnzeige(){
 		return anzeigeArray;
 	}
-	protected void setAutoAnzeige(char autoName, int index){
-		//noch nicht implementiert wie weiss die strasse welche fahrbahn?
+	/*methode zum updaten des anzeige arrays.
+	 * braucht  den char den es an anderer stelle anzeigen soll, ampelrichtungsfeil oder autochar oder leerzeichen(fuer
+	 * den leeren platz wo ein auto vorher war)
+	 * autos loeschen  nicht automatisch ihre letzte postion, da muss ein leerzeichen hin geschrieben werden*/
+	protected void setAnzeigeArray(char ampelAuto, int strassenKM, int fahrbahn ){
+		anzeigeArray[strassenKM][fahrbahn]= ampelAuto;
 	} 
-	protected void setAmpelAnzeige(Richtung rl, int index){
-		// noch nicht implementiert
-	}
+
 	
 	/*@pram  aktuelle position des autos.  
 	 * @return  ist die nächste ampel fuer das auto grün*/
