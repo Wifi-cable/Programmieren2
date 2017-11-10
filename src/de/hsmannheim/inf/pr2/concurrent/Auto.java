@@ -4,7 +4,7 @@ public class Auto implements Runnable {
 	int position, geschwindigkeit, naechstePos;
 	char name;
 	Richtung richtung;// ennum rechts oder links
-	boolean strassenEnde;
+	int strassenEnde;
 	int strassenLaenge;
 	private Strasse meineStrasse;
 	private boolean[] fahrBahn; // auf welcher fahrban ist das auto?
@@ -18,37 +18,49 @@ public class Auto implements Runnable {
 		this.name = name;
 		this.naechstePos = position;
 		fahrBahn = meineStrasse.getFahrbahnArray(LR);
+		strassenEnde=berechenStrassenEnde();
 	}
 
 	public void run() {
-		int zeit=wievielZeit();
+		int zeit=wievielZeit();	//errechnet wie lange ein auto sleep macht bis es weiter faert
+		int anzeigeFahrbahn;	//welche reihe im anzeigeArray benutzt ein auto, also welche "fahrbahn"
+		if(richtung.ordinal()==0){
+			anzeigeFahrbahn=2;
+		}
+		else{
+			anzeigeFahrbahn=0;
+		}
+		meineStrasse.setAnzeigeArray(name, position, anzeigeFahrbahn);	// auto erst mal auf die strasse setzen
+	//while !end of road, extra schleife	
+		while(position!=strassenEnde){
 		synchronized (meineStrasse) {
 			
 		while(!(meineStrasse.istGruen(position,richtung )&& (fahrBahn[naechstePos]))){
 			try {
 				wait();
-			
-				
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();
 				}
 			}
 		
-		try {
-			// fahren
+		try {	// fahren
+			meineStrasse.besetzen(naechstePos, fahrBahn);	//boolean array updaten
+			meineStrasse.freiGeben(position, fahrBahn);
+			meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn);	//anzeigeArray updaten
+			meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+			position=naechstePos;	// auto eins weiter, jetzt beide zeiger updaten
+			nachster();									
 			
 			Thread.sleep( zeit);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-			//dann fahren?
+		
+		}	
 		}// end sync
 	}
-	/*
-	 * hier kommt der code rein der paralell laufen kann. mehrere autos können
-	 * schliesslich auf der selben strasse fahren.
-	 */
+
 
 	/*
 	 * methode um herauszufinden was die nächste postition für das auto währe.
@@ -63,6 +75,7 @@ public class Auto implements Runnable {
 			naechstePos--;
 
 		}
+		
 	}
 	/*
 	 * Schreiben Sie eine Klasse Auto , die die Autos darstellt, die auf der
@@ -79,6 +92,15 @@ public class Auto implements Runnable {
 	int wievielZeit() {
 		int zeit = ((1 / geschwindigkeit) * 1000);
 		return zeit;
+	}
+	int berechenStrassenEnde(){// wo die strasse zu ende ist, kommt drauf an in welche richtung man fährt
+		if(richtung.ordinal() == 0){
+			return strassenLaenge;
+		}
+		else{
+			return 0;
+		}
+			
 	}
 
 }
