@@ -2,9 +2,10 @@ package de.hsmannheim.inf.pr2.concurrent;
 
 class Strasse  {
 	int laenge;
-	private boolean[]rechteFahrBahn=new boolean[laenge];
-	private boolean[]linkeFahrBahn=new boolean[laenge];
-	private Ampel[]mittelstreifen= new Ampel[laenge];
+	private volatile boolean[]obereFahrBahn=new boolean[laenge];	//nachLinks
+	private volatile boolean[]untereFahrBahn=new boolean[laenge];	//nachRechts
+	private volatile Ampel[]mittelstreifen= new Ampel[laenge];
+	private volatile char[][]anzeigeArray= new char[laenge][3];
 	
 	
 	public Strasse(int laenge){		//constructor  
@@ -13,10 +14,10 @@ class Strasse  {
 			mittelstreifen[i]=null;
 		}
 		for(int i=0; i<laenge; i++){	//freihe farht 
-			rechteFahrBahn[i]=false;	//steht hier schon ein auto? false 
+			obereFahrBahn[i]=false;	//steht hier schon ein auto? false 
 		}
 		for(int i=0; i<laenge; i++){	
-			linkeFahrBahn[i]=false;	
+			untereFahrBahn[i]=false;	
 		}
 	}
 	// setter  für eins der fahrban arrays, belegt eine array stelle (mit einem auto) 
@@ -27,25 +28,35 @@ class Strasse  {
 	void freiGeben(int p, boolean []fahrbahn){
 		fahrbahn[p]=false;
 	}
+	// erlaubt ausserhalb der klasse auf ein char array zur anzeige  zuzugreifen
+	 public char[][] getAnzeige(){
+		return anzeigeArray;
+	}
+	protected void setAutoAnzeige(char autoName, int index){
+		//noch nicht implementiert wie weiss die strasse welche fahrbahn?
+	} 
+	protected void setAmpelAnzeige(Richtung rl, int index){
+		// noch nicht implementiert
+	}
 	
 	/*@pram  aktuelle position des autos.  
 	 * @return  ist die nächste ampel fuer das auto grün*/
-	boolean istGruen(int autoPos, Richtung fahrbahn){
+	boolean istGruen(int autoPos, Richtung fahrtRichtung){
 		boolean gruen=false;
 		Richtung ampelStellung;	
 		Ampel naechsteAmpel=mittelstreifen[autoPos];
-		while((naechsteAmpel==null)&& !((autoPos<1)||(autoPos>mittelstreifen.length-1))){
-			if(fahrbahn==Richtung.NACHRECHTS){
+		while((naechsteAmpel==null)&& !((autoPos>1)||(autoPos<mittelstreifen.length-1))){
+			if(fahrtRichtung.ordinal()==0){  //nachRechts
 				autoPos++;
 			}
-			else{
+			else{	// nach links
 				autoPos--;
 			}
 			naechsteAmpel=mittelstreifen[autoPos];
 		}
 		ampelStellung= naechsteAmpel.getRichtung();
 		
-		if(ampelStellung==fahrbahn){
+		if(ampelStellung==fahrtRichtung){
 			gruen = true;
 		}// else waere false aber das ist der default wert
 		return gruen;
@@ -61,7 +72,24 @@ class Strasse  {
 			throw new SimulationsException();
 		}
 		
+		
 	}
+		/* diese methode wird warscheinlich nicht gebraucht. sie würde nachsehen ob die naechste position des
+		 *  autos frei ist, das kann das auto aber selbst. ausserdem macht es keinen sinn 5x abzufraen ob der nächste halt
+		 *  einen index höher oder niedriger ist.  code doppelung */
+//	public boolean istWegFrei(int pos, Richtung rechtsLinks){
+//		boolean frei;
+//		if(rechtsLinks.ordinal()==0){
+//			pos--;
+//			frei=untereFahrBahn[pos];
+//		}
+//		else{
+//			pos++;
+//			frei=obereFahrBahn[pos];
+//		}
+//		return frei;
+//	}
+
 
 	/*Schreiben Sie eine Klasse Strasse , die eine Strase symbolisiert. Die Straÿse hat eine
 	parametrierbare, aber danach für die Laufzeit der Simulation feste Länge (gemessen

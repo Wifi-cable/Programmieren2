@@ -14,7 +14,6 @@ public class Ampel implements Runnable {
 		else{
 			throw new SimulationsException();
 		}
-
 	}
 	
 
@@ -23,9 +22,11 @@ public class Ampel implements Runnable {
 		Thread.sleep(umschaltzeit);
 		if( this.RechtsOLinks==Richtung.NACHRECHTS){
 			RechtsOLinks=Richtung.NACHLINKS;
+			notifyAll();// reicht notify all? 
 		}
 		else{
 			RechtsOLinks=Richtung.NACHRECHTS;
+			notifyAll();	//reicht notify all?
 		}
 		
 		
