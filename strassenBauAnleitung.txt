@@ -1,0 +1,25 @@
+anleitung baustellen simulation
+
+zur vermeidung der grössten bugs und der grössten frustation.
+in der baustellen simulation zuerst eine "strasse bauen" (den constructor aufrufen. der braucht nur eine länge)
+
+dann ampeln bauen und auf die strasse setzen. dafür habe ich eine art factory methode gebaut. es muss
+ja nicht nur die strasse wissen wo eine ampel steht, es muss auch die ampel wissen wo sie umschalten muss.
+(ich hab mich dagegen endschieden das die strasse eine ampel umschaltet. sontzt hätten wir noch 
+strassen threads gebraucht)
+das sieht für jede ampel ungefär so aus:
+
+Ampel nameDerAmpel= nameDesStrassenobjectes.setupAmpel(standordIndexImAmpelArray, wannAmpelUmschatet, nameDesStrassenobjectes);
+
+wichtig ist erst die strasse bauen dann die ampeln drauf das gibt sontz einen null pointer weil die ampeln
+nachsehen wollen auf welcher strasse in welchem array sie die anzeige änder sollen, und sie dann nix
+finden wenn sie keine strasse haben deshalb komen die auch mit in den constructor.
+ 
+danach kann man die autos auf die strasse setzen. 
+das funktioniert nach dem selben prinzip, die richtigen stellen, in den richtigen arrays
+ sollten rein theoretisch makiert werden. (noch nicht getestet)
+
+Auto nameDesAutoObjects= nameDesStrassenobjectes.setupAuto(StandortIndexAufFahrbanArray, geschwindikeit, fahrtRichtung, strassenObject, charNameDesAutos);
+
+
+
