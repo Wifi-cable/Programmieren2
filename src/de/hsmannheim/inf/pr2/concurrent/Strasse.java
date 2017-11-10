@@ -7,7 +7,6 @@ class Strasse  {
 	private volatile Ampel[]mittelstreifen= new Ampel[laenge];
 	private volatile char[][]anzeigeArray= new char[laenge][3];
 	
-	
 	public Strasse(int laenge){		//constructor  
 		this.laenge=laenge;
 		for(int i=0; i<laenge; i++){	//keine ampel
@@ -44,7 +43,11 @@ class Strasse  {
 	 * braucht  den char den es an anderer stelle anzeigen soll, ampelrichtungsfeil oder autochar oder leerzeichen(fuer
 	 * den leeren platz wo ein auto vorher war)
 	 * autos loeschen  nicht automatisch ihre letzte postion, da muss ein leerzeichen hin geschrieben werden*/
-	protected void setAnzeigeArray(char ampelAuto, int strassenKM, int fahrbahn ){
+	protected void setAnzeigeArray(char ampelAuto, int strassenKM, int fahrbahn )throws Exception{
+		if(fahrbahn>2||(strassenKM>anzeigeArray.length)){
+			System.out.println("du bist auf dem holzweg, das ist jedenfalls keien strasse mehr");
+			throw new Exception();
+		}
 		anzeigeArray[strassenKM][fahrbahn]= ampelAuto;
 	} 
 
@@ -72,32 +75,57 @@ class Strasse  {
 		return gruen;
 	}
 	
-	void setupAmpel(int ort, long intervall, Strasse strassenObject )throws SimulationsException{// stellt eine neue ampel auf
-		if(!((ort<0)||(ort>mittelstreifen.length))){
+	Ampel setupAmpel(int ort, long intervall, Strasse strassenObject )throws SimulationsException{// stellt eine neue ampel auf
+		Ampel factoryAmpel=null;
+		if(!((ort<0)||(ort>mittelstreifen.length))){	// wenn glütitger standort angegeben wird
 			if(mittelstreifen[ort]==null){
-				mittelstreifen[ort]=new Ampel(intervall, ort, strassenObject );
+				factoryAmpel=new Ampel(intervall, ort, strassenObject );
+				mittelstreifen[ort]=factoryAmpel;
 				}
 			}
-		else{
+		else{		//beschwert sich methode und gibt null zurück
+			System.out.println("wo keine strasse ist, kann man keine ampel aufstellen");
 			throw new SimulationsException();
 		}
+		return factoryAmpel;
 		
 	}
-		/* diese methode wird warscheinlich nicht gebraucht. sie würde nachsehen ob die naechste position des
-		 *  autos frei ist, das kann das auto aber selbst. ausserdem macht es keinen sinn 5x abzufraen ob der nächste halt
-		 *  einen index höher oder niedriger ist.  code doppelung */
-//	public boolean istWegFrei(int pos, Richtung rechtsLinks){
-//		boolean frei;
-//		if(rechtsLinks.ordinal()==0){
-//			pos--;
-//			frei=untereFahrBahn[pos];
-//		}
-//		else{
-//			pos++;
-//			frei=obereFahrBahn[pos];
-//		}
-//		return frei;
-//	}
+	
+	/*factory artige methode die dir einen auto object baut und es gleich ins array packt.*/
+	Auto setupAuto(int position, int geschwindikeit, Richtung fahrtRichtung, Strasse strassenObject, char name)throws SimulationsException{
+		Auto neuwagen=null;
+		if(!((position<0)||(position>mittelstreifen.length))){	// wenn die postion gültig ist
+			// welche fahrbahn? 
+			boolean[]temp=strassenObject.getFahrbahnArray(fahrtRichtung);
+			if(temp[position]==false){	// steht und da noch kein auto steht
+				getFahrbahnArray(fahrtRichtung)[position]=true;				// geht das? 
+				neuwagen=new Auto(position,geschwindikeit, fahrtRichtung, strassenObject, name);
+				int spuhr=berechneAnzeigeFahrbahn(fahrtRichtung);
+				try {
+					strassenObject.setAnzeigeArray(name, position, spuhr);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				}	
+			}
+		else{
+			System.out.println("das mit dem auto bauen klappt so nicht !");
+			throw new SimulationsException();
+		}
+		//(int position, int geschwindigkeit, Richtung LR, Strasse meineStrasse, char name)
+		return neuwagen;
+	}
+	int berechneAnzeigeFahrbahn(Richtung richtung){
+		int ret;
+		if (richtung.ordinal() == 0) {
+			ret = 2;
+		}
+		else{
+			ret = 0;
+		}
+		return ret;
+	}
+	
 
 
 	/*Schreiben Sie eine Klasse Strasse , die eine Strase symbolisiert. Die Straÿse hat eine

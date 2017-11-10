@@ -7,42 +7,30 @@ public class Auto implements Runnable {
 	int strassenEnde;
 	int strassenLaenge;
 	private Strasse meineStrasse;
-	private boolean[] fahrBahn; // auf welcher fahrban ist das auto?
+	private boolean[] meineFahrbahn; // auf welcher fahrban ist das auto?
 
-	public Auto(int position, int geschwindigkeit, Richtung LR, Strasse meineStrasse, char name) { // constructor
+	public Auto(int position, int geschwindigkeit, Richtung rl, Strasse meineStrasse, char name) { // constructor
 		this.position = position;
 		this.geschwindigkeit = geschwindigkeit;
 		this.meineStrasse = meineStrasse;
-		richtung = LR;
 		strassenLaenge = meineStrasse.laenge;
 		this.name = name;
 		this.naechstePos = position;
-		fahrBahn = meineStrasse.getFahrbahnArray(LR);
 		strassenEnde = berechenStrassenEnde();
+		this.richtung= rl;
+		this.meineFahrbahn=meineStrasse.getFahrbahnArray(rl);
 	}
 
 	public void run() {
 		int zeit = wievielZeit(); // errechnet wie lange ein auto sleep macht
 									// bis es weiter faert
-		int anzeigeFahrbahn; // welche reihe im anzeigeArray benutzt ein auto,
-								// also welche "fahrbahn"
-		if (richtung.ordinal() == 0) {
-			anzeigeFahrbahn = 2;
-		} else {
-			anzeigeFahrbahn = 0;
-		}
-		meineStrasse.setAnzeigeArray(name, position, anzeigeFahrbahn); // auto
-																		// erst
-																		// mal
-																		// auf
-																		// die
-																		// strasse
-																		// setzen
-		// while !end of road, extra schleife
+		int anzeigeFahrbahn=meineStrasse.berechneAnzeigeFahrbahn(richtung); // welche reihe im anzeigeArray benutzt ein auto,
+	
+
 		while (position != strassenEnde) {
 			synchronized (meineStrasse) {
 
-				while (!(meineStrasse.istGruen(position, richtung) && (fahrBahn[naechstePos]))) {
+				while (!(meineStrasse.istGruen(position, richtung) && (meineFahrbahn[naechstePos]))) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -51,16 +39,21 @@ public class Auto implements Runnable {
 				}
 
 				try { // fahren
-					meineStrasse.besetzen(naechstePos, fahrBahn); // boolean array updaten
-					meineStrasse.freiGeben(position, fahrBahn);
+					meineStrasse.besetzen(naechstePos, meineFahrbahn); // boolean array updaten
+					meineStrasse.freiGeben(position, meineFahrbahn);
 					Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} // ende der schleife "fahr wenn du kannst"
 
 			} // end syncronized
-			meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn); // anzeigeArray updaten
-			meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+			try {
+				meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn);
+				meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} // anzeigeArray updaten
+			
 			position = naechstePos; // auto eins weiter, jetzt beide teiger aktualisieren
 			nachster();
 			notifyAll();
@@ -79,10 +72,19 @@ public class Auto implements Runnable {
 			naechstePos++;
 		} else { // auto fährt nach links obere fahrbahn
 			naechstePos--;
-
 		}
 
 	}
+//	int berechneAnzeigeFahrbahn(){
+//		int ret;
+//		if (richtung.ordinal() == 0) {
+//			ret = 2;
+//		}
+//		else{
+//			ret = 0;
+//		}
+//		return ret;
+//	}
 	/*
 	 * Schreiben Sie eine Klasse Auto , die die Autos darstellt, die auf der
 	 * Straÿe fahren kön- nen. Ein Auto kann an einer beliebigen Stelle der
