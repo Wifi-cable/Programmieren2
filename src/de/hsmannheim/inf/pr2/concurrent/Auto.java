@@ -18,49 +18,55 @@ public class Auto implements Runnable {
 		this.name = name;
 		this.naechstePos = position;
 		fahrBahn = meineStrasse.getFahrbahnArray(LR);
-		strassenEnde=berechenStrassenEnde();
+		strassenEnde = berechenStrassenEnde();
 	}
 
 	public void run() {
-		int zeit=wievielZeit();	//errechnet wie lange ein auto sleep macht bis es weiter faert
-		int anzeigeFahrbahn;	//welche reihe im anzeigeArray benutzt ein auto, also welche "fahrbahn"
-		if(richtung.ordinal()==0){
-			anzeigeFahrbahn=2;
+		int zeit = wievielZeit(); // errechnet wie lange ein auto sleep macht
+									// bis es weiter faert
+		int anzeigeFahrbahn; // welche reihe im anzeigeArray benutzt ein auto,
+								// also welche "fahrbahn"
+		if (richtung.ordinal() == 0) {
+			anzeigeFahrbahn = 2;
+		} else {
+			anzeigeFahrbahn = 0;
 		}
-		else{
-			anzeigeFahrbahn=0;
-		}
-		meineStrasse.setAnzeigeArray(name, position, anzeigeFahrbahn);	// auto erst mal auf die strasse setzen
-	//while !end of road, extra schleife	
-		while(position!=strassenEnde){
-		synchronized (meineStrasse) {
-			
-		while(!(meineStrasse.istGruen(position,richtung )&& (fahrBahn[naechstePos]))){
-			try {
-				wait();
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-				}
-			}
-		
-		try {	// fahren
-			meineStrasse.besetzen(naechstePos, fahrBahn);	//boolean array updaten
-			meineStrasse.freiGeben(position, fahrBahn);
-			meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn);	//anzeigeArray updaten
-			meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
-			position=naechstePos;	// auto eins weiter, jetzt beide zeiger updaten
-			nachster();									
-			
-			Thread.sleep( zeit);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		}	
-		}// end sync
-	}
+		meineStrasse.setAnzeigeArray(name, position, anzeigeFahrbahn); // auto
+																		// erst
+																		// mal
+																		// auf
+																		// die
+																		// strasse
+																		// setzen
+		// while !end of road, extra schleife
+		while (position != strassenEnde) {
+			synchronized (meineStrasse) {
 
+				while (!(meineStrasse.istGruen(position, richtung) && (fahrBahn[naechstePos]))) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+				try { // fahren
+					meineStrasse.besetzen(naechstePos, fahrBahn); // boolean array updaten
+					meineStrasse.freiGeben(position, fahrBahn);
+					Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} // ende der schleife "fahr wenn du kannst"
+
+			} // end syncronized
+			meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn); // anzeigeArray updaten
+			meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+			position = naechstePos; // auto eins weiter, jetzt beide teiger aktualisieren
+			nachster();
+			notifyAll();
+		} // ende äusere schleife die autofahrt
+		System.out.println(name + " ist angekommen");
+	}
 
 	/*
 	 * methode um herauszufinden was die nächste postition für das auto währe.
@@ -68,14 +74,14 @@ public class Auto implements Runnable {
 	 * position ++
 	 */
 	void nachster() {
-		if (richtung.ordinal() == 0) { // auto faert nach rechts, das heisst
-										// linke fahrban
+		if (richtung.ordinal() == 0) { // auto faert nach rechts, untere fahrban
+
 			naechstePos++;
-		} else {
+		} else { // auto fährt nach links obere fahrbahn
 			naechstePos--;
 
 		}
-		
+
 	}
 	/*
 	 * Schreiben Sie eine Klasse Auto , die die Autos darstellt, die auf der
@@ -93,14 +99,15 @@ public class Auto implements Runnable {
 		int zeit = ((1 / geschwindigkeit) * 1000);
 		return zeit;
 	}
-	int berechenStrassenEnde(){// wo die strasse zu ende ist, kommt drauf an in welche richtung man fährt
-		if(richtung.ordinal() == 0){
-			return strassenLaenge;
+
+	// wo die strasse zu ende ist, kommt drauf an in welche richtung man fährt
+	int berechenStrassenEnde() {
+		if (richtung.ordinal() == 0) {
+			return strassenLaenge - 1;
+		} else {
+			return 1;
 		}
-		else{
-			return 0;
-		}
-			
+
 	}
 
 }
