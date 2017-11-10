@@ -7,6 +7,8 @@ dann ampeln bauen und auf die strasse setzen. dafür habe ich eine art factory m
 ja nicht nur die strasse wissen wo eine ampel steht, es muss auch die ampel wissen wo sie umschalten muss.
 (ich hab mich dagegen endschieden das die strasse eine ampel umschaltet. sontzt hätten wir noch 
 strassen threads gebraucht)
+wichtig !!! nicht den konstructor fuer ampeln und autos aufrufen. dann wird nix funzen.  auf jeden 
+falll die factory methoden setupAmpel und setupAuto benutzen. 
 das sieht für jede ampel ungefär so aus:
 
 Ampel nameDerAmpel= nameDesStrassenobjectes.setupAmpel(standordIndexImAmpelArray, wannAmpelUmschatet, nameDesStrassenobjectes);
