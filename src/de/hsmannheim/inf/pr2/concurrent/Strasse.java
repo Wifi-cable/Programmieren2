@@ -10,7 +10,7 @@ class Strasse  {
 	
 	public Strasse(int laenge){		//constructor  
 		this.laenge=laenge;
-		for(int i=0; i<laenge; i++){	//setzt alles in ampeln[] auf gruen, oder du kannst fahren
+		for(int i=0; i<laenge; i++){	//keine ampel
 			mittelstreifen[i]=null;
 		}
 		for(int i=0; i<laenge; i++){	//freihe farht 
@@ -72,16 +72,15 @@ class Strasse  {
 		return gruen;
 	}
 	
-	void setupAmpel(int ort, long intervall, Richtung rOl )throws SimulationsException{// stellt eine neue ampel auf
+	void setupAmpel(int ort, long intervall, Strasse strassenObject )throws SimulationsException{// stellt eine neue ampel auf
 		if(!((ort<0)||(ort>mittelstreifen.length))){
 			if(mittelstreifen[ort]==null){
-				mittelstreifen[ort]=new Ampel(intervall,rOl );
+				mittelstreifen[ort]=new Ampel(intervall, ort, strassenObject );
 				}
 			}
 		else{
 			throw new SimulationsException();
 		}
-		
 		
 	}
 		/* diese methode wird warscheinlich nicht gebraucht. sie würde nachsehen ob die naechste position des

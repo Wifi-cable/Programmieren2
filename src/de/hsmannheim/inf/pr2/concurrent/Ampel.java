@@ -2,45 +2,52 @@ package de.hsmannheim.inf.pr2.concurrent;
 
 public class Ampel implements Runnable {
 	long umschaltzeit;
-	private Richtung RechtsOLinks;	// ist grün für die autos die nach rechts wollen oder für die autos die nach links wollen?
-	// ist es der ampel wichtig wo sie steht?
+	private Richtung RechtsOLinks= Richtung.NACHRECHTS;	// ist grün für die autos die nach rechts wollen oder für die autos die nach links wollen?
 	int standort;
-	Ampel(long umschaltzeit, Richtung RechtsLinks) throws SimulationsException{	//constructor
-		if((RechtsLinks==Richtung.NACHLINKS)||(RechtsLinks==Richtung.NACHRECHTS)){
-			
+	Strasse dieStrasse;
+	Ampel(long umschaltzeit, int standort,Strasse dieStrasse) throws SimulationsException{	//constructor
+		
 			this. umschaltzeit=umschaltzeit;
-			this.RechtsOLinks=RechtsLinks;
-		}
-		else{
-			throw new SimulationsException();
-		}
+			this.standort= standort;
+			this.dieStrasse=dieStrasse;
+	}		
+
+	public void setStandord(int k){
+		
 	}
-	
+	 public Richtung getRichtung(){
+		return RechtsOLinks;
+	 }
 
 	public void run() {	//schaltet um
 		try{
 		Thread.sleep(umschaltzeit);
-		if( this.RechtsOLinks==Richtung.NACHRECHTS){
-			RechtsOLinks=Richtung.NACHLINKS;
-			notifyAll();// reicht notify all? 
-		}
-		else{
-			RechtsOLinks=Richtung.NACHRECHTS;
-			notifyAll();	//reicht notify all?
-		}
-		
-		
 		}
 		catch(Exception e){
 			System.out.println("Tote Threads kann man nicht schlafen legen.");
 			e.getMessage();
 		}
-		
-
+		synchronized (dieStrasse) {
+		if( this.RechtsOLinks==Richtung.NACHRECHTS){	// wenn sie vorher nach rechts zeigt, lass sie nach  links zeigen
+			RechtsOLinks=Richtung.NACHLINKS;
+		}
+		else{
+			RechtsOLinks=Richtung.NACHRECHTS;	
+		}
+		}
+		notifyAll();
+		displayAmpelChar();
 	}
 	
-	 public Richtung getRichtung(){
-		return RechtsOLinks;
+
+	
+	private void displayAmpelChar(){
+		if(this.getRichtung().ordinal()==0){
+			 dieStrasse.setAnzeigeArray('>', standort, 1);
+		}
+		else {
+			dieStrasse.setAnzeigeArray('<', standort, 1);
+		}
 	}
 	/*Schreiben Sie eine Klasse Ampel , die eine Ampel an einer Engstellen repräsentiert. Eine
 Ampel lässt immer nur Autos in die eine oder andere Richtung durchfahren, d. h. sie
