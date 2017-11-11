@@ -34,8 +34,9 @@ public class Ampel implements Runnable {
 		else{
 			RechtsOLinks=Richtung.NACHRECHTS;	
 		}
+		dieStrasse.notifyAll();
 		}
-		notifyAll();
+	
 		try {
 			displayAmpelChar();
 		} catch (Exception e) {
