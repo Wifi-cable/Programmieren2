@@ -36,12 +36,17 @@ public class Ampel implements Runnable {
 		}
 		}
 		notifyAll();
-		displayAmpelChar();
+		try {
+			displayAmpelChar();
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
 	}
 	
 
 	
-	private void displayAmpelChar(){
+	private void displayAmpelChar() throws Exception{
 		if(this.getRichtung().ordinal()==0){
 			 dieStrasse.setAnzeigeArray('>', standort, 1);
 		}

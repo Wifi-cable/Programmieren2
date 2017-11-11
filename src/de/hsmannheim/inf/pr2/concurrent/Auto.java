@@ -75,16 +75,7 @@ public class Auto implements Runnable {
 		}
 
 	}
-//	int berechneAnzeigeFahrbahn(){
-//		int ret;
-//		if (richtung.ordinal() == 0) {
-//			ret = 2;
-//		}
-//		else{
-//			ret = 0;
-//		}
-//		return ret;
-//	}
+
 	/*
 	 * Schreiben Sie eine Klasse Auto , die die Autos darstellt, die auf der
 	 * Straÿe fahren kön- nen. Ein Auto kann an einer beliebigen Stelle der

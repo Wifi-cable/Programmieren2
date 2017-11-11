@@ -125,8 +125,15 @@ class Strasse  {
 		}
 		return ret;
 	}
-	
-
+//	void syntaxcheck(){
+//	Strasse nameDesStrassenobjectes= new Strasse (3);
+//	try {
+//		Ampel nameDerAmpel=nameDesStrassenobjectes.setupAmpel(1, 50, nameDesStrassenobjectes);
+//	} catch (SimulationsException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//	}
 
 	/*Schreiben Sie eine Klasse Strasse , die eine Strase symbolisiert. Die Straÿse hat eine
 	parametrierbare, aber danach für die Laufzeit der Simulation feste Länge (gemessen
