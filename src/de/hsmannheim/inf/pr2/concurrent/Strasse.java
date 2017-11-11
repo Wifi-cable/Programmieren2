@@ -2,13 +2,19 @@ package de.hsmannheim.inf.pr2.concurrent;
 
 class Strasse  {
 	int laenge;
-	private volatile boolean[]obereFahrBahn=new boolean[laenge];	//nachLinks
-	private volatile boolean[]untereFahrBahn=new boolean[laenge];	//nachRechts
-	private volatile Ampel[]mittelstreifen= new Ampel[laenge];
-	private volatile char[][]anzeigeArray= new char[laenge][3];
+	private volatile boolean[]obereFahrBahn;	//nachLinks
+	private volatile boolean[]untereFahrBahn;	//nachRechts
+	private volatile Ampel[]mittelstreifen;
+	private volatile char[][]anzeigeArray;	//damit man das ganze gut ausgeben kann
 	
 	public Strasse(int laenge){		//constructor  
 		this.laenge=laenge;
+		obereFahrBahn=new boolean[laenge];	//nachLinks
+		untereFahrBahn=new boolean[laenge];	//linsk
+		mittelstreifen= new Ampel[laenge];
+		anzeigeArray= new char[laenge][3];
+		
+		
 		for(int i=0; i<laenge; i++){	//keine ampel
 			mittelstreifen[i]=null;
 		}
