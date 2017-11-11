@@ -10,7 +10,7 @@ class Strasse  {
 	public Strasse(int laenge){		//constructor  
 		this.laenge=laenge;
 		obereFahrBahn=new boolean[laenge];	//nachLinks
-		untereFahrBahn=new boolean[laenge];	//linsk
+		untereFahrBahn=new boolean[laenge];	//rechs
 		mittelstreifen= new Ampel[laenge];
 		anzeigeArray= new char[laenge][3];
 		
@@ -72,6 +72,9 @@ class Strasse  {
 				autoPos--;
 			}
 			naechsteAmpel=mittelstreifen[autoPos];
+		}
+		if(naechsteAmpel==null){	// array ende erreicht, aber es GIBT keine ampel mehr
+			return true;		//wenn keine ampel da ist kann sie nicht rot sein.
 		}
 		ampelStellung= naechsteAmpel.getRichtung();
 		
