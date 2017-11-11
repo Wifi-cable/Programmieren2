@@ -31,6 +31,8 @@ public class BaustellenSimulation {
 		Runnable Audi = strassenbau.setupAuto(71, 10, Richtung.NACHLINKS, strassenbau, 'D');
 		Runnable Skoda = strassenbau.setupAuto(58, 8, Richtung.NACHLINKS, strassenbau, 'E');
 		
+		//Runnable VW = new Auto(0, 10, Richtung.NACHRECHTS, strassenbau, 'A');
+		
 		Thread ampel1 = new Thread(eins);
 		Thread ampel2 = new Thread(zwei);
 		Thread ampel3 = new Thread(drei);
@@ -58,6 +60,7 @@ public class BaustellenSimulation {
 		auto3.start();
 		auto4.start();
 		auto5.start();
+
 
 	}
 	/*In einer Klasse BaustellenSimulation , die auch die main ()-Methode enthält, werden
