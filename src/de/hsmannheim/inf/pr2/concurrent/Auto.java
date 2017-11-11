@@ -10,7 +10,7 @@ public class Auto implements Runnable {
 	private boolean[] meineFahrbahn; // auf welcher fahrban ist das auto?
 
 	public Auto(int position, int geschwindigkeit, Richtung rl, Strasse meineStrasse, char name) { // constructor
-		System.out.println("auto gebaut");
+		//System.out.println("auto gebaut");
 		this.position = position;
 		this.geschwindigkeit = geschwindigkeit;
 		this.meineStrasse = meineStrasse;
@@ -29,13 +29,12 @@ public class Auto implements Runnable {
 		nachster();
 
 		while (position != strassenEnde) {
-			System.out.println(" runn methode läuft für "+ name );
 			synchronized (meineStrasse) {
-
+					//warte wenn ampel nicht grün oder strasse nicht frei
 				while (!(meineStrasse.istGruen(position, richtung) && !(meineFahrbahn[naechstePos]))) {
 					try {
 						meineStrasse.wait();	
-						System.out.print("stau ");
+						//System.out.print(name+" stau ");
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -44,7 +43,7 @@ public class Auto implements Runnable {
 				try { // fahren
 					meineStrasse.besetzen(naechstePos, meineFahrbahn); // boolean array updaten
 					meineStrasse.freiGeben(position, meineFahrbahn);
-					System.out.print(" fahren ");	//debugg statement
+					//System.out.print(" "+name+" fahren ");	//debugg statement
 					Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
 					
 					
@@ -56,7 +55,6 @@ public class Auto implements Runnable {
 			try {
 				Thread.sleep(zeit);
 			} catch (InterruptedException e1) {
-			System.out.println("schalfen funst nett");// debugg statement
 				e1.printStackTrace();
 			}					//geschwindikeit wird durch pausen beim fahren symboliesiert.
 			
@@ -82,9 +80,9 @@ public class Auto implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("");
-		System.out.println(name + " ist angekommen");
-		System.out.println("");
+//		System.out.println("");
+//		System.out.println(name + " ist angekommen");
+//		System.out.println("");
 	}
 
 	/*

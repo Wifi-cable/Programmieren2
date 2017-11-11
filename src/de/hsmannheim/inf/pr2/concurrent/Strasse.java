@@ -96,7 +96,7 @@ class Strasse  {
 			System.out.println("wo keine strasse ist, kann man keine ampel aufstellen");
 			throw new SimulationsException();
 		}
-		System.out.println("ampel wurde gebaut");	//debug statement
+		
 		
 		return factoryAmpel;
 		
@@ -104,7 +104,6 @@ class Strasse  {
 	
 	/*factory artige methode die dir einen auto object baut und es gleich ins array packt.*/
 	Auto setupAuto(int position, int geschwindikeit, Richtung fahrtRichtung, Strasse strassenObject, char name)throws SimulationsException{
-		System.out.println("strasse baut gleich auto");
 		Auto neuwagen=null;
 		if(!((position<0)||(position>mittelstreifen.length))){	// wenn die postion gültig ist
 			// welche fahrbahn? 
