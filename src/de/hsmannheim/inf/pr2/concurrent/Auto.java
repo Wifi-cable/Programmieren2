@@ -16,8 +16,8 @@ public class Auto implements Runnable {
 		strassenLaenge = meineStrasse.laenge;
 		this.name = name;
 		this.naechstePos = position;
-		strassenEnde = berechenStrassenEnde();
 		this.richtung= rl;
+		strassenEnde = berechenStrassenEnde();
 		this.meineFahrbahn=meineStrasse.getFahrbahnArray(rl);
 	}
 
@@ -32,7 +32,7 @@ public class Auto implements Runnable {
 
 				while (!(meineStrasse.istGruen(position, richtung) && (meineFahrbahn[naechstePos]))) {
 					try {
-						wait();
+						meineStrasse.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -41,12 +41,22 @@ public class Auto implements Runnable {
 				try { // fahren
 					meineStrasse.besetzen(naechstePos, meineFahrbahn); // boolean array updaten
 					meineStrasse.freiGeben(position, meineFahrbahn);
+					
 					Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
+					
+					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} // ende der schleife "fahr wenn du kannst"
 
 			} // end syncronized
+			try {
+				Thread.sleep(zeit);
+			} catch (InterruptedException e1) {
+			System.out.println("schalfen funst nett");// debugg statement
+				e1.printStackTrace();
+			}					//geschwindikeit wird durch pausen beim fahren symboliesiert.
+			
 			try {
 				meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn);
 				meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
@@ -56,7 +66,9 @@ public class Auto implements Runnable {
 			
 			position = naechstePos; // auto eins weiter, jetzt beide teiger aktualisieren
 			nachster();
-			notifyAll();
+			synchronized(meineStrasse){
+			meineStrasse.notifyAll();
+			}
 		} // ende äusere schleife die autofahrt
 		System.out.println(name + " ist angekommen");
 	}
