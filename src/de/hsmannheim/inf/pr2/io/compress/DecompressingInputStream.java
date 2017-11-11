@@ -59,7 +59,7 @@ public class DecompressingInputStream extends InputStream {
                 //index += 3;
 
             }
-            // Betrachtet einzelne Bytes
+            // Betrachtet einzelne Bytes allerdings nur wenn sie direkt vor einer wiederholten zahl stehen
 
             else if (oldData[pos] != -1 && oldData[zaehler] == -1) {
 
@@ -145,7 +145,7 @@ public class DecompressingInputStream extends InputStream {
         //byte test [] = {-1, 9, 15, -1, -1, -125, -125};
         //byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
         //byte test [] = {-1, 5, 2, -1, -1, -1, -1, 3, -125, -125};
-        byte test [] = {1, 2, 3, 4};
+        byte test [] = {1, 2, 3, 4, -125, -125};
 
         DecompressingInputStream in = new DecompressingInputStream(test);
 
