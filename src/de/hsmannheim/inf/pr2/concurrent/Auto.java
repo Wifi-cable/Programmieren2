@@ -10,6 +10,7 @@ public class Auto implements Runnable {
 	private boolean[] meineFahrbahn; // auf welcher fahrban ist das auto?
 
 	public Auto(int position, int geschwindigkeit, Richtung rl, Strasse meineStrasse, char name) { // constructor
+		System.out.println("auto gebaut");
 		this.position = position;
 		this.geschwindigkeit = geschwindigkeit;
 		this.meineStrasse = meineStrasse;
@@ -25,14 +26,16 @@ public class Auto implements Runnable {
 		int zeit = wievielZeit(); // errechnet wie lange ein auto sleep macht
 									// bis es weiter faert
 		int anzeigeFahrbahn=meineStrasse.berechneAnzeigeFahrbahn(richtung); // welche reihe im anzeigeArray benutzt ein auto,
-	
+		nachster();
 
 		while (position != strassenEnde) {
+			System.out.println(" runn methode läuft für "+ name );
 			synchronized (meineStrasse) {
 
-				while (!(meineStrasse.istGruen(position, richtung) && (meineFahrbahn[naechstePos]))) {
+				while (!(meineStrasse.istGruen(position, richtung) && !(meineFahrbahn[naechstePos]))) {
 					try {
-						meineStrasse.wait();
+						meineStrasse.wait();	
+						System.out.print("stau ");
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -41,7 +44,7 @@ public class Auto implements Runnable {
 				try { // fahren
 					meineStrasse.besetzen(naechstePos, meineFahrbahn); // boolean array updaten
 					meineStrasse.freiGeben(position, meineFahrbahn);
-					
+					System.out.print(" fahren ");	//debugg statement
 					Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
 					
 					
@@ -70,7 +73,18 @@ public class Auto implements Runnable {
 			meineStrasse.notifyAll();
 			}
 		} // ende äusere schleife die autofahrt
+		synchronized(meineStrasse){
+			try{
+			meineStrasse.freiGeben(position, meineFahrbahn);
+			meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("");
 		System.out.println(name + " ist angekommen");
+		System.out.println("");
 	}
 
 	/*

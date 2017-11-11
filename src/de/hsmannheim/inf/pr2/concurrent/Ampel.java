@@ -20,6 +20,7 @@ public class Ampel implements Runnable {
 	 }
 
 	public void run() {	//schaltet um
+	while (true){
 		try{
 		Thread.sleep(umschaltzeit);
 		}
@@ -28,6 +29,7 @@ public class Ampel implements Runnable {
 			e.getMessage();
 		}
 		synchronized (dieStrasse) {
+		//	System.out.println("ampel "+ this+" schaltet jetzt");
 		if( this.RechtsOLinks==Richtung.NACHRECHTS){	// wenn sie vorher nach rechts zeigt, lass sie nach  links zeigen
 			RechtsOLinks=Richtung.NACHLINKS;
 		}
@@ -43,6 +45,7 @@ public class Ampel implements Runnable {
 		
 			e.printStackTrace();
 		}
+	}
 	}
 	
 

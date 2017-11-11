@@ -11,7 +11,7 @@ public class BaustellenSimulation {
 	//braucht ein strassen object. warscheinlich mit ampel objecten und auto objecten
 	
 	
-	public static void main(String[] args) throws SimulationsException {
+	public static void main(String[] args) throws SimulationsException, InterruptedException {
 		
 		BaustellenSimulation laenge = new BaustellenSimulation(80);
 		
@@ -61,25 +61,34 @@ public class BaustellenSimulation {
 		auto4.start();
 		auto5.start();
 
+		auto1.join();
+		auto2.join();
+		auto3.join();
+		auto4.join();
+		auto5.join();
+		// debugg print statement
+		System.out.println("es ist nacht die strasse ist nass, kein auto fÃ¤hrt mehr nur noch die ampeln schalten einsam");
+		
+
 
 	}
-	/*In einer Klasse BaustellenSimulation , die auch die main ()-Methode enthält, werden
-	nun die Fahrzeuge und Ampeln auf der Straÿe positioniert und die Simulation wird
-	gestartet. Nach jeder Veränderung des Zustandes soll auf der Konsole die Straÿe mit
+	/*In einer Klasse BaustellenSimulation , die auch die main ()-Methode enthï¿½lt, werden
+	nun die Fahrzeuge und Ampeln auf der Straï¿½e positioniert und die Simulation wird
+	gestartet. Nach jeder Verï¿½nderung des Zustandes soll auf der Konsole die Straï¿½e mit
 	den Ampeln und die Positionen der Fahrzeuge ausgegeben werden. Bei den Ampeln
 	wird durch ein > bzw. < angezeigt, dass die Fahrzeuge von links nach rechts bzw. von
-	rechts nach links fahren dürfen. Eine beispielhafte Ausgabe sieht dann wie folgt aus:
+	rechts nach links fahren dï¿½rfen. Eine beispielhafte Ausgabe sieht dann wie folgt aus:
 	
 	*In diese beispielhaften Ausgabe warten die Fahrzeuge D, C und A gerade an einer
-	Ampel. Modellieren Sie die Ampeln und Fahrzeuge als Threads, die eigenständig lau-
-   fen und über entsprechende Mittel der Threadkoordination miteinander interagieren.
-   Sorgen Sie dafür, dass alle kritischen Abschnitte richtig geschützt sind und dass sich
+	Ampel. Modellieren Sie die Ampeln und Fahrzeuge als Threads, die eigenstï¿½ndig lau-
+   fen und ï¿½ber entsprechende Mittel der Threadkoordination miteinander interagieren.
+   Sorgen Sie dafï¿½r, dass alle kritischen Abschnitte richtig geschï¿½tzt sind und dass sich
    die Threads sauber beenden, wenn das Programm zu Ende gelaufen ist. Die Simulation
-   ist dann beendet, wenn alle Fahrzeuge am Ende der Straÿe angekommen sind. Rechnen
+   ist dann beendet, wenn alle Fahrzeuge am Ende der Straï¿½e angekommen sind. Rechnen
    Sie bei den Fahrzeugen die Geschwindigkeiten von km/h einfach eins-zu-eins in km/sec
- um, damit die Simulation hinreichend schnell abläuft.*/
+ um, damit die Simulation hinreichend schnell ablï¿½uft.*/
 	
-	static int gibOrdinal( String ampelnummer ){	// hilfsmehtode ist die ampel rot oder grün?
+	static int gibOrdinal( String ampelnummer ){	// hilfsmehtode ist die ampel rot oder grï¿½n?
 		
 	  try {
 		  
