@@ -60,8 +60,12 @@ public class Auto implements Runnable {
 			}					//geschwindikeit wird durch pausen beim fahren symboliesiert.
 			
 			try {
+				char[][]temp=meineStrasse.getAnzeige();
 				meineStrasse.setAnzeigeArray(name, naechstePos, anzeigeFahrbahn);
-				meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+				if(temp[position][anzeigeFahrbahn]==name ){			// überchreib die autos hinter dir nicht.
+					meineStrasse.setAnzeigeArray(' ', position, anzeigeFahrbahn);
+				}
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			} // anzeigeArray updaten
