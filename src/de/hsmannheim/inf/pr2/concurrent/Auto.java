@@ -40,20 +40,21 @@ public class Auto implements Runnable {
 					}
 				}
 
-				try { // fahren
+//				try { // fahren
 					meineStrasse.besetzen(naechstePos, meineFahrbahn); // boolean array updaten
 					meineStrasse.freiGeben(position, meineFahrbahn);
 					//System.out.print(" "+name+" fahren ");	//debugg statement
-					Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
+					//Thread.sleep(zeit);					//geschwindikeit wird durch pausen beim fahren symboliesiert.
 					
 					
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} // ende der schleife "fahr wenn du kannst"
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				} // ende der schleife "fahr wenn du kannst"
 
 			} // end syncronized
 			try {
-				Thread.sleep(zeit);
+				//Thread.sleep(zeit);
+				Thread.sleep(1000);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}					//geschwindikeit wird durch pausen beim fahren symboliesiert.

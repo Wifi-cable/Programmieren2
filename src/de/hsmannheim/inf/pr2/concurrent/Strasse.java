@@ -24,6 +24,11 @@ class Strasse  {
 		for(int i=0; i<laenge; i++){	
 			untereFahrBahn[i]=false;	
 		}
+		for(int i=0; i<anzeigeArray.length; i++){
+			anzeigeArray[i][0]=' ';
+			anzeigeArray[i][1]='.';
+			anzeigeArray[i][2]=' ';
+		}
 	}
 	public boolean []getFahrbahnArray(Richtung rl){
 		if(rl.ordinal()==0){
@@ -90,6 +95,11 @@ class Strasse  {
 			if(mittelstreifen[ort]==null){
 				factoryAmpel=new Ampel(intervall, ort, strassenObject );
 				mittelstreifen[ort]=factoryAmpel;
+				try {
+					setAnzeigeArray('>',ort, 1 );
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				}
 			}
 		else{		//beschwert sich methode und gibt null zurück
@@ -113,7 +123,7 @@ class Strasse  {
 				neuwagen=new Auto(position,geschwindikeit, fahrtRichtung, strassenObject, name);
 				int spuhr=berechneAnzeigeFahrbahn(fahrtRichtung);
 				try {
-					strassenObject.setAnzeigeArray(name, position, spuhr);
+					setAnzeigeArray(name, position, spuhr);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -129,6 +139,8 @@ class Strasse  {
 	int berechneAnzeigeFahrbahn(Richtung richtung){
 		int ret;
 		if (richtung.ordinal() == 0) {
+		//if(richtung.equals(Richtung.NACHRECHTS)){
+		//if(richtung==Richtung.NACHRECHTS){
 			ret = 2;
 		}
 		else{
