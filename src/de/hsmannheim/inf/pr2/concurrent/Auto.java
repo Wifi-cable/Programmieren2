@@ -53,8 +53,8 @@ public class Auto implements Runnable {
 
 			} // end syncronized
 			try {
-				//Thread.sleep(zeit);
-				Thread.sleep(1000);
+				Thread.sleep(zeit);
+				//Thread.sleep(1000);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}					//geschwindikeit wird durch pausen beim fahren symboliesiert.
@@ -114,7 +114,8 @@ public class Auto implements Runnable {
 	 */
 
 	int wievielZeit() {
-		int zeit = ((1 / geschwindigkeit) * 1000);
+		//int zeit = ((1 / geschwindigkeit) * 1000);
+		int zeit= 1000/( geschwindigkeit);
 		return zeit;
 	}
 
