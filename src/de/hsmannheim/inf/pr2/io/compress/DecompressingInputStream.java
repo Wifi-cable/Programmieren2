@@ -114,7 +114,7 @@ public class DecompressingInputStream extends InputStream {
             newData=machGroesser(newData);
         }
         newData[x] = stelle;
-        System.out.print(newData[x] + " ");
+      //  System.out.print(newData[x] + " ");
         x++;
     }
 
@@ -133,7 +133,9 @@ public class DecompressingInputStream extends InputStream {
     public byte[] getoldData(){
         return oldData;
     }
-
+    public byte[]getNewData(){
+    	return newData;
+    }
 
     public static void main(String [] args) throws IOException {
 

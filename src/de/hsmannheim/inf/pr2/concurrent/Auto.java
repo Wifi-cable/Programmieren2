@@ -85,9 +85,9 @@ public class Auto implements Runnable {
 				e.printStackTrace();
 			}
 		}
-//		System.out.println("");
-//		System.out.println(name + " ist angekommen");
-//		System.out.println("");
+				System.out.println("");
+		System.out.println(name + " ist angekommen");
+		System.out.println("");
 	}
 
 	/*
