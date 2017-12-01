@@ -90,14 +90,7 @@ public class ListNode<E>  {
     return value + " ";
   }
 	 public  boolean contains(E e){
-//		 System.out.println(value);
-//		 if(this.getTail()==null){
-//			 System.out.println("folge nicht dem null pointer");
-//		 }
-		  if(this.value!=null){			//folge nicht dem mull pointer.  wenn das auto null ist ignoriers
-			  return false;
-		  }  
-		  
+  
 		  if(this.getTail()!=null){
 			 // if(this.value!=null){			//folge nicht dem mull pointer.  wenn das auto null ist ignoriers
 			  if(this.value.equals(e)){

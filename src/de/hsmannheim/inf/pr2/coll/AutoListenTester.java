@@ -7,18 +7,18 @@ import org.junit.Test;
 
 public class AutoListenTester {
 	// einige autos zum verleichen und zaelen
-	Auto vw= new Auto("VW","polo", 30);
+	Auto vw= new Auto("VW","polo", 60);
 	Auto voksWagen= new Auto("VW","golf", 45);
-	Auto smart= new Auto("Smart","cabrio", 30);
-	Auto audi=  new Auto("Audi", "quadro", 80);
-	Auto audi2= new Auto("Audi", "quadro", 80);
-	Auto sportwagen= new Auto("porsche","cayenne",120);
-	Auto potenzHelfer= new Auto ("porsche","cayenne",220);
+	Auto smart= new Auto("Smart","cabrio", 50);
+	Auto audi=  new Auto("Audi", "quadro", 120);
+	Auto audi2= new Auto("Audi", "quadro", 120);
+	Auto sportwagen= new Auto("porsche","cayenne",220);
+	Auto potenzHelfer= new Auto ("porsche","cayenne",420);
 	//einige listen zum fuellen vergleichen und testen
 	ListNode<Auto> firstList = new ListNode<Auto>(vw);
 	ListNode <Auto>secondList= null;
 	ListNode<Auto>thirdList= null;
-	ListNode<Auto> empty=new ListNode<Auto>(null);
+	ListNode<Auto> single=new ListNode<Auto>(potenzHelfer);
 	@Before
 	 public void init(){
 		firstList= new ListNode<Auto>(vw);
@@ -40,12 +40,12 @@ public class AutoListenTester {
 	@Test
 	public void containTester() {
 		assertFalse(firstList.contains(sportwagen));	//sollte false sein
+		assertFalse(firstList.contains(potenzHelfer));
 		assertTrue(firstList.contains(audi));		//ist wirklich drinn
 		assertTrue(firstList.contains(audi2));		// ist identisch, sollte also drinn sein
 		assertTrue(firstList.contains(vw));
 		assertTrue(firstList.contains(voksWagen));
 		assertTrue(firstList.contains(smart));
-	
 	}
 	@Test
 	public void einDuplicateMitte(){
@@ -55,8 +55,16 @@ public class AutoListenTester {
 	}
 	@Test
 	public void erstesLetztesDoppelt(){
-		assertEquals(2, thirdList.countIf(sportwagen));
-		assertEquals(2,thirdList.countIf(vw));
+		assertEquals(2, thirdList.countIf(sportwagen));	//2x drinn einer als erstes
+		assertEquals(2,thirdList.countIf(vw));			// 2x drinn einer als letztes
+		assertEquals(0,thirdList.countIf(smart));	//nicht drin
+	}
+	@Test
+	public void nurEins(){
+		assertTrue(single.contains(potenzHelfer));	
+		assertFalse(single.contains(vw));
+		assertEquals(1, single.countIf(potenzHelfer));
+		assertEquals(0,single.countIf(voksWagen));
 	}
 
 	
