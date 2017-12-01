@@ -7,20 +7,14 @@ package de.hsmannheim.inf.pr2.coll;
  * @author wifi-cable
  *
  */
-public class ListNode<E> {
+public class ListNode <E> {
 
-	/**
-	 * 
-	 */
-	public ListNode() {
-		// TODO Auto-generated constructor stub
-	}
 	 public E value;
 
 	  /**
 	   * Nachfolger dieses Knotens. null bedeutet: kein Nachfolger.
 	   */
-	  public ListNode next = null;
+	  public ListNode<E> next = null;
 
 	  // Konstruktoren
 
@@ -30,7 +24,7 @@ public class ListNode<E> {
 	   * @param value Wert dieses Knotens
 	   * @param n     Nachfolger-Knoten
 	   */
-	  public ListNode(E value, ListNode n) {
+	  public ListNode(E value, ListNode<E> n) {
 	    this.value = value;
 	    next = n;
 	  }
@@ -77,7 +71,8 @@ public class ListNode<E> {
 	  public int size() {
 	    if (getTail() == null) { // Kein Nachfolger-Knoten vorhanden?
 	      return 1; // Liste hat genau ein Element.
-	    } else {
+	    } 
+	    else {
 	      return 1 + getTail().size();
 	    }
 	  }
@@ -88,9 +83,36 @@ public class ListNode<E> {
 	  public void print() {
 	    System.out.print(value + " ");
 	  }
-
+	  @Override
 	  public String toString() {
 	    return value + " ";
 	  }
+	 public  boolean contains(E e){
+		 System.out.println(value);
+		 if(this.getTail()==null){
+			 System.out.println("folge nicht dem null pointer");
+		 }
+		 
+		  if(this.getTail()!=null){
+			  
+			  if(this.equals(e)){
+				  System.out.println("hab eins gefunden");
+				  return true;
+			  }
+			  else{ 
+				  System.out.println("suche weiter");
+				return this.getTail().contains(e);
+			  }
+		  }
+		  else{
+		  return false;
+		  }
+	  }
 
+
+
+	int coutIf(E e){
+		  return 0;
+	  }
+	  
 }
