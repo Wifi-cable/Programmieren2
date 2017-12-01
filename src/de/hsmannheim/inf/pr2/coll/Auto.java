@@ -19,16 +19,14 @@ public class Auto {
 	int getPS(){
 		return this.ps;
 	}
-	// sollen die einen hashcode haben? comparable sein? 
+	
 	@Override
 	public boolean equals(Object o ){
 		System.out.println(" auto equals wird ausgeführt");
 		if(this==o){	// 2x das gleiche object ist logischwerweise gleich
 		return true;	
 		}
-//		if(this.hashCode()==o.hashCode()){
-//			System.out.println("hashcode the same "+ this.hashCode()+" "+o.hashCode());
-//		}
+
 		if(!(o instanceof Auto)){	//wenn das andere kein auto ist, sind sie auf keinen fall gleich
 			return false;
 		}
@@ -57,30 +55,5 @@ public class Auto {
 		
 	}
 	
-//	public int compareTo(Auto o) {
-//		System.out.println("compare to in use ");
-//			if(o instanceof Auto){
-//				Auto that=(Auto)o;
-//				if(this.ps==that.getPS()){	// gleich viel ps
-//					return 0;
-//				}
-//				else if(this.ps<that.getPS()){	//wehniger PS als das andere
-//					return -1;
-//				}
-//				else{						// mehr ps als das andere
-//					return 1;
-//				}
-//			}
-//			return -100; 	// das andere ist kein auto.
-//		
-//		
-//	}
-//	@Override
-//	public int compareTo(Object o){
-//		
-//			Auto pkw= (Auto)o;
-//		
-//		return this.compareTo(pkw);
-//	}
 	
 }

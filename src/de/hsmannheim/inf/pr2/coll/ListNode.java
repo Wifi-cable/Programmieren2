@@ -94,9 +94,12 @@ public class ListNode<E>  {
 //		 if(this.getTail()==null){
 //			 System.out.println("folge nicht dem null pointer");
 //		 }
-		 
+		  if(this.value!=null){			//folge nicht dem mull pointer.  wenn das auto null ist ignoriers
+			  return false;
+		  }  
+		  
 		  if(this.getTail()!=null){
-			  
+			 // if(this.value!=null){			//folge nicht dem mull pointer.  wenn das auto null ist ignoriers
 			  if(this.value.equals(e)){
 				  System.out.println("hab eins gefunden");
 				  return true;
@@ -105,12 +108,58 @@ public class ListNode<E>  {
 				  System.out.println("suche "+e.hashCode()+" ist nicht gleich "+value.hashCode()+" suche weiter");
 				return this.getTail().contains(e);
 			  }
-		  }
+			
+		  }	//end if next!=null
 		  else{
-		  return false;
+		  return this.value.equals(e);
 		  }
 	  }
-		int coutIf(E e){
-			  return 0;
+		int countIf1(E e){
+			
+//			if(!contains(e)){
+//				return 0;
+//			}
+			/*else */if(this.getTail()!=null){
+				System.out.println("tail nicht null, auto: "+this.value.hashCode()+" suchwert: "+e.hashCode());
+				if(this.value.equals(e)){
+					System.out.println("eins");
+					return 1 + getTail().countIf1(e);
+				}
+			}
+			else{
+				if ( this.value.equals(e)){
+					return 1+this.countIf1(e);
+				}
+				return this.countIf1(e);
+			}
+			System.out.println("letztes return statement");
+			return 0; 
 		  }
+		
+		public int countIf(E elem){
+			if(getTail()==null){
+				if(this.value.equals(elem)){
+					return 1;
+				}
+			}
+			else{
+				if(this.value.equals(elem)){
+					return 1+getTail().countIf(elem);
+				}
+				else{
+					return getTail().countIf(elem);
+				}
+			}
+			
+			return 0; 
+		}
+		
+		
+		public void printAll(){
+			if(this.getTail()!=null){
+				print();
+				this.getTail().printAll();
+			}
+			System.out.println(value.toString());
+		}
 }
