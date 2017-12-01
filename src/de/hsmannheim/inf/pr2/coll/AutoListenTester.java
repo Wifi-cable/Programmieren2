@@ -13,7 +13,7 @@ public class AutoListenTester {
 	Auto smart= new Auto("Smart","cabrio", 30);
 	Auto audi=  new Auto("Audi", "quadro", 80);
 	Auto audi2= new Auto("Audi", "quadro", 80);
-	Auto cabrio= new Auto("porsche","cayenne",120);
+	Auto sportwagen= new Auto("porsche","cayenne",120);
 	
 	ListNode<Auto> firstList = new ListNode<Auto>(vw);
 	ListNode <Auto>secondList= null;
@@ -34,8 +34,9 @@ public class AutoListenTester {
 
 	@Test
 	public void testKeinDuplicat() {
-		assertFalse(firstList.contains(cabrio));
-		assertTrue(firstList.contains(audi2));
+		assertFalse(firstList.contains(sportwagen));
+		assertTrue(firstList.contains(audi));
+		//assertTrue(firstList.contains(audi2));
 		//assertTrue(firstList.contains(audi));
 	
 	}

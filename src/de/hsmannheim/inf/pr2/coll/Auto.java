@@ -26,9 +26,9 @@ public class Auto {
 		if(this==o){	// 2x das gleiche object ist logischwerweise gleich
 		return true;	
 		}
-		if(this.hashCode()==o.hashCode()){
-			System.out.println("hashcode the same "+ this.hashCode()+" "+o.hashCode());
-		}
+//		if(this.hashCode()==o.hashCode()){
+//			System.out.println("hashcode the same "+ this.hashCode()+" "+o.hashCode());
+//		}
 		if(!(o instanceof Auto)){	//wenn das andere kein auto ist, sind sie auf keinen fall gleich
 			return false;
 		}
