@@ -107,27 +107,23 @@ public class ListNode<E>  {
 		  return this.value.equals(e);
 		  }
 	  }
-		int countIf1(E e){
-			
-//			if(!contains(e)){
-//				return 0;
+//		int countIf1(E e){
+//			if(this.getTail()!=null){
+//				//System.out.println("tail nicht null, auto: "+this.value.hashCode()+" suchwert: "+e.hashCode());
+//				if(this.value.equals(e)){
+//					//System.out.println("eins");
+//					return 1 + getTail().countIf1(e);
+//				}
 //			}
-			/*else */if(this.getTail()!=null){
-				System.out.println("tail nicht null, auto: "+this.value.hashCode()+" suchwert: "+e.hashCode());
-				if(this.value.equals(e)){
-					System.out.println("eins");
-					return 1 + getTail().countIf1(e);
-				}
-			}
-			else{
-				if ( this.value.equals(e)){
-					return 1+this.countIf1(e);
-				}
-				return this.countIf1(e);
-			}
-			System.out.println("letztes return statement");
-			return 0; 
-		  }
+//			else{
+//				if ( this.value.equals(e)){
+//					return 1+this.countIf1(e);
+//				}
+//				return this.countIf1(e);
+//			}
+//			System.out.println("letztes return statement");
+//			return 0; 
+//		  }
 		
 		public int countIf(E elem){
 			if(getTail()==null){
