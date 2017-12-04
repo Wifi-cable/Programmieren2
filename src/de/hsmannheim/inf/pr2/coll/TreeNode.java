@@ -1,9 +1,9 @@
-package de.hsmannheim.inf.pr2.coll;
+package coll;
 
 
 /**
- * Ein Knoten fÃ¼r einen BinÃ¤rbaum.
- * Dieser Knoten kann selbst als eigener BinÃ¤rbaum aufgefasst werden.
+ * Ein Knoten für einen Binärbaum.
+ * Dieser Knoten kann selbst als eigener Binärbaum aufgefasst werden.
  *
  * @author Markus Gumbel
  */
@@ -15,7 +15,7 @@ public class TreeNode<E extends Comparable<E>> {
   public TreeNode<E> right = null; // Rechter Teilbaum.
 
   /**
-   * Erzeuge einen neuen BinÃ¤rbaum-Knoten. Nachfolger und VorgÃ¤nger sind nicht
+   * Erzeuge einen neuen Binärbaum-Knoten. Nachfolger und Vorgänger sind nicht
    * gesetzt.
    *
    * @param v Der Wert des Knotens.
@@ -26,7 +26,7 @@ public class TreeNode<E extends Comparable<E>> {
   }
 
   /**
-   * Erzeuge einen neuen BinÃ¤rbaum(-Knoten), entspricht tree().
+   * Erzeuge einen neuen Binärbaum(-Knoten), entspricht tree().
    * @param value Der Wert des Knotens.
    * @param left Der linke Teilbaum.
    * @param right Der rechte Teilbaum.
@@ -50,7 +50,7 @@ public class TreeNode<E extends Comparable<E>> {
   }
 
   /**
-   * Bestimme die HÃ¶he des Baums.
+   * Bestimme die Höhe des Baums.
    *
    * @return
    */
@@ -78,7 +78,7 @@ public class TreeNode<E extends Comparable<E>> {
     if (node == null) { // Leerer Baum?
       return 0; // Anzahl Elemente ist 0.
     } else { // Echter Teilbaum.
-      // GrÃ¶ÃŸe ist dieser Knoten plus solche in den TeilbÃ¤umen:
+      // Größe ist dieser Knoten plus solche in den Teilbäumen:
       int sizeLeft = size(node.getLeft());
       int sizeRight = size(node.getRight());
       
@@ -106,7 +106,7 @@ public class TreeNode<E extends Comparable<E>> {
   }
 
   /**
-   * DurchlÃ¤uft einen (Teil-)Baum vom Wurzelknoten an in
+   * Durchläuft einen (Teil-)Baum vom Wurzelknoten an in
    * Inorder-Reihenfolge und gibt die Werte auf die Konsole aus.
    *
    * @param node Wurzelknoten des (Teil-)Baums
@@ -124,40 +124,63 @@ public class TreeNode<E extends Comparable<E>> {
     // NOCH NICHT IMPLEMENTIERT!
   }
   
-  //Soll einen binären, geordneten mit einem anderen binären geordneten Baum vergleichen.
+  //Soll einen bin�ren, geordneten mit einem anderen bin�ren geordneten Baum vergleichen.
  public boolean equalStructure(TreeNode<E> otherNode) {
-	  
-	  if(getValue() == null && otherNode.getValue() == null) {
-		  System.out.println("true");
-		  
-		  return true;
-	  }
-	//Wird ein größere komplexerer Baum genommen, so werden hier nur die Werte von Value, left und right verglichen.
-	 //Andere Werte bzw. Knoten die nach left und right kommen, werden nicht verglichen.
-	  else if (getValue() == otherNode.getValue()) {
-		  
-		 if((getLeft().getValue() == otherNode.getLeft().getValue()) && (getRight().getValue() == otherNode.getRight().getValue())) {
-			  System.out.println("true");
-			  
-			  
-			  
-			  return true;
-		  }
+	
+		 if(getLeft() == null && otherNode.getLeft() == null) {
+			 return true;
+		 }
 		 
-		 else {
-			 System.out.println("false");
-			  
-			  return false;
+		 else if(getRight() == null && otherNode.getRight() == null) {
+			 return true;
+		 }
+		 
+		 else if(getLeft() != null && otherNode.getLeft() == null) {
+			 return false;
+		 }
+		 
+		 else if(getLeft() == null && otherNode.getLeft() != null) {
+			 return false;
+		 }
+		 
+		 else if(getRight() != null && otherNode.getRight() == null) {
+			 return false;
+		 }
+		 
+		 
+		 else if(getRight() == null && otherNode.getRight() != null) {
+			 return false;
+		 }
+		 
+		 else if(getLeft().getValue().equals(otherNode.getLeft().getValue())) {
+			 
+			 if(getLeft().equalStructure(otherNode.getLeft())) {
+				 
+				 if(getRight().getValue().equals(otherNode.getRight().getValue())) {
+					 
+					 return getRight().equalStructure(otherNode.getRight());
+				 }
+				 
+				 else {
+					 					 
+					 return false;
+				 }
+				 
+			 }
+			 
+			 else {
+				 return false;
+			 }
 			 
 		 }
-	  }
-	  
-	  else { 
-	  System.out.println("false");
-	  
-	  return false;
-	  
-	  }
-  }
+		 
+		 else {
+			 return false;
+		 }
+	 }
+	 
+	 
   
- }
+
+ 
+}
