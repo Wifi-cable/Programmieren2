@@ -42,33 +42,39 @@ public class TestSortiertMitBaum {
 
 	@Test
 	public void testMini() {
-		assertEquals(miniTree.sortedList.getAt(0),3);
-		assertEquals(miniTree.sortedList.getAt(1),8);
-		assertEquals(miniTree.sortedList.getAt(2),16);
+		assertEquals(miniTree.sortedList.get(0),3);
+		assertEquals(miniTree.sortedList.get(1),8);
+		assertEquals(miniTree.sortedList.get(2),16);
 	}
 	@Test
 	public void testMini2() {
-		assertEquals(miniTree2.sortedList.getAt(0),3);
-		assertEquals(miniTree2.sortedList.getAt(1),8);
-		assertEquals(miniTree2.sortedList.getAt(2),16);
+		assertEquals(miniTree2.sortedList.get(0),3);
+		assertEquals(miniTree2.sortedList.get(1),8);
+		assertEquals(miniTree2.sortedList.get(2),16);
 	}
 	
 	@Test
 	public void testBiggerTree(){
-	assertEquals(biggerTree.sortedList.getAt(0),2);	
-	assertEquals(biggerTree.sortedList.getAt(1),3);
-	assertEquals(biggerTree.sortedList.getAt(2),8);
-	assertEquals(biggerTree.sortedList.getAt(3),12);
-	assertEquals(biggerTree.sortedList.getAt(4),16);
+	assertEquals(biggerTree.sortedList.get(0),2);	
+	assertEquals(biggerTree.sortedList.get(1),3);
+	assertEquals(biggerTree.sortedList.get(2),8);
+	assertEquals(biggerTree.sortedList.get(3),12);
+	assertEquals(biggerTree.sortedList.get(4),16);
 	}
 	@Test
 	public void testBiggerTree2(){
-	assertEquals(biggerTree2.sortedList.getAt(0),3);	
-	assertEquals(biggerTree2.sortedList.getAt(1),5);
-	assertEquals(biggerTree2.sortedList.getAt(2),8);
-	assertEquals(biggerTree2.sortedList.getAt(3),16);
-	assertEquals(biggerTree2.sortedList.getAt(4),20);
+	assertEquals(biggerTree2.sortedList.get(0),3);	
+	assertEquals(biggerTree2.sortedList.get(1),5);
+	assertEquals(biggerTree2.sortedList.get(2),8);
+	assertEquals(biggerTree2.sortedList.get(3),16);
+	assertEquals(biggerTree2.sortedList.get(4),20);
 	}
-	
-
+	@Test 
+	public void stringTree(){
+		assertEquals(christmasTree.sortedList.get(0),"Ich bin ein Weihnachstsbaum. ");
+	}
+	@Test
+	public void nullTest(){
+		assertNull(nullTree.sortedList.get(0),null);
+	}
 }
