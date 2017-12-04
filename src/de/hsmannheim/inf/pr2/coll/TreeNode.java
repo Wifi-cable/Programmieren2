@@ -1,4 +1,4 @@
-package coll;
+package de.hsmannheim.inf.pr2.coll;
 
 
 /**
