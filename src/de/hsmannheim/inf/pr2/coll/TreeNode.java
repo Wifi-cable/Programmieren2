@@ -1,6 +1,5 @@
 package de.hsmannheim.inf.pr2.coll;
 
-
 /**
  * Ein Knoten f√ºr einen Bin√§rbaum.
  * Dieser Knoten kann selbst als eigener Bin√§rbaum aufgefasst werden.
@@ -125,44 +124,55 @@ public class TreeNode<E extends Comparable<E>> {
   }
   
   //Soll einen bin‰ren, geordneten mit einem anderen bin‰ren geordneten Baum vergleichen.
- public boolean equalStructure(TreeNode<E> otherNode) {
-	
-		 if(getLeft() == null && otherNode.getLeft() == null) {
-			 return true;
-		 }
+  public boolean equalStructure(TreeNode<E> otherNode) {
+
+	 if(this != null && otherNode != null && otherNode instanceof TreeNode<?>) {
 		 
-		 else if(getRight() == null && otherNode.getRight() == null) {
-			 return true;
-		 }
-		 
-		 else if(getLeft() != null && otherNode.getLeft() == null) {
-			 return false;
-		 }
-		 
-		 else if(getLeft() == null && otherNode.getLeft() != null) {
-			 return false;
-		 }
-		 
-		 else if(getRight() != null && otherNode.getRight() == null) {
-			 return false;
-		 }
-		 
-		 
-		 else if(getRight() == null && otherNode.getRight() != null) {
-			 return false;
-		 }
-		 
-		 else if(getLeft().getValue().equals(otherNode.getLeft().getValue())) {
+		 if(this.getValue().equals(otherNode.getValue())) {
 			 
-			 if(getLeft().equalStructure(otherNode.getLeft())) {
+			 
+			 if(getLeft() == null && otherNode.getLeft() == null) {
+				 return true;
+			 }
+			 
+			 else if(getRight() == null && otherNode.getRight() == null) {
+				 return true;
+			 }
+			 
+			 else if(getLeft() != null && otherNode.getLeft() == null) {
+				 return false;
+			 }
+			 
+			 else if(getLeft() == null && otherNode.getLeft() != null) {
+				 return false;
+			 }
+			 
+			 else if(getRight() != null && otherNode.getRight() == null) {
+				 return false;
+			 }
+			 
+			 
+			 else if(getRight() == null && otherNode.getRight() != null) {
+				 return false;
+			 }
+			 
+			 else if(getLeft().getValue().equals(otherNode.getLeft().getValue())) {
 				 
-				 if(getRight().getValue().equals(otherNode.getRight().getValue())) {
+				 if(getLeft().equalStructure(otherNode.getLeft())) {
 					 
-					 return getRight().equalStructure(otherNode.getRight());
+					 if(getRight().getValue().equals(otherNode.getRight().getValue())) {
+						 
+						 return getRight().equalStructure(otherNode.getRight());
+					 }
+					 
+					 else {
+						 					 
+						 return false;
+					 }
+					 
 				 }
 				 
 				 else {
-					 					 
 					 return false;
 				 }
 				 
@@ -171,16 +181,18 @@ public class TreeNode<E extends Comparable<E>> {
 			 else {
 				 return false;
 			 }
-			 
 		 }
 		 
 		 else {
 			 return false;
 		 }
-	 }
+			 
+	}
 	 
-	 
-  
-
- 
+	else {
+		return false;
+	}
+		 
+  }
+		  
 }
