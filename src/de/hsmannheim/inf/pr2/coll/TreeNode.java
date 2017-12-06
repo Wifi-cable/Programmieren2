@@ -125,8 +125,12 @@ public class TreeNode<E extends Comparable<E>> {
   
   //Soll einen binären, geordneten mit einem anderen binären geordneten Baum vergleichen.
   public boolean equalStructure(TreeNode<E> otherNode) {
-
-	 if(this != null && otherNode != null && otherNode instanceof TreeNode<?>) {
+	  
+	  if(this.value == null && otherNode.value == null) {
+		  return true;
+	  }
+	  	
+	  else if(this != null && otherNode != null && otherNode instanceof TreeNode<?>) {
 		 
 		 if(this.getValue().equals(otherNode.getValue())) {
 			 
