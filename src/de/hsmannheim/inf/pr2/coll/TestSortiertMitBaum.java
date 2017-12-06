@@ -55,6 +55,7 @@ public class TestSortiertMitBaum {
 		assertEquals(sortedList.get(1),(Integer)8);
 		assertEquals(sortedList.get(2),(Integer)16);
 		
+	
 //		assertEquals(miniTree.sortedList.get(0),3);
 //		assertEquals(miniTree.sortedList.get(1),8);
 //		assertEquals(miniTree.sortedList.get(2),16);
