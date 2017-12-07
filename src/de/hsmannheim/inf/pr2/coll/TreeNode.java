@@ -1,5 +1,8 @@
 package de.hsmannheim.inf.pr2.coll;
 
+
+import java.util.ArrayList;
+
 /**
  * Ein Knoten für einen Binärbaum.
  * Dieser Knoten kann selbst als eigener Binärbaum aufgefasst werden.
@@ -8,7 +11,6 @@ package de.hsmannheim.inf.pr2.coll;
  */
 public class TreeNode<E extends Comparable<E>> {
 
-	//value ist auch die Wurzel
   public E value = null;           // Wert des Knotens.
   public TreeNode<E> left = null;  // Linker Teilbaum.
   public TreeNode<E> right = null; // Rechter Teilbaum.
@@ -80,10 +82,7 @@ public class TreeNode<E extends Comparable<E>> {
       // Größe ist dieser Knoten plus solche in den Teilbäumen:
       int sizeLeft = size(node.getLeft());
       int sizeRight = size(node.getRight());
-      
-      
       return 1 + sizeLeft + sizeRight;
-      
     }
   }
 
@@ -122,81 +121,24 @@ public class TreeNode<E extends Comparable<E>> {
   public void printPostorder() {
     // NOCH NICHT IMPLEMENTIERT!
   }
-  
-  //Soll einen bin�ren, geordneten mit einem anderen bin�ren geordneten Baum vergleichen.
-  public boolean equalStructure(TreeNode<E> otherNode) {
-	  
-	  if(this.value == null && otherNode.value == null) {
-		  return true;
-	  }
-	  	
-	  else if(this != null && otherNode != null && otherNode instanceof TreeNode<?>) {
-		 
-		 if(this.getValue().equals(otherNode.getValue())) {
-			 
-			 
-			 if(getLeft() == null && otherNode.getLeft() == null) {
-				 return true;
-			 }
-			 
-			 else if(getRight() == null && otherNode.getRight() == null) {
-				 return true;
-			 }
-			 
-			 else if(getLeft() != null && otherNode.getLeft() == null) {
-				 return false;
-			 }
-			 
-			 else if(getLeft() == null && otherNode.getLeft() != null) {
-				 return false;
-			 }
-			 
-			 else if(getRight() != null && otherNode.getRight() == null) {
-				 return false;
-			 }
-			 
-			 
-			 else if(getRight() == null && otherNode.getRight() != null) {
-				 return false;
-			 }
-			 
-			 else if(getLeft().getValue().equals(otherNode.getLeft().getValue())) {
-				 
-				 if(getLeft().equalStructure(otherNode.getLeft())) {
-					 
-					 if(getRight().getValue().equals(otherNode.getRight().getValue())) {
-						 
-						 return getRight().equalStructure(otherNode.getRight());
-					 }
-					 
-					 else {
-						 					 
-						 return false;
-					 }
-					 
-				 }
-				 
-				 else {
-					 return false;
-				 }
-				 
-			 }
-			 
-			 else {
-				 return false;
-			 }
-		 }
-		 
-		 else {
-			 return false;
-		 }
-			 
-	}
-	 
-	else {
-		return false;
-	}
-		 
+
+  public ArrayList<E> getList(){
+    ArrayList<E> list = new ArrayList<>();
+    return fillList(list, this);
   }
-		  
+
+  private ArrayList<E> fillList(ArrayList<E> list, TreeNode<E> node){
+    if(node != null) {
+      if (node.getLeft() != null) {
+        fillList(list, node.left);
+      }
+      list.add(node.value);
+      if (node.getRight() != null) {
+        fillList(list, node.right);
+      }
+    }
+    return list;
+  }
+
+
 }
