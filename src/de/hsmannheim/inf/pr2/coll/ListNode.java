@@ -53,6 +53,7 @@ public class ListNode<E>  {
    * @return Die Restliste.
    */
   public ListNode<E>  getTail() {
+	
     return next;
   }
 
