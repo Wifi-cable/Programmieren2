@@ -70,7 +70,7 @@ public class TestSortiertMitBaum {
 	
 	@Test
 	public void testBiggerTree(){
-	ArrayList <Integer>sortedList= biggerTree2.sort();		
+	ArrayList <Integer>sortedList= biggerTree.sort();		
 	assertEquals(sortedList.get(0),(Integer)2);	
 	assertEquals(sortedList.get(1),(Integer)3);
 	assertEquals(sortedList.get(2),(Integer)8);

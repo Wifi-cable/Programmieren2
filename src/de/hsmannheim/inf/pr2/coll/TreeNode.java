@@ -121,24 +121,83 @@ public class TreeNode<E extends Comparable<E>> {
   public void printPostorder() {
     // NOCH NICHT IMPLEMENTIERT!
   }
-
-  public ArrayList<E> getList(){
-    ArrayList<E> list = new ArrayList<>();
-    return fillList(list, this);
+  /**
+   * aufgabe 2.2  implementierung 
+   * */
+  
+public boolean equalStructure(TreeNode<E> otherNode) {
+	  
+	  if(this.value == null && otherNode.value == null) {	//vergleicht ob beide werte null sind
+		  return true;
+	  }
+	  	
+	  else if((this != null) && (otherNode != null) && (otherNode instanceof TreeNode<?>)) {	
+		 //wenn  der zu vergleichende baum an der selben stelle einen knoten hat...
+		 if(this.getValue().equals(otherNode.getValue())) {
+			//nur wenn die aktuellen knoten den gleichen wert haben wird weiter verglichen. 
+			 
+			 if(getLeft() == null && otherNode.getLeft() == null) {	//wenn an beiden knoten keinen linken nachfolger haben
+				 return true;
+			 }
+			 
+			 else if(getRight() == null && otherNode.getRight() == null) {//wenn beide keinen rechten nachfolger haben 
+				 return true;
+			 }
+			 
+			 else if(getLeft() != null && otherNode.getLeft() == null) {	//wenn beim einen links kein knoten ist beim andern schon
+				 return false;
+			 }
+			 //wenn  ein baum links nichts hat, der andere schon
+			 else if(getLeft() == null && otherNode.getLeft() != null) {
+				 return false;
+			 }
+			 //wenn rechts von aktuellen knoten keiner ist aber der vergleichsbaum einen hat
+			 else if(getRight() != null && otherNode.getRight() == null) {
+				 return false;
+			 }
+			 
+			 //wenn rechts von aktuellen knoten noch einer kommt aber im vergleichsbaum nicht
+			 else if(getRight() == null && otherNode.getRight() != null) {
+				 return false;
+			 }
+			 //wenn der linke knoten der aktuellen knoten beider bäume gleich ist
+			 else if(getLeft().getValue().equals(otherNode.getLeft().getValue())) {
+				//ruf funktion rekursiv wieder auf 
+				 if(getLeft().equalStructure(otherNode.getLeft())) {
+					 //das selbe rechts 
+					 if(getRight().getValue().equals(otherNode.getRight().getValue())) {
+						 
+						 return getRight().equalStructure(otherNode.getRight());
+					 }
+					 
+					 else {
+						 					 
+						 return false;
+					 }
+					 
+				 }
+				 
+				 else {
+					 return false;
+				 }
+				 
+			 }
+			 
+			 else {
+				 return false;
+			 }
+		 }
+		 
+		 else {
+			 return false;
+		 }
+			 
+	}
+	 
+	else {
+		return false;
+	}
+		 
   }
-
-  private ArrayList<E> fillList(ArrayList<E> list, TreeNode<E> node){
-    if(node != null) {
-      if (node.getLeft() != null) {
-        fillList(list, node.left);
-      }
-      list.add(node.value);
-      if (node.getRight() != null) {
-        fillList(list, node.right);
-      }
-    }
-    return list;
-  }
-
 
 }
