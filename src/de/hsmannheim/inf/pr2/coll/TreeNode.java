@@ -4,8 +4,8 @@ package de.hsmannheim.inf.pr2.coll;
 import java.util.ArrayList;
 
 /**
- * Ein Knoten f√ºr einen Bin√§rbaum.
- * Dieser Knoten kann selbst als eigener Bin√§rbaum aufgefasst werden.
+ * Ein Knoten f¸r einen Bin‰rbaum.
+ * Dieser Knoten kann selbst als eigener Bin‰rbaum aufgefasst werden.
  *
  * @author Markus Gumbel
  */
@@ -17,7 +17,7 @@ public class TreeNode<E extends Comparable<E>> {
   public TreeNode<E> right = null; // Rechter Teilbaum.
 
   /**
-   * Erzeuge einen neuen Bin√§rbaum-Knoten. Nachfolger und Vorg√§nger sind nicht
+   * Erzeuge einen neuen Bin‰rbaum-Knoten. Nachfolger und Vorg‰nger sind nicht
    * gesetzt.
    *
    * @param v Der Wert des Knotens.
@@ -28,7 +28,7 @@ public class TreeNode<E extends Comparable<E>> {
   }
 
   /**
-   * Erzeuge einen neuen Bin√§rbaum(-Knoten), entspricht tree().
+   * Erzeuge einen neuen Bin‰rbaum(-Knoten), entspricht tree().
    * @param value Der Wert des Knotens.
    * @param left Der linke Teilbaum.
    * @param right Der rechte Teilbaum.
@@ -52,7 +52,7 @@ public class TreeNode<E extends Comparable<E>> {
   }
 
   /**
-   * Bestimme die H√∂he des Baums.
+   * Bestimme die Hˆhe des Baums.
    *
    * @return
    */
@@ -80,7 +80,7 @@ public class TreeNode<E extends Comparable<E>> {
     if (node == null) { // Leerer Baum?
       return 0; // Anzahl Elemente ist 0.
     } else { // Echter Teilbaum.
-      // Gr√∂√üe ist dieser Knoten plus solche in den Teilb√§umen:
+      // Grˆﬂe ist dieser Knoten plus solche in den Teilb‰umen:
       int sizeLeft = size(node.getLeft());
       int sizeRight = size(node.getRight());
 
@@ -108,7 +108,7 @@ public class TreeNode<E extends Comparable<E>> {
   }
 
   /**
-   * Durchl√§uft einen (Teil-)Baum vom Wurzelknoten an in
+   * Durchl‰uft einen (Teil-)Baum vom Wurzelknoten an in
    * Inorder-Reihenfolge und gibt die Werte auf die Konsole aus.
    *
    * @param node Wurzelknoten des (Teil-)Baums
@@ -126,7 +126,11 @@ public class TreeNode<E extends Comparable<E>> {
     // NOCH NICHT IMPLEMENTIERT!
   }
 
-  //Soll einen binaeren, geordneten mit einem anderen binaeren geordneten Baum vergleichen.
+  /**
+   * Rekursiver Vergleich auf Gleichheit von zwei bin‰ren geordneten B‰umen
+   * @param otherNode
+   * @return
+   */
   public boolean equalStructure(TreeNode<E> otherNode) {
 
     if(this.value == null && otherNode.value == null) {
@@ -204,7 +208,7 @@ public class TreeNode<E extends Comparable<E>> {
 
   // Aufgabe 3
   /**
-   * R√ºckgabe der ganzen Liste
+   * R¸ckgabe der ganzen Liste
    * @return
    */
   public ArrayList<E> getList(){
@@ -214,7 +218,7 @@ public class TreeNode<E extends Comparable<E>> {
 
   /**
    * Rekusiver aufbau einer Liste, die jeden vorhandenen Knoten
-   * in die Liste hinzuf√ºgt.
+   * in die Liste hinzuf¸gt.
    * @param list
    * @param node
    * @return
