@@ -49,19 +49,15 @@ public class TestSortiertMitBaum {
 	}
 
 	@Test
-	public void testMini() {
+	public void testMini() {	//tstet den mini tree, ein baum mit drei knoten, balanciert 
 		ArrayList <Integer>sortedList= miniTree2.sort();
 		assertEquals(sortedList.get(0),(Integer)3);
 		assertEquals(sortedList.get(1),(Integer)8);
 		assertEquals(sortedList.get(2),(Integer)16);
 		
-	
-//		assertEquals(miniTree.sortedList.get(0),3);
-//		assertEquals(miniTree.sortedList.get(1),8);
-//		assertEquals(miniTree.sortedList.get(2),16);
 	}
 	@Test
-	public void testMini2() {
+	public void testMini2() {	//anderer baum mit nur 3 knoten in anderer anordnung, nicht balanciert
 		ArrayList <Integer>sortedList= miniTree2.sort();
 		assertEquals(sortedList.get(0),(Integer)3);
 		assertEquals(sortedList.get(1),(Integer)8);
@@ -69,7 +65,7 @@ public class TestSortiertMitBaum {
 	}
 	
 	@Test
-	public void testBiggerTree(){
+	public void testBiggerTree(){	// testet grösserer baum, funktiniert die rekursion
 	ArrayList <Integer>sortedList= biggerTree.sort();		
 	assertEquals(sortedList.get(0),(Integer)2);	
 	assertEquals(sortedList.get(1),(Integer)3);
@@ -77,36 +73,26 @@ public class TestSortiertMitBaum {
 	assertEquals(sortedList.get(3),(Integer)12);
 	assertEquals(sortedList.get(4),(Integer)16);	
 	
-//	assertEquals(biggerTree.sortedList.get(0),2);	
-//	assertEquals(biggerTree.sortedList.get(1),3);
-//	assertEquals(biggerTree.sortedList.get(2),8);
-//	assertEquals(biggerTree.sortedList.get(3),12);
-//	assertEquals(biggerTree.sortedList.get(4),16);
+
 	}
 	@Test
-	public void testBiggerTree2(){
+	public void testBiggerTree2(){	// un ausgegleichener grösserer bauem
 	ArrayList <Integer>sortedList= biggerTree2.sort();	
 	assertEquals(sortedList.get(0),(Integer)3);	
 	assertEquals(sortedList.get(1),(Integer)5);
 	assertEquals(sortedList.get(2),(Integer)8);
 	assertEquals(sortedList.get(3),(Integer)16);
 	assertEquals(sortedList.get(4),(Integer)20);
-	
-//	assertEquals(biggerTree2.sortedList.get(0),3);	
-//	assertEquals(biggerTree2.sortedList.get(1),5);
-//	assertEquals(biggerTree2.sortedList.get(2),8);
-//	assertEquals(biggerTree2.sortedList.get(3),16);
-//	assertEquals(biggerTree2.sortedList.get(4),20);
 	}
 	@Test 
-	public void stringTree(){
+	public void stringTree(){	// anderer inhalt fuktioniert nicht wenn mit == verglichen wurde
 		ArrayList<String>sortedList=christmasTree.sort();
 		assertEquals(sortedList.get(0),"Ich bin ein Weihnachstsbaum. ");
 	}
 	@Test
-	public void nullTest(){	
+	public void nullTest(){	// testet ob methode mit dem wert null klarkommt
 		ArrayList<String>sortedList=nullTree.sort();
 		assertNull(sortedList.get(0),null);
-		//assertNull(nullTree.sortedList.get(0),null);
+	
 	}
 }

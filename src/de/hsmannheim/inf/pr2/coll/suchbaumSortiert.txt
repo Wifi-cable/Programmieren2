@@ -1,0 +1,30 @@
+Aufgabe 3.3
+
+Weil in einnem Suchbaum unten links der kleinste Knoten ist, und unten rechts
+ der grösste Knoten, kann man sehr leicht mit Suchbäumen sortieren. Im prinzip
+  muss ein Baum nur in Levelorder abgelaufen werden und jeder Knoten in eine 
+  geignete daten struktur eingefügt werden. Es hilft bei jedem Knoten erst zu prüfen 
+ob der da ist und ihn dann zu verabeiten. zu testen ob die node die man verabeiten 
+will gleich null ist,schien auch sinnvoll.
+Levelorder geht erst im Baum ganz nach unten links, verabeitet den Knoten, dann den
+ Eltern Knoten und dann den linken Nachfolger. Danach wird das ganze eine Ebene 
+ höher wiederholt.
+ pseudocode artig
+ proc sort()
+ 	if baum nicht leer ist than
+ 		sortNode(root)
+ 	fi
+ corp
+ 
+  funct sortNode(node)
+	sortNode(node.getLeft())
+	füge den aktuellen knoten in die liste ein
+	sortNode(node.getRight())     
+tcnuf	    
+ 
+Weil das Übungsblatt eine Methode ohne Parameter forderte, aber die aktuellen node
+ dem Algorytmus mitgegenben werden musste, haben wir eine parameterlose Mehtode
+ gebaut die eine Mehtode mit dem Parameterroot aufruft.  Diese geht dann 
+ rekutsiv den Baum durch und fügt in eine Liste ein. Die Liste ist ein Feld der
+  Klasse SeachTree, weil Nodes in jedem Baum vorkommen können, jedoch nur der
+ Seachtree sortiert ist.

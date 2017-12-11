@@ -6,24 +6,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestTreeComparison {
+	//9 verschiedene bäume.  laut Gumpel 1 baum == ein testfall
+	
 	TreeNode<Integer> emptyTree= new TreeNode<Integer>(null);	//zwei leere baueme zum vergleichen
 	TreeNode<Integer> nullTree= new TreeNode<Integer>(null);
-	//SearchTree<Integer> miniTree= new SearchTree<Integer>();	//minimaler baum mit gleicher füllung
+	//minimaler baum mit gleicher füllung
 	TreeNode<Integer> miniTree;
-	//SearchTree<Integer> miniTree2= new SearchTree<Integer>();
 	TreeNode<Integer> miniTree2;
-	//SearchTree<Integer> fakeTree= new SearchTree<Integer>();	//gleiche zahlen, andere reihenfolge
-	TreeNode<Integer>fakeTree;	//andere ordnung
-	//SearchTree<String>stringTree=new SearchTree<String>();
+	//gleiche zahlen, andere reihenfolge
+	TreeNode<Integer>fakeTree;	//andere ordnung 
 	TreeNode<String> stringTree;
-	//SearchTree<String>stringTree2=new SearchTree<String>();
 	TreeNode<String> stringTree2;
 	TreeNode<Integer> biggerTree;
-	//SearchTree<Integer> biggerTree=new SearchTree<Integer>();
-	//SearchTree<Integer> biggerTree2=new SearchTree<Integer>();
 	TreeNode<Integer>biggerTree2;
-	//SearchTree <Integer>backwards= new SearchTree<Integer>();
-	//SearchTree <Integer>slantedTree= new SearchTree<Integer>();
 	TreeNode<Integer>SlantedTree;
 
 	@Before
@@ -63,59 +58,7 @@ public class TestTreeComparison {
 	TreeNode<Integer> n15=new TreeNode<Integer>(4,n14, null);
 	TreeNode<Integer> n16=new TreeNode<Integer>(8,n15, null);
 	SlantedTree=new TreeNode<Integer>(16,n16, null);
-	
-	
-	
-	
-//	miniTree.add(8);
-//	miniTree2.add(8);
-//	
-//	miniTree.add(3);
-//	miniTree2.add(3);
-//	
-//	miniTree.add(16);
-//	miniTree2.add(16);
-//
-//	fakeTree.add(8);
-//	TreeNode<Integer> right=new TreeNode<Integer>(3);	// rueckwärts bauen
-//	TreeNode<Integer> left=new TreeNode<Integer>(16);
-//	fakeTree.root.left=left;
-//	fakeTree.root.right=right;
-//	
-//	stringTree.add("ich");
-//	stringTree.add("bin");
-//	stringTree.add("ein");
-//	stringTree.add("weihnachtsbaum");
-//	
-//	stringTree2.add("stern");
-//	stringTree2.add("kerzte");
-//	stringTree2.add("christbaumkugel");
-//	
-//	biggerTree.add(8);
-//	biggerTree.add(3);
-//	biggerTree.add(16);	//bis hier gleich miniTree , miniTree2 und biggerTree2
-//	biggerTree.add(2);
-//	biggerTree.add(12);
-//	
-//	biggerTree2.add(8);
-//	biggerTree2.add(3);
-//	biggerTree2.add(16);	//bis hier gleich miniTree , miniTree2 und biggerTree1
-//	biggerTree2.add(5);
-//	biggerTree2.add(20);
-//	
-//	backwards.add(20);
-//	backwards.add(16);
-//	backwards.add(12);
-//	backwards.add(5);
-//	backwards.add(3);
-//	backwards.add(2);
-//	
-//	slantedTree.add(3);
-//	slantedTree.add(8);
-//	slantedTree.add(16);
-
-	
-	
+		
 	}
 
 	@Test
@@ -131,7 +74,7 @@ public class TestTreeComparison {
 		assertTrue(miniTree2.equalStructure(miniTree2));	//identisch und gleich?
 	}
 	@Test
-	public void notEqual(){
+	public void notEqual(){	// allem  baume die nicht gleich sind
 		assertFalse(miniTree.equalStructure(emptyTree));
 		assertFalse(miniTree.equalStructure(fakeTree));
 		assertFalse(fakeTree.equalStructure(miniTree2));

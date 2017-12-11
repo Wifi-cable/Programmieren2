@@ -1,16 +1,16 @@
 package de.hsmannheim.inf.pr2.coll;
 
-//public class Auto extends Object implements Comparable<Auto>{
+//		aufgabe 1.2
 public class Auto {	
 	String marke;
 	String modell;
 	int ps;
-	public Auto(String marke,String modell, int ps) {
+	public Auto(String marke,String modell, int ps) {	//constructor
 		this.marke=marke;
 		this.modell=modell;
 		this.ps=ps;
 	}
-	String getModell(){
+	String getModell(){	// getter für die privaten felder.
 		return this.modell;
 	}
 	String getMarke(){
@@ -38,20 +38,22 @@ public class Auto {
 	}
 
 	@Override 
-	public String toString(){
-		
+	public String toString(){	// möglichst sinnvolle to string methode für autos
 		return "[Marke: "+marke+" Modell: "+modell+" PS anzahl: "+ps+" ]";
 	}
+	/*
+	 * hascode methode die hilft autos zu vergleichen wenn sie von den feldern her gleich sind aber ein anderes object erzeugt wird
+	 * nutzt primzahl und alle felder*/
 
 	@Override
-	public int hashCode(){
+	public int hashCode(){	
 	int prime= 41;
 	if((marke!= null)&&(modell!=null)){
 		prime= prime +marke.hashCode();
 		prime= prime+modell.hashCode();
 	}
 	
-	return (prime-ps)%5000;
+	return (prime-ps)%5000;	// modulo 
 		
 	}
 	

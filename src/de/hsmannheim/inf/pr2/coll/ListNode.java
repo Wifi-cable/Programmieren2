@@ -92,14 +92,13 @@ public class ListNode<E>  {
   }
 	 public  boolean contains(E e){
   
-		  if(this.getTail()!=null){
-			 // if(this.value!=null){			//folge nicht dem mull pointer.  wenn das auto null ist ignoriers
-			  if(this.value.equals(e)){
-				  System.out.println("hab eins gefunden");
+		  if(this.getTail()!=null){	//solagne es nachfolger gitb 
+			  if(this.value.equals(e)){		
+				 // System.out.println("hab eins gefunden");	// erfolg
 				  return true;
 			  }
-			  else{ 
-				  System.out.println("suche "+e.hashCode()+" ist nicht gleich "+value.hashCode()+" suche weiter");
+			  else{ //sontzt mache rekursiv weiter mit dem nächsten
+				//  System.out.println("suche "+e.hashCode()+" ist nicht gleich "+value.hashCode()+" suche weiter");
 				return this.getTail().contains(e);
 			  }
 			
@@ -108,40 +107,23 @@ public class ListNode<E>  {
 		  return this.value.equals(e);
 		  }
 	  }
-//		int countIf1(E e){
-//			if(this.getTail()!=null){
-//				//System.out.println("tail nicht null, auto: "+this.value.hashCode()+" suchwert: "+e.hashCode());
-//				if(this.value.equals(e)){
-//					//System.out.println("eins");
-//					return 1 + getTail().countIf1(e);
-//				}
-//			}
-//			else{
-//				if ( this.value.equals(e)){
-//					return 1+this.countIf1(e);
-//				}
-//				return this.countIf1(e);
-//			}
-//			System.out.println("letztes return statement");
-//			return 0; 
-//		  }
 		
 		public int countIf(E elem){
-			if(getTail()==null){
-				if(this.value.equals(elem)){
+			if(getTail()==null){	//wenn es keine nachfolger gibt werde noch den aktuellen knoten aus
+				if(this.value.equals(elem)){	
 					return 1;
 				}
 			}
-			else{
+			else{	// ansonsten zähle eins zur anzahl der gefundenen dazu in dem du wieder aufrufst plus 1
 				if(this.value.equals(elem)){
 					return 1+getTail().countIf(elem);
 				}
-				else{
+				else{	// wenn suchwert und aktuelles nicht identisch sind rufe nur rekursiv auf nächsten knoten auf
 					return getTail().countIf(elem);
 				}
 			}
 			
-			return 0; 
+			return 0; 	// wenn keins gefunden wurde gibt 0 zurücl
 		}
 		
 		

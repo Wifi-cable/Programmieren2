@@ -220,29 +220,13 @@ public class SearchTree<E extends Comparable<E>> implements Set<E> {
 //	  return root.getValue();
 //  }
   
-  /*
-   * 
-   * *aufgabe 3.2
-   * 
-   * */
-  public ArrayList<E>sort(){	//parameterloose methode die auf null checkt und die eigentliche methode aufruft
-	  if(!isEmpty()){
-		  sortNode(root);
-		}
-	  
-	  return sortierteListe;
-  }
-  
-  private void sortNode(TreeNode<E> node) {
-	    if (node != null) { // wenn die node exisitet ( baum nicht leer ist)
-	      
-		  if(node.getLeft()!=null){		//wenn der knoten einen linken nachvolger hat rufe dorthin auf
-			  sortNode(node.getLeft());
-	      }
-	      sortierteListe.add(node.getValue());	//füge den aktuellen knoten in die liste ein
-	      if(node.getRight()!= null){	// wen es einen rechten nachvolger oder teilbaum gibt
-	    	  sortNode(node.getRight());	// rufe methode rekursiv mit dem rechten auf
-	      }
+
+  public ArrayList<E> sort() {
+	    if (this.root != null){
+	      return root.getList();
 	    }
-	  }
+	    else{
+	      return new ArrayList<>();
+	    }
+	}
 }

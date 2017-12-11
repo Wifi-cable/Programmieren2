@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AutoListenTester {
-	// einige autos zum verleichen und zaelen
+	// einige autos zum verleichen und zaelen  
 	Auto vw= new Auto("VW","polo", 60);
 	Auto voksWagen= new Auto("VW","golf", 45);
 	Auto smart= new Auto("Smart","cabrio", 50);
@@ -38,9 +38,12 @@ public class AutoListenTester {
 	}
 
 	@Test
-	public void containTester() {
+	public void containTesterFalse() {
 		assertFalse(firstList.contains(sportwagen));	//sollte false sein
 		assertFalse(firstList.contains(potenzHelfer));
+	}
+		@Test
+	public void containTesterTrue() {	
 		assertTrue(firstList.contains(audi));		//ist wirklich drinn
 		assertTrue(firstList.contains(audi2));		// ist identisch, sollte also drinn sein
 		assertTrue(firstList.contains(vw));
@@ -49,7 +52,7 @@ public class AutoListenTester {
 	}
 	@Test
 	public void einDuplicateMitte(){
-		assertEquals(2, secondList.countIf(sportwagen));		// testet einen doppelten
+		assertEquals(2, secondList.countIf(sportwagen));	// testet einen doppelten
 		assertEquals(1, secondList.countIf(audi));			// kein doppelter, steht vorne
 		assertEquals(1, secondList.countIf(smart));			// kein doppelter, steht hinten
 	}
@@ -60,7 +63,7 @@ public class AutoListenTester {
 		assertEquals(0,thirdList.countIf(smart));	//nicht drin
 	}
 	@Test
-	public void nurEins(){
+	public void nurEins(){			//vergleicht 
 		assertTrue(single.contains(potenzHelfer));	
 		assertFalse(single.contains(vw));
 		assertEquals(1, single.countIf(potenzHelfer));

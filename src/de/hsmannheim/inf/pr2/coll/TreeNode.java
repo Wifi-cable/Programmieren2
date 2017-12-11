@@ -199,5 +199,30 @@ public boolean equalStructure(TreeNode<E> otherNode) {
 	}
 		 
   }
+//alena edit
+public ArrayList<E> getList(){
+    ArrayList<E> list = new ArrayList<>();
+    return fillList(list, this);
+  }
+
+  /**
+   * Rekusiver aufbau einer Liste, die jeden vorhandenen Knoten
+   * in die Liste hinzufügt.
+   * @param list
+   * @param node
+   * @return
+   */
+  private ArrayList<E> fillList(ArrayList<E> list, TreeNode<E> node){
+    if(node != null) {
+      if (node.getLeft() != null) {
+        fillList(list, node.left);
+      }
+      list.add(node.value);
+      if (node.getRight() != null) {
+        fillList(list, node.right);
+      }
+    }
+    return list;
+}
 
 }
