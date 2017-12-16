@@ -199,7 +199,6 @@ public boolean equalStructure(TreeNode<E> otherNode) {
 	}
 		 
   }
-//alena edit
 public ArrayList<E> getList(){
     ArrayList<E> list = new ArrayList<>();
     return fillList(list, this);
