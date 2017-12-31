@@ -8,7 +8,7 @@ import java.util.Iterator;
  *
  * @author Markus Gumbel
  */
-public class SearchTree  <E extends Comparable<E>> implements Set<E>,Iterator<E>{
+public class SearchTree  <E extends Comparable<E>> implements Set<E>{
 
   public TreeNode<E> root; // Wurzelknoten dieses Suchbaums.
   private ArrayList <E> sortierteListe=new ArrayList<E>();
@@ -258,16 +258,6 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>,Iterator<E>
 	      return new ArrayList<>();
 	    }
 	}
-
-@Override
-public boolean hasNext() {
-	// ?  inorder nehmen? 
-	return false;
+  //class Iterator{}
 }
 
-@Override
-public E next() {
-	//inorder nehmen, knoten zurück gebem
-	return null;
-}
-}

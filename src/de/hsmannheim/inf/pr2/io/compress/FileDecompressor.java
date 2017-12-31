@@ -119,7 +119,6 @@ public class FileDecompressor extends DecompressingInputStream {
         }
         return array;
     }
-
 }
 
 	/*

@@ -1,4 +1,4 @@
-package de.hsmannheim.inf.pr2.coll;
+package de.hsmannheim.inf.pr2;
 
 /**
  * Ein Knoten fÃ¼r einen BinÃ¤rbaum.
@@ -123,7 +123,7 @@ public class TreeNode<E extends Comparable<E>> {
     // NOCH NICHT IMPLEMENTIERT!
   }
   
-  //Soll einen binären, geordneten mit einem anderen binären geordneten Baum vergleichen.
+  //Soll einen binï¿½ren, geordneten mit einem anderen binï¿½ren geordneten Baum vergleichen.
   public boolean equalStructure(TreeNode<E> otherNode) {
 	  
 	  if(this.value == null && otherNode.value == null) {
