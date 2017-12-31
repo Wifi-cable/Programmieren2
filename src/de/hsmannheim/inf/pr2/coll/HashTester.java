@@ -59,9 +59,10 @@ public class HashTester<E> {
 		moreStrings.add((E)"Enterprise");
 		
 	}
+	// teste fast maximale kollisionen. integer
 	@Test 
 	public void testCollisions(){
-		System.out.println(collideMax.mkString());
+		//System.out.println(collideMax.mkString());	// debug feature
 		for(int i=10;i<70;i=(i+10)){
 		assertTrue(collideMax.contains((E)(Integer)i));
 		}	
@@ -70,7 +71,7 @@ public class HashTester<E> {
 		}
 	}
 	
-	//tested integer
+	//tested integer  leicht testbar
 	@Test
 	public void removeFrontInteger() {
 		assertTrue(oneStepTable.contains((E)(Integer)10));
@@ -78,26 +79,26 @@ public class HashTester<E> {
 		assertFalse(oneStepTable.contains((E)(Integer)10));
 		//assertEquals(oneStepTable.hashtable[0], 10);
 	}
-	//@Test
+	@Test
 	public void removeLast(){
 		assertTrue(oneStepTable.contains((E)(Integer)1));
 		oneStepTable.remove((E)(Integer)1);
 		assertFalse(oneStepTable.contains((E)(Integer)1));
 	}
-	//@Test
+	@Test
 	public void removeCenter(){
 		assertTrue(twoStep.contains((E)new Integer(2)));
 		twoStep.remove((E)(Integer)2);
 		assertFalse(twoStep.contains((E) (Integer)2));
 	}
-	//schlaegt der versuch fehl etwas zu löschen das nicht drin ist?
-	//@Test
+	//schlaegt der versuch fehl, etwas zu löschen das nicht drin ist? (sollte er zumindest)
+	@Test
 	public void removeNotContained(){
 		assertFalse(twoStep.contains((E) (Integer)10));
 		assertFalse(twoStep.remove((E)new Integer(10)));
 	}
 	//schlägt der test fehl etwas zu entfernen das schon endfernt wurde?
-	//@Test
+	@Test
 	public void removeDeleted(){
 		twoStep.remove((E)(Integer)2);
 		assertFalse(twoStep.contains((E) (Integer)2));
@@ -105,30 +106,32 @@ public class HashTester<E> {
 	}
 //tests fuer strings
 	
-	//@Test
+	@Test
 	public void rmString(){
 		assertTrue(onlyString.contains((E)"you"));	// string wirklich drin
 		onlyString.remove((E)"you");				// string endfernt
 		assertFalse(onlyString.contains((E)"you"));	// string jetzt weg
 		assertFalse(onlyString.remove((E)"you"));	// kann auch nicht mehr gelöscht werden
 	}
+	// testet einen string der nie drin war. löschen sollte false ergeben 
 	@Test
-	public void noSuchString(){
-		assertFalse(onlyString.contains((E)"pumping lemma"));
+	public void noSuchString(){	
+		assertFalse(onlyString.contains((E)"pumping lemma"));	// ueberprueft ob der sting wirklich nicht drin ist. 
 		assertFalse(onlyString.remove((E)"pumping lemma"));
 	}
-//	@Test
+	// testet ob alles gelöscht werden kann.  
+	@Test
 	public void dellAll(){
-		System.out.println(onlyString.mkString());
+		//System.out.println(onlyString.mkString());	// debug feature
 		assertTrue(onlyString.remove((E)"may"));
 		assertTrue(onlyString.remove((E)"the"));
-		assertTrue(onlyString.remove((E)"force"));
+		assertTrue(onlyString.remove((E)"force"));	// professors code gab -10 als hashwert aus. leider faengt ein array bei 0 an. 
 		assertTrue(onlyString.remove((E)"be"));
 		assertTrue(onlyString.remove((E)"with"));
-		assertTrue(onlyString.contains((E)"you"));
-		assertTrue(onlyString.remove((E)"you"));
+		assertTrue(onlyString.contains((E)"you"));	// dieser string wurde rehashed, weil es zur kollision kam 
+		assertTrue(onlyString.remove((E)"you"));	// solle trozdem gefunden werden und gelöscht
 		
-		System.out.println(onlyString.mkString());
+		//System.out.println(onlyString.mkString());	// debug feature
 		assertEquals(onlyString.size(),0);
 	}
 	
