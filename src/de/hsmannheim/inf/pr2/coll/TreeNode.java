@@ -205,7 +205,6 @@ public boolean equalStructure(TreeNode<E> otherNode) {
 		 
   }
 
-
 /*
 
    * Rekusiver aufbau einer Liste, die jeden vorhandenen Knoten

@@ -8,7 +8,7 @@ import java.util.Iterator;
  *
  * @author Markus Gumbel
  */
-public class SearchTree<E extends Comparable<E>> implements Set<E> {
+public class SearchTree  <E extends Comparable<E>> implements Set<E>,Iterator<E>{
 
   public TreeNode<E> root; // Wurzelknoten dieses Suchbaums.
   private ArrayList <E> sortierteListe=new ArrayList<E>();
@@ -128,6 +128,7 @@ public class SearchTree<E extends Comparable<E>> implements Set<E> {
    * @return True, falls Element entfernt wurde, false sonst.
    */
   public boolean remove(E o) {
+	  
     return remove(root, o);
   }
 
@@ -139,8 +140,36 @@ public class SearchTree<E extends Comparable<E>> implements Set<E> {
    * @param o Schlüssel (int-Wert), der entfernt werden soll
    * @return True, falls Element entfernt wurde, false sonst.
    */
+  public void remove(){}
   private boolean remove(TreeNode<E> n, E o) {
-    // NOCH NICHT IMPLEMENTIERT!
+   /*
+    * public TreeNode deleteBSTNode(int value,TreeNode node)
+{
+    if(node==null)
+    {
+        System.out.println("the value " + value + " is not found");
+        return null;
+    }
+    //delete
+    if(node.data>value) node.left = deleteBSTNode(value,node.left);
+    else if(node.data<value) node.right = deleteBSTNode(value,node.right);
+    else{
+        if(node.isLeaf())
+            return null;
+        if(node.right==null)
+            return node.left;
+        if(node.left==null)
+            return node.right;
+
+        TreeNode successor = findMax(node.left);
+        int data = successor.data;
+        deleteBSTNode(data, node.left);
+        node.data = data;
+
+
+    }
+    return node;
+}*/
     return false;
   }
 
@@ -172,8 +201,8 @@ public class SearchTree<E extends Comparable<E>> implements Set<E> {
   /**
    * Entfernt alle Elemente aus dem Baum.
    */
-  public void clear() {
-    // NOCH NICHT IMPLEMENTIERT!
+  public void clear() {//baum  nicht mehr gefunden
+    root=null;
   }
 
   /**
@@ -229,4 +258,16 @@ public class SearchTree<E extends Comparable<E>> implements Set<E> {
 	      return new ArrayList<>();
 	    }
 	}
+
+@Override
+public boolean hasNext() {
+	// ?  inorder nehmen? 
+	return false;
+}
+
+@Override
+public E next() {
+	//inorder nehmen, knoten zurück gebem
+	return null;
+}
 }
