@@ -102,42 +102,24 @@ public class Hashtable<E> implements Set<E> {
    * @return True, wenn gefunden und gelöscht, sonst false.
    */
   
-  /*
-   * wo sollte remove hin? in der beschreibung steht nix von welches element.  also keine parameter.
-   * 
-   * contains code ansehen, versuchen ihn zu verwenden.   das mit dem add ist zu komplieziert. und es funst net */
   
   public boolean remove(E element) {	//finde tableEntry setze auf überschreibbar
-//find the bucked. like the add method
-	    int expectedIndex = hash(element.hashCode(), 0); // Erstes versuchtes Bucket.
-	    int idx = expectedIndex;
-	    int counter = 1;
-	    HashtableEntry toEmpty;
-	    toEmpty= hashtable[idx];
-	    if(toEmpty.isSame(element)){
-	    	toEmpty.delete();
-	    	idx = hash(expectedIndex, counter);    // Alternativplatz.
-	    	counter++;
-	    	
-	    	return true;
-	    }
-	    while ((hashtable[idx]!=null)&&(idx!=expectedIndex)) {
-	    	System.out.print(counter+" ");
-	    	//toEmpty= hashtable[idx];
-	    	if ((toEmpty.isSame(element))) {	
-	    		toEmpty.delete();
-	    		return true;
+
+	  int oldIndex = hash(element.hashCode(), 0); // Erstes versuchtes Bucket.
+	    int index = oldIndex;
+	    int i = 1; 
+
+	    while(hashtable[index]!=null){	// suche bis du bei einem leeren eintrag bist, denn element ist vieleicht nicht wo erwartet (kollision)
+	      if (hashtable[index].isSame(element)&& (!hashtable[index].isDeleted())){
+	    	  hashtable[index].delete();	// wenn du es gefunden hast, loesche es,
+	        return true;
 	      }
-	
-	    	if(toEmpty.isDeleted()){	//bug 
-	    		System.out.println("ist schon gelöscht");
-	    		return false;
-	    }	
-	      idx = hash(expectedIndex, counter);    // Alternativplatz.
-//	      if (idx == expectedIndex) {// Alle buckets wurden besucht, aber das Element nicht gefunden.
-//	        return false;
-//	      }
-	      counter++;
+	      index = hash(oldIndex, i);    // Alternativplatz suchen
+	      if (index == oldIndex) {
+	        // Alle buckets wurden besucht, aber das Element nicht gefunden  oder es ist schon gelöscht
+	        return false;
+	      }
+	      i++;
 	    }
 	    return false; 
 	  

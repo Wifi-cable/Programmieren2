@@ -21,7 +21,8 @@ public class HashTester<E> {
 	Hashtable <E>onlyString= new Hashtable<E>(7,3);
 	Hashtable <E>moreStrings= new Hashtable<E>(21,1);
 	Hashtable <E>collideMax = new Hashtable<E>(10);
-	
+	Hashtable<E> onlyOne=  new Hashtable<E>();
+	Hashtable<E> emptyTable=  new Hashtable<E>();
 	@Before
 	public void setUp() throws Exception {
 		Integer content;
@@ -57,6 +58,8 @@ public class HashTester<E> {
 		moreStrings.add((E)"the");
 		moreStrings.add((E)"starship");
 		moreStrings.add((E)"Enterprise");
+		
+		onlyOne.add((E)"Frodo ist ein Hobbit");
 		
 	}
 	// teste fast maximale kollisionen. integer
@@ -134,8 +137,17 @@ public class HashTester<E> {
 		//System.out.println(onlyString.mkString());	// debug feature
 		assertEquals(onlyString.size(),0);
 	}
-	
-	
+	//ein einziger string im table.
+	@Test
+	public void onlyString(){
+		assertTrue(onlyOne.remove((E)"Frodo ist ein Hobbit"));
+		assertFalse(onlyOne.remove((E)"Frodo ist ein Hobbit"));
+	}
+	// löschen in einem leeren hashtable. kein  nullppinter und keien endloos schleife
+	@Test
+	public void empty(){
+		assertFalse(emptyTable.remove((E)"any sting"));
+	}
 
 }
 
