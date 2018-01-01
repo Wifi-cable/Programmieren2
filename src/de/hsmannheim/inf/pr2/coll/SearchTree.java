@@ -10,7 +10,8 @@ import java.util.Iterator;
  */
 public class SearchTree  <E extends Comparable<E>> implements Set<E>{
 
-  public TreeNode<E> root; // Wurzelknoten dieses Suchbaums.
+ // public SearchTreeNode<E> root; // Wurzelknoten dieses Suchbaums.
+  public TreeNode<E> root;
   private ArrayList <E> sortierteListe=new ArrayList<E>();
 
 
@@ -26,8 +27,11 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
     // Strategie: Wir suchen den Knoten, der nach dem Einfügen des neues
     // Elements der Elternknoten ist.
 
-    TreeNode<E> parent = null; // (Vorläufiger) Elternknoten
-    TreeNode<E> node = root; // (Vorläufiger) Kindknoten
+	TreeNode<E> parent = null; // (Vorläufiger) Elternknoten
+	TreeNode<E> node = root; // (Vorläufiger) Kindknoten
+
+   // SearchTreeNode<E> parent = null; // (Vorläufiger) Elternknoten
+   // SearchTreeNode<E> node = root; // (Vorläufiger) Kindknoten
 
     // Solange der aktuelle Kindknoten nicht null ist...
     while (node != null) {
@@ -174,8 +178,8 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
   }
 
   public Iterator<E> iterator() {
-    // Noch nicht implementiert!
-    return null;
+
+    return  new SeachTreeIterator();
   }
 
   /**
@@ -245,9 +249,9 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
     // NOCH NICHT IMPLEMENTIERT!
   }
 
-//  public E getValue(){
-//	  return root.getValue();
-//  }
+  public E getValue(){
+	  return root.getValue();
+  }
   
 
   public ArrayList<E> sort() {
@@ -258,6 +262,37 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
 	      return new ArrayList<>();
 	    }
 	}
-  //class Iterator{}
+  class SeachTreeIterator implements Iterator<E>{
+	
+//	  TreeNode <E> root;
+//	  TreeNode <E> start;
+//	  TreeNode <E> nodePointer;
+	  ArrayList<E> treeList=sort();
+	  int pointer=0;
+//	  
+//	  SeachTreeIterator(TreeNode<E> root){
+//		  this.root=root;
+//		  start=root;	//temporaere zuweisung 
+//		  while(start.getLeft()!=null){
+//			  start=start.getLeft();
+//		  }
+//		  this.nodePointer=start;
+//	  }
+	  
+	@Override
+	public boolean hasNext() {	
+		return next()!=null;
+	}
+
+	@Override
+	public E next() {
+		E ret=null;
+		if(pointer<treeList.size()){
+		 ret= treeList.get(pointer);
+		 pointer++;
+		}
+		return ret;
+	}
+	}
 }
 

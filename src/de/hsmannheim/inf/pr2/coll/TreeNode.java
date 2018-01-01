@@ -229,7 +229,33 @@ public boolean equalStructure(TreeNode<E> otherNode) {
 	     ArrayList<E> list = new ArrayList<>();
 	     return fillList(list, this);
 	}
-
+//  public boolean hasNextNode(){
+//	  return (nextNode(this)!=null);
+//  }
+ 
+  
+  							//denkfehler meinerseits 
+  
+//  private boolean hasNextNode(TreeNode<E> node){
+//	  boolean ret=false;
+//	  if(node!= null){
+//		  hasNextNode(node.getLeft());
+//		  ret=true;
+//	      hasNextNode(node.getRight());
+//	      return ret;
+//	  }
+//	
+//	  return ret;
+//  }
+//  public TreeNode <E>nextNode(TreeNode<E> node){
+//	  if(this.getLeft()!=null){
+//		return  nextNode(getLeft());
+//	  }
+//	  return this;
+//	  if(this.getRight()!=null){
+//		 return nextNode(getRight());
+//	  }
+//  }
 
 }
 
