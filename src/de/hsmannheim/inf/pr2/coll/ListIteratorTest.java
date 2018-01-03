@@ -55,18 +55,16 @@ public class ListIteratorTest {
 		assertFalse(itr.hasNext());
 	}
 	
-	/**
-	 * NullPointerException, bei zuweisen eines Objektes ohne ein einziges Element.
-	 */
-	/*@Test
-	public void testHasNext4() {
+	// NullPointerException, bei zuweisen eines Objektes ohne ein einziges Element.
+	@Test
+	public void testHasNext4a() {
 		List<Integer> list4 = new List<Integer>();
 		Iterator<Integer> itr = list4.iterator();
 		assertFalse(itr.hasNext());
-	}*/
+	}
 	
 	/**
-	 * Einfügen der Elemente, nach Erzeugen des Iterators
+	 * Einfï¿½gen der Elemente, nach Erzeugen des Iterators
 	 */
 	@Test
 	public void testHasNext4() {
@@ -103,7 +101,7 @@ public class ListIteratorTest {
 	}
 	
 	/**
-	 * Test für Next???
+	 * Test fï¿½r Next???
 	 */
 	@Test
 	public void testNext() {

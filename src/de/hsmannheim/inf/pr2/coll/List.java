@@ -43,9 +43,9 @@ public class List<E> implements Container<E> {
 
 
   /**
-   * Fügt ein Element an das Ende der Liste an.
+   * Fï¿½gt ein Element an das Ende der Liste an.
    *
-   * @param value Element, das eingefügt werden soll.
+   * @param value Element, das eingefï¿½gt werden soll.
    */
   public void addLast(E value) {
     ListNode node = new ListNode(value); // Erzeuge Knoten.
@@ -53,21 +53,21 @@ public class List<E> implements Container<E> {
     ListNode p = head; // Hilfsvariable.
     if (p == null) { // Leere Liste?
       head = node; // Head ist jetzt der neue Knoten.
-    } else { // Liste enthält Elemente.
+    } else { // Liste enthï¿½lt Elemente.
       while (p.getTail() != null) { // p am Ende?
         p = p.getTail(); // p wandert weiter.
       }
-      p.next = node; // Füge am Ende an.
+      p.next = node; // Fï¿½ge am Ende an.
     }
   }
 
   /**
-   * Überprüft, ob die Liste Elemente enthält.
+   * ï¿½berprï¿½ft, ob die Liste Elemente enthï¿½lt.
    *
    * @return Wahr, wenn die Liste leer ist, falsch sonst.
    */
   public boolean isEmpty() {
-    // Es könnte auch überprüft werden, ob size() 0 liefert,
+    // Es kï¿½nnte auch ï¿½berprï¿½ft werden, ob size() 0 liefert,
     // dieser Test ist jedoch schneller:
     return head == null;
   }
@@ -91,7 +91,7 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * Gibt die Liste auf die Console aus.  Eine bessere Lösung ist toString().
+   * Gibt die Liste auf die Console aus.  Eine bessere Lï¿½sung ist toString().
    */
   public void print() {
     System.out.print("( ");
@@ -111,7 +111,7 @@ public class List<E> implements Container<E> {
    * @return Textdarstellung der Liste.
    */
   public String toString() {
-    // Anmerkung: StringBuffer wäre die bessere Lösung. Egal.
+    // Anmerkung: StringBuffer wï¿½re die bessere Lï¿½sung. Egal.
     String text = "";
     ListNode<E> p = head;
     while (p != null) {
@@ -162,7 +162,7 @@ public class List<E> implements Container<E> {
   /**
    * @param idx
    * @return Wert an Position <code>idx</code> oder -1 im Fehlerfall,
-   * wenn der Index ungültig ist.
+   * wenn der Index ungï¿½ltig ist.
    */
   public E getAt(int idx) {
     // NOCH NICHT IMPLEMENTIERT!
@@ -170,9 +170,9 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * Überschreibe den Wert an Position <code>idx</code> mit <code>value</code>.
+   * ï¿½berschreibe den Wert an Position <code>idx</code> mit <code>value</code>.
    * Es wird eine Fehlermeldung ausgegeben, wenn <code>idx</code> eine
-   * üngültige Position ist.
+   * ï¿½ngï¿½ltige Position ist.
    *
    * @param idx
    * @param value
@@ -196,10 +196,10 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * Fügt eine andere Liste an das Ende dieser Liste an.
-   * Achtung! Die angefügte Liste könnte auch weiterhin
+   * Fï¿½gt eine andere Liste an das Ende dieser Liste an.
+   * Achtung! Die angefï¿½gte Liste kï¿½nnte auch weiterhin
    * doppelt verwendet werden. Das wird hier NICHT gemacht,
-   * statt dessen wird die ursprüngliche Liste geleert.
+   * statt dessen wird die ursprï¿½ngliche Liste geleert.
    *
    * @param otherList Die andere Liste.
    */
@@ -208,7 +208,7 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * Überprüft, ob der der Wert <code>value</code> in der Liste
+   * ï¿½berprï¿½ft, ob der der Wert <code>value</code> in der Liste
    * enthalten ist.
    *
    * @param value
@@ -227,7 +227,9 @@ protected class ListIterator implements Iterator<E>{
 	}
 	@Override
 	public boolean hasNext() {
-		
+		if(head==null){
+			return false;
+		}
 		return current.getTail()!=null;
 	}
 
