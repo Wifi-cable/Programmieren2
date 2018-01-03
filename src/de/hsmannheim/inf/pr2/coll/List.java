@@ -2,6 +2,8 @@ package de.hsmannheim.inf.pr2.coll;
 
 import java.util.Iterator;
 
+import de.hsmannheim.inf.pr2.coll.SearchTree.SeachTreeIterator;
+
 /**
  * @author Markus Gumbel
  */
@@ -41,9 +43,9 @@ public class List<E> implements Container<E> {
 
 
   /**
-   * FÃ¼gt ein Element an das Ende der Liste an.
+   * Fügt ein Element an das Ende der Liste an.
    *
-   * @param value Element, das eingefÃ¼gt werden soll.
+   * @param value Element, das eingefügt werden soll.
    */
   public void addLast(E value) {
     ListNode node = new ListNode(value); // Erzeuge Knoten.
@@ -51,21 +53,21 @@ public class List<E> implements Container<E> {
     ListNode p = head; // Hilfsvariable.
     if (p == null) { // Leere Liste?
       head = node; // Head ist jetzt der neue Knoten.
-    } else { // Liste enthÃ¤lt Elemente.
+    } else { // Liste enthält Elemente.
       while (p.getTail() != null) { // p am Ende?
         p = p.getTail(); // p wandert weiter.
       }
-      p.next = node; // FÃ¼ge am Ende an.
+      p.next = node; // Füge am Ende an.
     }
   }
 
   /**
-   * ÃœberprÃ¼ft, ob die Liste Elemente enthÃ¤lt.
+   * Überprüft, ob die Liste Elemente enthält.
    *
    * @return Wahr, wenn die Liste leer ist, falsch sonst.
    */
   public boolean isEmpty() {
-    // Es kÃ¶nnte auch Ã¼berprÃ¼ft werden, ob size() 0 liefert,
+    // Es könnte auch überprüft werden, ob size() 0 liefert,
     // dieser Test ist jedoch schneller:
     return head == null;
   }
@@ -89,7 +91,7 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * Gibt die Liste auf die Console aus.  Eine bessere LÃ¶sung ist toString().
+   * Gibt die Liste auf die Console aus.  Eine bessere Lösung ist toString().
    */
   public void print() {
     System.out.print("( ");
@@ -109,7 +111,7 @@ public class List<E> implements Container<E> {
    * @return Textdarstellung der Liste.
    */
   public String toString() {
-    // Anmerkung: StringBuffer wÃ¤re die bessere LÃ¶sung. Egal.
+    // Anmerkung: StringBuffer wäre die bessere Lösung. Egal.
     String text = "";
     ListNode<E> p = head;
     while (p != null) {
@@ -160,7 +162,7 @@ public class List<E> implements Container<E> {
   /**
    * @param idx
    * @return Wert an Position <code>idx</code> oder -1 im Fehlerfall,
-   * wenn der Index ungÃ¼ltig ist.
+   * wenn der Index ungültig ist.
    */
   public E getAt(int idx) {
     // NOCH NICHT IMPLEMENTIERT!
@@ -168,9 +170,9 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * Ãœberschreibe den Wert an Position <code>idx</code> mit <code>value</code>.
+   * Überschreibe den Wert an Position <code>idx</code> mit <code>value</code>.
    * Es wird eine Fehlermeldung ausgegeben, wenn <code>idx</code> eine
-   * Ã¼ngÃ¼ltige Position ist.
+   * üngültige Position ist.
    *
    * @param idx
    * @param value
@@ -190,14 +192,14 @@ public class List<E> implements Container<E> {
   }
 
   public Iterator<E> iterator() {
-    return null;
+    return new ListIterator(head);
   }
 
   /**
-   * FÃ¼gt eine andere Liste an das Ende dieser Liste an.
-   * Achtung! Die angefÃ¼gte Liste kÃ¶nnte auch weiterhin
+   * Fügt eine andere Liste an das Ende dieser Liste an.
+   * Achtung! Die angefügte Liste könnte auch weiterhin
    * doppelt verwendet werden. Das wird hier NICHT gemacht,
-   * statt dessen wird die ursprÃ¼ngliche Liste geleert.
+   * statt dessen wird die ursprüngliche Liste geleert.
    *
    * @param otherList Die andere Liste.
    */
@@ -206,7 +208,7 @@ public class List<E> implements Container<E> {
   }
 
   /**
-   * ÃœberprÃ¼ft, ob der der Wert <code>value</code> in der Liste
+   * Überprüft, ob der der Wert <code>value</code> in der Liste
    * enthalten ist.
    *
    * @param value
