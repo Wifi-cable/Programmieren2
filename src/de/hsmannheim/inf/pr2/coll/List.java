@@ -2,7 +2,7 @@ package de.hsmannheim.inf.pr2.coll;
 
 import java.util.Iterator;
 
-import de.hsmannheim.inf.pr2.coll.SearchTree.SeachTreeIterator;
+
 
 /**
  * @author Markus Gumbel
@@ -236,10 +236,12 @@ protected class ListIterator implements Iterator<E>{
 	@Override
 	public E next() {
 		ListNode <E>currentTail=current;
+		E localValue=null;
 		if(hasNext()){	// do not follow the Null pointer.
+			 localValue=currentTail.value;
 			current= current.getTail();	// ListNode ++ geht ja schlecht. 
 		}
-		return (E) currentTail;
+		return (E)localValue;
 	}
 	}
 }

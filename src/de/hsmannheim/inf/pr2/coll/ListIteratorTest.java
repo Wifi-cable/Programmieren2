@@ -16,6 +16,7 @@ public class ListIteratorTest {
 	List<String> list5 = new List<String>();
 	List<String> list6 = new List<String>();	
 	List<String> list7 = new List<String>();
+	List<Integer> list8= new List<Integer>();
 	
 	@Before
 	public void setUp() {	
@@ -26,6 +27,9 @@ public class ListIteratorTest {
 		list5.add("Hallo");
 		list5.add("nichts");
 		list6.add("Lord");
+		for(int fill=1; fill<=12;fill++){
+			list8.add(fill);
+		}
 	}
 	
 	/**
@@ -108,7 +112,25 @@ public class ListIteratorTest {
 		Iterator<Integer> itr = list1.iterator();
 		itr.next();
 	}
-
-	
-
+	@Test
+	public void nextTest(){
+		Iterator<Integer> number=list8.iterator();	//geht macht aber liste nicht iterirbar
+		int content=1;
+		while(number.hasNext()){
+			assertEquals(number.next(),(Integer)content);
+			content++;
+		}
+		assertNull(number.next());
+		}
+	@Test
+	public void LenghtTests(){
+		Iterator<Integer> count=list1.iterator();
+		int loopCount=0;
+		while(count.hasNext()){
+			loopCount++;
+		}
+		assertNull(count.next());
+		assertEquals(2, loopCount);
+	}
 }
+
