@@ -264,20 +264,10 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
 	}
   class SeachTreeIterator implements Iterator<E>{
 	
-//	  TreeNode <E> root;
-//	  TreeNode <E> start;
-//	  TreeNode <E> nodePointer;
+	  TreeNode <E> root;
 	  ArrayList<E> treeList=sort();
 	  int pointer=0;
-//	  
-//	  SeachTreeIterator(TreeNode<E> root){
-//		  this.root=root;
-//		  start=root;	//temporaere zuweisung 
-//		  while(start.getLeft()!=null){
-//			  start=start.getLeft();
-//		  }
-//		  this.nodePointer=start;
-//	  }
+
 	  
 	@Override
 	public boolean hasNext() {	
@@ -293,6 +283,7 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
 		}
 		return ret;
 	}
+
 	}
 }
 

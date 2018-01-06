@@ -14,28 +14,35 @@ public class SearchTreeIteratorTest {
 
 	SearchTree<Integer> miniTree1 = new SearchTree<Integer>();
 	SearchTree<Integer> miniTree2 = new SearchTree<Integer>();
-	SearchTree<Integer> miniTree3 = new SearchTree<Integer>();
+	SearchTree<Integer> integerTree = new SearchTree<Integer>();
 	SearchTree<String> stringTree1 = new SearchTree<String>();
 	SearchTree<String> stringTree2 = new SearchTree<String>();
 	SearchTree<Integer> nullTree = new SearchTree<Integer>();
-
-
+	
+	SearchTree<String> stringNull= new SearchTree<String>();
 	@Before
 	public void setUp() {
 
 		miniTree1.add(8);
 		miniTree1.add(3);
 		miniTree1.add(16);
-		//miniTree1.sort();
 		
-		miniTree3.add(20);
+		for(int i=2;i<16; i+=2){
+		miniTree2.add(i);
+		}
+		
+		integerTree.add(20);
+		integerTree.add(10);
+		integerTree.add(30);
+		integerTree.add(5);
+		integerTree.add(7);
+		integerTree.add(25);
+		integerTree.add(35);
 		
 		nullTree.add(null);
-		//nullTree.sort();
-		
+				
 		stringTree1.add("G");
-		stringTree1.add("C");
-		//stringTree1.sort();
+		stringTree1.add("C");	
 	}
 	
 	/**
@@ -49,7 +56,7 @@ public class SearchTreeIteratorTest {
 	
 	/**
 	 * Testen eines nullTree, es sind keine Elemente vorhanden.
-	 * Es wurde null durch add hinzugefügt.
+	 * Es wurde null durch add hinzugefï¿½gt.
 	 */
 	@Test
 	public void testHasNext2() {
@@ -58,20 +65,19 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Testen von vorzeitigen einfügen durch add und nach dem erzeugen des Iterators,
-	 * ein weiteres Element hinzufügen.
+	 * Testen von vorzeitigen einfï¿½gen durch add und nach dem erzeugen des Iterators,
+	 * ein weiteres Element hinzufï¿½gen.
 	 */
 	@Test
 	public void testHasNext3() {
 		miniTree2.add(5);
 		Iterator<Integer> itr = miniTree2.iterator();
 		miniTree2.add(4);
-		//miniTree2.sort();
 		assertTrue(itr.hasNext());
 	}
 	
 	/**
-	 * Selber Test wie bei testHasNext1, bloß mit Strings.
+	 * Selber Test wie bei testHasNext1, bloï¿½ mit Strings.
 	 */
 	@Test
 	public void testHasNext4() {
@@ -80,7 +86,7 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Selber Test wie bei testHasNext3, bloß mit Strings.
+	 * Selber Test wie bei testHasNext3, bloï¿½ mit Strings.
 	 */
 	@Test
 	public void testHasNext5() {
@@ -97,14 +103,14 @@ public class SearchTreeIteratorTest {
 	 */
 	@Test
 	public void testHasNext6() {
-		Iterator<Integer> itr = miniTree3.iterator();
+		Iterator<Integer> itr = integerTree.iterator();
 		assertTrue(itr.hasNext());
 	}
 	
 	/**
-	 * Test eines NullTree, bei dem keine Elemete hinzugefügt worden sind.
+	 * Test eines NullTree, bei dem keine Elemete hinzugefï¿½gt worden sind.
 	 * 
-	 * NullPointer erwartet? Es wurde kein Element hinzugefügt, es existiert auch keines im Baum.
+	 * NullPointer erwartet? Es wurde kein Element hinzugefï¿½gt, es existiert auch keines im Baum.
 	 */
 	@Test
 	public void testHasNext7() {
@@ -114,23 +120,54 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Test für next() ????
+	 * Test fï¿½r next() ????
 	 */
 	@Test
 	public void testNext() {
-		Iterator<Integer> itr = miniTree1.iterator();
-		itr.next();
+		Iterator<Integer> itr = miniTree2.iterator();
+		for(int i=2;i<16; i+=2){
+			assertEquals((Integer)i,itr.next());
+		}
+		assertFalse(itr.hasNext());
+		assertEquals((1+1),2);
 	}
 	
 	/**
-	 * Teste einen Baum, bei dem keine Elemente hinzugefügt wurden.
+	 * Teste einen Baum, bei dem keine Elemente hinzugefï¿½gt wurden.
 	 * 
-	 * NullPointer erwartet? Es wurde kein Element hinzugefügt, es existiert auch keines im Baum.
+	 * NullPointer erwartet? Es wurde kein Element hinzugefï¿½gt, es existiert auch keines im Baum.
 	 */
 	@Test
 	public void testNext1() {
-		SearchTree<Integer> nullTree2 = new SearchTree<Integer>();
-		Iterator<Integer> itr = nullTree2.iterator();
-		itr.next();
+		Iterator<Integer> itr = miniTree1.iterator();
+		assertEquals((Integer)3,itr.next());
+		assertEquals((Integer)8,itr.next());
+		assertEquals((Integer)16,itr.next());
+		assertNull(itr.next());
 	}
+	//lauft er wirklich die ganze daten struktur ab? 
+	@Test
+	public void testFindsAll(){
+		Iterator<Integer>iter=integerTree.iterator();
+		int counter=0;
+		while(iter.hasNext()){
+			counter++;
+		}
+		assertEquals(7,counter);
+	}
+	//stÃ¼rzt es ab wenn ein baum nur "null" endhÃ¤lt?
+	@Test
+	public void nextNull(){
+		Iterator <Integer> iterare =nullTree.iterator();
+		assertFalse(iterare.hasNext());
+		assertNull(iterare.next());
+	}
+	//baum in den nie etwas eingefÃ¼gt wurde, stÃ¼rtzt nicht ab.
+	@Test
+	public void noElement(){
+		Iterator <String> iterare =stringNull.iterator();
+		assertFalse(iterare.hasNext());
+		assertNull(iterare.next());
+	}
+	
 }
