@@ -46,7 +46,7 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Erster Test der Methode hasNext(), Elemente sind in miniTree1 noch vorhanden.
+	 * Elemente sind in miniTree1 vorhanden
 	 */
 	@Test
 	public void testHasNext1() {
@@ -56,7 +56,7 @@ public class SearchTreeIteratorTest {
 	
 	/**
 	 * Testen eines nullTree, es sind keine Elemente vorhanden.
-	 * Es wurde null durch add hinzugef�gt.
+	 * Es wurde null durch add hinzugefuegt.
 	 */
 	@Test
 	public void testHasNext2() {
@@ -65,8 +65,8 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Testen von vorzeitigen einf�gen durch add und nach dem erzeugen des Iterators,
-	 * ein weiteres Element hinzuf�gen.
+	 * Testen von vorzeitigen einfuegen durch add und nach dem erzeugen des Iterators,
+	 * ein weiteres Element hinzufuegen.
 	 */
 	@Test
 	public void testHasNext3() {
@@ -77,7 +77,7 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Selber Test wie bei testHasNext1, blo� mit Strings.
+	 * Selber Test wie bei testHasNext1, bloss mit Strings.
 	 */
 	@Test
 	public void testHasNext4() {
@@ -86,20 +86,18 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Selber Test wie bei testHasNext3, blo� mit Strings.
+	 * Selber Test wie bei testHasNext3, bloss mit Strings.
 	 */
 	@Test
 	public void testHasNext5() {
 		stringTree2.add("X");
 		Iterator<String> itr = stringTree2.iterator();
 		stringTree2.add("A");
-		//stringTree2.sort();
 		assertTrue(itr.hasNext());
 	}
 	
 	/**
-	 * Testen eines einzelnen Elementes.
-	 * Erwartet False? Weiteres Element nach dem ersten nicht vorhanden?
+	 * Test wie bei HasNext1
 	 */
 	@Test
 	public void testHasNext6() {
@@ -108,9 +106,8 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Test eines NullTree, bei dem keine Elemete hinzugef�gt worden sind.
-	 * 
-	 * NullPointer erwartet? Es wurde kein Element hinzugef�gt, es existiert auch keines im Baum.
+	 * Test eines NullTree, bei dem keine Elemete hinzugefuegt worden sind.
+
 	 */
 	@Test
 	public void testHasNext7() {
@@ -120,7 +117,7 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Test f�r next() ????
+	 * 
 	 */
 	@Test
 	public void testNext() {
@@ -133,9 +130,9 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Teste einen Baum, bei dem keine Elemente hinzugef�gt wurden.
+	 * Teste einen Baum, bei dem keine Elemente hinzugefuegt wurden.
 	 * 
-	 * NullPointer erwartet? Es wurde kein Element hinzugef�gt, es existiert auch keines im Baum.
+	 * NullPointer erwartet? Es wurde kein Element hinzugefuegt, es existiert auch keines im Baum.
 	 */
 	@Test
 	public void testNext1() {

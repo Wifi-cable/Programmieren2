@@ -42,7 +42,7 @@ public class ListIteratorTest {
 	}
 	
 	/**
-	 * Ein weiteres Element ist nicht vorhanden, also erwartet False?
+	 *Nur ein Element vorhanden
 	 */
 	@Test
 	public void testHasNext2() {
@@ -103,15 +103,7 @@ public class ListIteratorTest {
 		list7.add("Gewehr");
 		assertTrue(itr.hasNext());
 	}
-	
-	/**
-	 * Test f�r Next???
-	 */
-	@Test
-	public void testNext() {
-		Iterator<Integer> itr = list1.iterator();
-		itr.next();
-	}
+
 	@Test
 	public void nextTest(){
 		Iterator<Integer> number=list8.iterator();	//geht macht aber liste nicht iterirbar
@@ -133,4 +125,3 @@ public class ListIteratorTest {
 		assertEquals(2, loopCount);
 	}
 }
-
