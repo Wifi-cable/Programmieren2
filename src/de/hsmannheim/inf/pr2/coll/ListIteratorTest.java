@@ -18,6 +18,7 @@ public class ListIteratorTest {
 	List<String> list7 = new List<String>();
 	List<Integer> list8= new List<Integer>();
 	
+	// füllt einige listen mit testwerten.
 	@Before
 	public void setUp() {	
 		list1.add(5);
@@ -95,7 +96,7 @@ public class ListIteratorTest {
 		Iterator<String> itr = list6.iterator();
 		assertFalse(itr.hasNext());
 	}
-	
+	//testet Strings , nachträgliches einfügen
 	@Test
 	public void testHasNext7() {
 		list7.add("Rambo");
@@ -103,17 +104,18 @@ public class ListIteratorTest {
 		list7.add("Gewehr");
 		assertTrue(itr.hasNext());
 	}
-
+	//testet ob next den korrekten wert zurück gibt. testet dann ob liste komlett abgearbeitet ist
 	@Test
 	public void nextTest(){
-		Iterator<Integer> number=list8.iterator();	//geht macht aber liste nicht iterirbar
+		Iterator<Integer> number=list8.iterator();	
 		int content=1;
 		while(number.hasNext()){
 			assertEquals(number.next(),(Integer)content);
 			content++;
 		}
-		assertNull(number.next());
+		assertNull(number.next());	// komlett abgearbeitet?
 		}
+	//testet ob die komplette liste wirklich itteriert wird
 	@Test
 	public void LenghtTests(){
 		Iterator<Integer> count=list1.iterator();

@@ -1,4 +1,4 @@
-package de.hsmannheim.inf.pr2.coll;
+ package de.hsmannheim.inf.pr2.coll;
 
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -80,7 +80,6 @@ public class Hashtable<E> implements Set<E> {
     int oIdx = hash(element.hashCode(), 0); // Erstes versuchtes Bucket.
     int idx = oIdx;
     int i = 1; 
-   // while (!hashtable[idx].isEmpty()) {
     while(hashtable[idx]!=null){
       if (hashtable[idx].isSame(element)&& (!hashtable[idx].isDeleted())){
         return true;

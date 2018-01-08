@@ -190,7 +190,7 @@ public class List<E> implements Container<E> {
     // NOCH NICHT IMPLEMENTIERT!
     return null;
   }
-
+// gibt ein Iterator object der inneren selbst implementierten klasse zurück
   public Iterator<E> iterator() {
     return new ListIterator(head);
   }
@@ -218,13 +218,16 @@ public class List<E> implements Container<E> {
     // NOCH NICHT IMPLEMENTIERT!
     return false;
   }
+  //innere Iterator klasse  ohne remove
 protected class ListIterator implements Iterator<E>{
 	ListNode<E> head;
 	ListNode<E> current;	//pointer to the current node. starts at head
+	//constructor der den head der liste bekommt um über sie zu itterieren
 	ListIterator(ListNode <E>head){
 		this.head=head;
 		current=head;	//auf den anfang setzen
 	}
+	// gibt true zurück solange der pointer nicht auf der letzten node ist. 
 	@Override
 	public boolean hasNext() {
 		if(head==null){
@@ -232,16 +235,16 @@ protected class ListIterator implements Iterator<E>{
 		}
 		return current.getTail()!=null;
 	}
-
+	//liefert das nächste element wenn die liste nicht leer ist sontzt null
 	@Override
 	public E next() {
 		ListNode <E>currentTail=current;
 		E localValue=null;
-		if(hasNext()){	// do not follow the Null pointer.
+		if(hasNext()){	// vermeided null pointer
 			 localValue=currentTail.value;
 			current= current.getTail();	// ListNode ++ geht ja schlecht. 
 		}
-		return (E)localValue;
+		return (E)localValue;	//gibt den nächsten wert zurück
 	}
 	}
 }

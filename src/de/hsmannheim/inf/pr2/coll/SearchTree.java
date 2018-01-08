@@ -146,37 +146,11 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
    */
   public void remove(){}
   private boolean remove(TreeNode<E> n, E o) {
-   /*
-    * public TreeNode deleteBSTNode(int value,TreeNode node)
-{
-    if(node==null)
-    {
-        System.out.println("the value " + value + " is not found");
-        return null;
-    }
-    //delete
-    if(node.data>value) node.left = deleteBSTNode(value,node.left);
-    else if(node.data<value) node.right = deleteBSTNode(value,node.right);
-    else{
-        if(node.isLeaf())
-            return null;
-        if(node.right==null)
-            return node.left;
-        if(node.left==null)
-            return node.right;
-
-        TreeNode successor = findMax(node.left);
-        int data = successor.data;
-        deleteBSTNode(data, node.left);
-        node.data = data;
-
-
-    }
-    return node;
-}*/
+  //not implemented
     return false;
   }
 
+  //factory methode die einen object der inneren klasse liefert
   public Iterator<E> iterator() {
 
     return  new SeachTreeIterator();
@@ -262,18 +236,21 @@ public class SearchTree  <E extends Comparable<E>> implements Set<E>{
 	      return new ArrayList<>();
 	    }
 	}
+  //innere klasse Iterator
   class SeachTreeIterator implements Iterator<E>{
-	
+	/**
+	 * packt den baum inorder in eine liste,
+	 *  itteriert über die liste*/
 	  TreeNode <E> root;
 	  ArrayList<E> treeList=sort();
-	  int pointer=0;
+	  int pointer=0;		//pointer auf die aktuelle listnode
 
-	  
+	//beantwortet die frage ob das element das letzte ist in dem es die methode darunter aufrufft  
 	@Override
-	public boolean hasNext() {	
+	public boolean hasNext() {		
 		return next()!=null;
 	}
-
+//läuft die liste vom in order baum ab gibt den inhalt des nächsten knoten/nodes zurück
 	@Override
 	public E next() {
 		E ret=null;

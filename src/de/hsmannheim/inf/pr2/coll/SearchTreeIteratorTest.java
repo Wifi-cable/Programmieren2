@@ -20,6 +20,8 @@ public class SearchTreeIteratorTest {
 	SearchTree<Integer> nullTree = new SearchTree<Integer>();
 	
 	SearchTree<String> stringNull= new SearchTree<String>();
+	
+	//einige bäume zum testen werden mit werten gefullt.
 	@Before
 	public void setUp() {
 
@@ -117,7 +119,7 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * 
+	 * werden die richtigen werte ausgegeben?
 	 */
 	@Test
 	public void testNext() {
@@ -130,9 +132,7 @@ public class SearchTreeIteratorTest {
 	}
 	
 	/**
-	 * Teste einen Baum, bei dem keine Elemente hinzugefuegt wurden.
-	 * 
-	 * NullPointer erwartet? Es wurde kein Element hinzugefuegt, es existiert auch keines im Baum.
+	vergleicht soll und ist werte bei kleinem baum
 	 */
 	@Test
 	public void testNext1() {
